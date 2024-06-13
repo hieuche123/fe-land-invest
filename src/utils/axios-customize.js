@@ -16,25 +16,25 @@ instance.interceptors.request.use(function (config) {
   });
 
 // //gán token
-// instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
 
-// const handleRefreshToken = async () => {
-//   const res = await instance.get('/api/v1/auth/refresh');
-//   if(res && res.data){
-//     return res.data.access_token;
-//   }else{
-//     return null;
-//   }
-// } 
+const handleRefreshToken = async () => {
+  const res = await instance.get('/refresh_token');
+  if(res){
+    return res
+  }else{
+    return null;
+  }
+} 
 
-//const NO_RETRY_HEADER = 'x-no-retry';
+const NO_RETRY_HEADER = 'x-no-retry';
 // Add a response interceptor
 instance.interceptors.response.use(function (response) {
     console.log("response: ",response);
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     return response
-  },  function (error) {
+  }, async function  (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     // if(error.config && error.response && +error.response.status === 401 && !error.config.headers[NO_RETRY_HEADER]){
@@ -47,9 +47,9 @@ instance.interceptors.response.use(function (response) {
     //     return instance .request(error.config);
 
     //   }
-    // }
-    // //refresh_token expiration
-    // if(error.config && error.response && +error.response.status === 400 && error.config.url === '/api/v1/auth/refresh'){
+    //}
+    //refresh_token expiration
+    // if(error.config && error.response && +error.response.status === 400 && error.config.url === '/refresh_token'){
     //   window.location.href = './login';
     // }
     return  Promise.reject(error);

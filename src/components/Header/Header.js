@@ -10,13 +10,32 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaSearchLocation } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import './Header.scss'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalNotification from '../Auth/ModalNotification';
+import { useDispatch, useSelector } from 'react-redux';
+import { doLogoutAction } from '../../redux/account/accountSlice';
+import { callLogout } from '../../services/api';
+import { message } from 'antd';
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const isAuthenticated = useSelector(state => state.account.isAuthenticated);
+    const user = useSelector(state => state.account.Users);
+    console.log("user type: ", typeof users);
     const [isShowModalLogin, setIsShowModalLogin] = useState(false);
     const handleClose = () => {
         setIsShowModalLogin(false);
+    }
+
+
+    const hanldeLogout = async () => {
+        const res = await callLogout();
+        console.log("res logout",res)
+        if(res) {
+            dispatch(doLogoutAction());
+            message.success('Đăng xuất thành công!');
+            navigate('/')
+        }
     }
     return (
         <>
@@ -52,7 +71,16 @@ const Header = () => {
                         <div className='header-notification'>
                             <IoIosNotifications size={24}/>
                         </div>
-                        <button className='btn' onClick={()=>navigate('/register')}>Đăng nhập</button>
+                        {
+                            !isAuthenticated ? 
+                            <button className='btn' onClick={()=>navigate('/register')}>Đăng nhập</button>
+                            :
+                            <>
+                            <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
+                            <button className='btn' onClick={()=>hanldeLogout()}>Đăng xuất</button>
+                            </>
+                        }
+                        
                     </div>
                 </Container>
             </Navbar>

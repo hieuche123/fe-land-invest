@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-import { callLogin } from "../../../services/api";
+import { callLogin, callRegister, callforgotPassword } from "../../../services/api";
 import { useDispatch } from "react-redux";
 import { doLoginAction } from "../../../redux/account/accountSlice";
 import { message, notification } from "antd";
@@ -41,18 +41,18 @@ const RESET_PASSWORD = 4;
 const Register = () => {
   const [content, setContent] = useState(1);
 
-  const [Username, setUserName] = useState("");
-  const [Password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerFullName, setRegisterFullName] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
-  const [registerGender, setRegisterGender] = useState("");
-  const [registerLatitude, setRegisterLatitude] = useState("");
-  const [registerLongitude, setRegisterLongitude] = useState("");
-  const [registeravatarLink, setRegisteravatarLink] = useState("");
+  const [registerGender, setRegisterGender] = useState("Nam");
+  const [registerLatitude, setRegisterLatitude] = useState(10.54);
+  const [registerLongitude, setRegisterLongitude] = useState(20.435);
+  const [registeravatarLink, setRegisteravatarLink] = useState(null);
   const [registerEmail, setRegisterEmail] = useState("");
-  const [registerLastLoginIP, setRegisterLastLoginIP] = useState("");
+  const [registerLastLoginIP, setRegisterLastLoginIP] = useState("127.0.0.1");
 
   const navigate = useNavigate();
 
@@ -72,11 +72,11 @@ const Register = () => {
     setOpenDialog(false);
   };
 
-  const handleLogin = async(Username,Password) => {
-    const res = await callLogin(Username, Password);
+  const handleLogin = async(userName, password) => {
+    const res = await callLogin(userName, password);
     if(res?.data) {
       console.log("res",res)
-      localStorage.setItem('jwt',res.data.jwt)
+      localStorage.setItem('access_token',res.data.access_token)
       dispatch(doLoginAction(res.config.data))
       message.success('Đăng nhập tài khoản thành công!');
       navigate('/')
@@ -90,35 +90,89 @@ const Register = () => {
     }
   };
 
-  const handleRegister = async(registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP) => {
-    // const res = await callLogin(Username, FullName, Password, Gender, Latitude, Longitude, avatarLink, Email, LastLoginIP);
-    const res = await callLogin({
-      Username:registerUsername,
-      FullName:registerFullName,
-      Password:registerPassword,
-      Gender:registerGender,
-      Latitude:registerLatitude,
-      Longitude:registerLongitude,
-      avatarLink: registeravatarLink,
-      Email:registerEmail,
-      LastLoginIP:registerLastLoginIP
-    });
-    if(res?.data) {
-      console.log("res",res)
-      // localStorage.setItem('jwt',res.data.jwt)
-      // dispatch(doLoginAction(res.config.data))
-      message.success('Đăng ký tài khoản thành công!');
-      handleShowLogin()
-    }else{
-      notification.error({
-        message:'Có lỗi xáy ra',
-        description:
-          res.message && Array.isArray(res.message) ? res.message[0] :res.message[1],
-        duration: 5
-      })
-    }
-  };
+  // const handleRegister = async(registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP) => {
+  //   const registerData = {
+  //     Username: registerUsername,
+  //     FullName: registerFullName,
+  //     Password: registerPassword,
+  //     Gender: registerGender,
+  //     Latitude: registerLatitude,
+  //     Longitude: registerLongitude,
+  //     avatarLink: registeravatarLink,
+  //     Email: registerEmail,
+  //     LastLoginIP: registerLastLoginIP
+  // };
 
+  // console.log('Register Data:', registerData);
+  //   // const res = await callRegister(registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP);
+  //   // if(res) {
+  //   //   console.log("res",res)
+  //   //   // localStorage.setItem('jwt',res.data.jwt)
+  //   //   // dispatch(doLoginAction(res.config.data))
+  //   //   message.success('Đăng ký tài khoản thành công!');
+  //   //   setOpenModal(true);
+  //   //   setContent(LOGIN);
+  //   // }else{
+  //   //   notification.error({
+  //   //     message:'Có lỗi xáy ra',
+  //   //     description:
+  //   //       res.message && Array.isArray(res.message) ? res.message[0] :res.message[1],
+  //   //     duration: 5
+  //   //   })
+  //   // }
+
+  //   try {
+  //     await callRegister(registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handleRegister = async (registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP) => {
+    try {
+        const res = await callRegister(registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP);
+        console.log('Response:', res);
+        message.success('Đăng ký tài khoản thành công!');
+        setOpenModal(true);
+        setContent(LOGIN);
+    } catch (error) {
+        console.error('API Error:', error);
+        if (error.response) {
+            console.error('Error Response Data:', error.response.data);
+            notification.error({
+                message: 'Có lỗi xảy ra',
+                description: error.response.data.message || 'Lỗi không xác định từ máy chủ',
+                duration: 5
+            });
+        } else {
+            notification.error({
+                message: 'Có lỗi xảy ra',
+                description: error.message || 'Lỗi không xác định',
+                duration: 5
+            });
+        }
+    }
+
+    // catch (e) {
+    //   console.log(e);
+    // }
+};
+
+
+const handleForgotPassword = async(email) => {
+  const res = await callforgotPassword(email);
+  if(res) {
+    console.log("res",res)
+    message.success('Kiểm tra gmail!');
+  }else{
+    notification.error({
+      message:'Có lỗi xáy ra',
+      description:
+        res.message && Array.isArray(res.message) ? res.message[0] :res.message[1],
+      duration: 5
+    })
+  }
+};
 
   const renderContent = () => {
     if (content === LOGIN) {
@@ -129,7 +183,7 @@ const Register = () => {
             label="Email address or username"
             variant="outlined"
             className="form-modal-input w-full rounded-full"
-            value={Username}
+            value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
           <TextField
@@ -137,7 +191,7 @@ const Register = () => {
             variant="outlined"
             className="form-modal-input w-full"
             type="password"
-            value={Password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
@@ -145,7 +199,7 @@ const Register = () => {
             variant="contained"
             size="large"
             className="btn-form bg-[#5BE260] w-full text-center text-black"
-            onClick={()=>{handleLogin(Username,Password)}}
+            onClick={()=>{handleLogin(userName,password)}}
           >
             login
           </Button>
@@ -236,6 +290,7 @@ const Register = () => {
             variant="contained"
             size="large"
             className="btn-form bg-[#5BE260] w-full text-center text-black"
+            onClick={()=>{handleForgotPassword(forgotPassword)}}
           >
             submit
           </Button>

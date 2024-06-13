@@ -5,12 +5,15 @@ const initialState = {
   isLoading: true,
   isAuthenticated: false,
   Users: {
-    Username: "",
-    Password: "",
-    Email: "",
-    Latitude: "",
-    Longitude: "",
-    LastLoginIP: ""
+    Username: '',
+    FullName: '',
+    Password: '',
+    Gender: 'Nam',
+    Latitude: null,
+    Longitude: null,
+    avatarLink: null,
+    Email: '',
+    LastLoginIP: ''
   }
 };
 
@@ -25,7 +28,7 @@ export const accountSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.isAuthenticated= true
+      state.isAuthenticated= true;
       state.Users= action.payload
     },
 
@@ -34,9 +37,24 @@ export const accountSlice = createSlice({
         // doesn't actually mutate the state because it uses the Immer library,
         // which detects changes to a "draft state" and produces a brand new
         // immutable state based off those changes
-
+        state.isAuthenticated= true
         state.Users= action.payload.Users
-      },
+    },
+    doLogoutAction: (state,action) => {
+      localStorage.removeItem('access_token');
+      state.isAuthenticated= false
+      state.Users = {
+          Username: '',
+          FullName: '',
+          Password: '',
+          Gender: 'Nam',
+          Latitude: null,
+          Longitude: null,
+          avatarLink: null,
+          Email: '',
+          LastLoginIP: ''
+        }
+    },
 
    
    
@@ -48,7 +66,7 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { doLoginAction,doLGetAccountAction } = accountSlice.actions;
+export const { doLoginAction,doLGetAccountAction, doLogoutAction } = accountSlice.actions;
 
 
 

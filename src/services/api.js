@@ -1,9 +1,65 @@
 import instance from "../utils/axios-customize";
 
-export const callLogin = (Username, Password) => {
-    return instance.post('/api/login',{Username, Password})
+export const callLogin = (userName, password) => {
+    return instance.post('/api/login',
+    {
+        Username:userName, 
+        Password:password
+    })
 }
 
-export const callRegister = (Username, FullName, Gender, Latitude, Longitude, avatarLink, Email, LastLoginIP) => {
-    return instance.post('/api/register',{Username, FullName, Gender, Latitude, Longitude, avatarLink, Email, LastLoginIP})
+// export const callRegister = (registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP) => {
+//     return instance.post('/api/register',
+//     {
+//         Username:registerUsername,
+//         FullName:registerFullName,
+//         Password:registerPassword,
+//         Gender:registerGender,
+//         Latitude:registerLatitude,
+//         Longitude:registerLongitude,
+//         avatarLink: registeravatarLink,
+//         Email:registerEmail,
+//         LastLoginIP:registerLastLoginIP
+//     })
+// }
+
+export const callRegister = (registerUsername, registerFullName, registerPassword, registerGender, registerLatitude, registerLongitude, registeravatarLink, registerEmail, registerLastLoginIP) => {
+    const payload = {
+        Username:registerUsername,
+        FullName:registerFullName,
+        Password:registerPassword,
+        Gender:registerGender,
+        Latitude:registerLatitude,
+        Longitude:registerLongitude,
+        avatarLink: registeravatarLink,
+        Email:registerEmail,
+        LastLoginIP:registerLastLoginIP
+    };
+
+    console.log('Payload:', payload);
+
+    return instance.post('/api/register', payload)
+        .then(response => response.data)
+        .catch(error => {
+            if (error.response) {
+                console.error('Error Response Data:', error.response.data);
+            }
+            throw error;
+        });
+};
+
+export const callLogout = () => {
+    return instance.post('/api/logout')
+}
+
+export const callRefeshToken = () => {
+    return instance.post('/refresh_token')
+}
+
+export const callforgotPassword = (email) => {
+    return instance.post('/api/forgotPassword',
+    {
+        Email:email, 
+
+    })
 }
