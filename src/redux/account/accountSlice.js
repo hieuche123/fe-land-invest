@@ -2,19 +2,19 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 
-  isLoading: true,
   isAuthenticated: false,
-  Users: {
-    Username: '',
-    FullName: '',
-    Password: '',
-    Gender: 'Nam',
-    Latitude: null,
-    Longitude: null,
-    avatarLink: null,
-    Email: '',
-    LastLoginIP: ''
-  }
+  Users: null
+  // {
+  //   Username:"",
+  //   FullName:"",
+  //   Password:"",
+  //   Gender:"Nam",
+  //   Latitude:10.54,
+  //   Longitude:20.435,
+  //   avatarLink: null,
+  //   Email:"",
+  //   LastLoginIP:"127.0.0.1"
+  // }
 };
 
 
@@ -40,21 +40,10 @@ export const accountSlice = createSlice({
         state.isAuthenticated= true
         state.Users= action.payload.Users
     },
-    doLogoutAction: (state,action) => {
-      localStorage.removeItem('access_token');
-      state.isAuthenticated= false
-      state.Users = {
-          Username: '',
-          FullName: '',
-          Password: '',
-          Gender: 'Nam',
-          Latitude: null,
-          Longitude: null,
-          avatarLink: null,
-          Email: '',
-          LastLoginIP: ''
-        }
-    },
+    doLogoutAction: (state) => {
+      state.isAuthenticated = false;
+      state.Users = null;
+  },
 
    
    

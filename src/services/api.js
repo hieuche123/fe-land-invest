@@ -52,6 +52,25 @@ export const callLogout = () => {
     return instance.post('/api/logout')
 }
 
+export const logoutUser = async () => {
+    try {
+        await instance.post('/api/logout');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        console.log('Logout successful');
+    } catch (error) {
+        console.error('Logout error:', error);
+        if (error.response) {
+            console.error('Response error:', error.response.data);
+        } else if (error.request) {
+            console.error('Request error:', error.request);
+        } else {
+            console.error('Error:', error.message);
+        }
+        throw error;
+    }
+};
+
 export const callRefeshToken = () => {
     return instance.post('/refresh_token')
 }
@@ -63,3 +82,18 @@ export const callforgotPassword = (email) => {
 
     })
 }
+
+export const refreshAccessToken = async () => {
+    try {
+        const response = await instance.post('/refresh_token');
+        const { access_token } = response.data;
+        
+        // Cập nhật access token mới vào local storage hoặc cookies
+        localStorage.setItem('access_token', access_token);
+        
+        return response.data;
+    } catch (error) {
+        console.error('Refresh token error:', error);
+        throw error;
+    }
+};

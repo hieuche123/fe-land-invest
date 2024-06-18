@@ -1,58 +1,48 @@
 
 import axios from "axios";
+import { doLogoutAction } from "../redux/account/accountSlice";
+import { message } from "antd";
+import { useDispatch } from "react-redux";
 
 const instance = axios.create({
     baseURL: `http://14.248.100.78:2345`,
 });
 
-
-// Add a request interceptor
-instance.interceptors.request.use(function (config) {
-    // Do something before request is sent
-    return config;
-  }, function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  });
-
-// //gán token
-instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
-
-const handleRefreshToken = async () => {
-  const res = await instance.get('/refresh_token');
-  if(res){
-    return res
-  }else{
-    return null;
+const handleLogOut = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    message.success('Đăng xuất thành công!');
+  };
+instance.interceptors.request.use(
+  config => {
+      const token = localStorage.getItem('access_token');
+      const refreshToken = localStorage.getItem('refresh_token');
+      console.log("refreshToken: ",refreshToken)
+      if (token) {
+          config.headers['Authorization'] = `Bearer ${token}`;
+          console.log("config: ",config)
+          console.log("token: ",token)
+      }
+      if (refreshToken) {
+        config.headers['x-refresh-token'] = refreshToken;
+      }
+      return config;
+  },
+  error => {
+      return Promise.reject(error);
   }
-} 
+);
 
-const NO_RETRY_HEADER = 'x-no-retry';
-// Add a response interceptor
-instance.interceptors.response.use(function (response) {
-    console.log("response: ",response);
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response
-  }, async function  (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    // if(error.config && error.response && +error.response.status === 401 && !error.config.headers[NO_RETRY_HEADER]){
-    //   // return updateToken().then((token) =>{
-    //   const access_token = await handleRefreshToken();
-    //     error.config.headers[NO_RETRY_HEADER] = 'true';
-    //   if(access_token) {
-    //     error.config.headers['Authorization'] = `Bearer ${access_token}`
-    //     localStorage.setItem('access_token', access_token)
-    //     return instance .request(error.config);
-
-    //   }
-    //}
-    //refresh_token expiration
-    // if(error.config && error.response && +error.response.status === 400 && error.config.url === '/refresh_token'){
-    //   window.location.href = './login';
-    // }
-    return  Promise.reject(error);
-  });
-
-export default instance
+instance.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      if (error.response?.status === 401) {
+        handleLogOut();
+      }
+  
+      return Promise.reject(error);
+    }
+  );
+export default instance;

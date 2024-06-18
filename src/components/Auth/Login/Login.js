@@ -21,12 +21,13 @@ const Login = () => {
     setIsSubmit(true);
     const res = await callLogin(Username, Password);
     setIsSubmit(false);
-    if(res?.data) {
-      console.log("res",res)
-      localStorage.setItem('jwt',res.data.jwt)
-      dispatch(doLoginAction(res.config.data))
+    if(res) {
+      console.log("res", res);
+      localStorage.setItem('access_token', res.data.access_token);
+      localStorage.setItem('refresh_token', res.data.refreshtoken);
+      dispatch(doLoginAction(res.data));
       message.success('Đăng nhập tài khoản thành công!');
-      navigate('/')
+      navigate('/');
     }else{
       notification.error({
         message:'Có lỗi xáy ra',

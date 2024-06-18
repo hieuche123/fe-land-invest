@@ -14,8 +14,8 @@ import { useEffect, useState } from 'react';
 import ModalNotification from '../Auth/ModalNotification';
 import { useDispatch, useSelector } from 'react-redux';
 import { doLogoutAction } from '../../redux/account/accountSlice';
-import { callLogout } from '../../services/api';
-import { message } from 'antd';
+import { callLogout, logoutUser } from '../../services/api';
+import { message, notification } from 'antd';
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch()
@@ -28,20 +28,36 @@ const Header = () => {
     }
 
 
-    const hanldeLogout = async () => {
-        const res = await callLogout();
-        console.log("res logout",res)
-        if(res) {
-            dispatch(doLogoutAction());
-            message.success('Đăng xuất thành công!');
-            navigate('/')
-        }
-    }
+    // const handleLogout = async () => {
+    //     try {
+    //         await callLogout();
+    //         localStorage.removeItem('access_token');
+    //         localStorage.removeItem('refresh_token');
+    //         dispatch(doLogoutAction());
+    //         message.success('Đăng xuất thành công!');
+    //         navigate('/login');
+    //     } catch (error) {
+    //         console.error('Logout error:', error);
+    //         notification.error({
+    //             message: 'Có lỗi xảy ra',
+    //             description: error.response ? error.response.data.message : error.message,
+    //             duration: 5
+    //         });
+    //     }
+    // };
+
+    const handleLogOut = () => {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        dispatch(doLogoutAction());
+        message.success('Đăng xuất thành công!');
+        navigate('/login');
+      };
     return (
         <>
             <Navbar bg="#262D34" className='header-container'  expand="lg">
                 <Container >
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand href="/">
                         <div className='header-logo'>
                             <img
                                 src={logo}
@@ -67,29 +83,34 @@ const Header = () => {
     
                        
                     </Navbar.Collapse>
+                    <Navbar.Collapse id="basic-navbar-nav">
                     <div className='header-right'>
                         <div className='header-notification'>
                             <IoIosNotifications size={24}/>
                         </div>
                         {
                             !isAuthenticated ? 
-                            <button className='btn' onClick={()=>navigate('/register')}>Đăng nhập</button>
+                            <button className='btn' onClick={()=>setIsShowModalLogin(true)}>Đăng nhập</button>
                             :
                             <>
                             <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
-                            <button className='btn' onClick={()=>hanldeLogout()}>Đăng xuất</button>
+                            <button className='btn' onClick={()=>handleLogOut()}>Đăng xuất</button>
                             </>
                         }
                         
                     </div>
+                    </Navbar.Collapse>
+                    
                 </Container>
             </Navbar>
-            {/* <ModalNotification 
+            <ModalNotification 
                 show={isShowModalLogin}
                 handleClose={handleClose}
-            /> */}
+            />
         </>
     );
 }
 
 export default Header;
+
+
