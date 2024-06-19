@@ -1,36 +1,27 @@
-import './Login.scss'
+import './ForgotPassword.scss'
 import { Button, Checkbox, Divider, Form, Input, message, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import { callLogin } from '../../../services/api';
+import { callLogin, callforgotPassword } from '../../../services/api';
 import { doLoginAction } from '../../../redux/account/accountSlice';
 import { useDispatch } from 'react-redux';
-const Login = () => {
+const ForgotPassword = () => {
   const dispatch = useDispatch()
   const [isSubmit, setIsSubmit] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-//   const handleClickRegister = () => {
-//       handleClose()
-//       navigate('/register')
-//   }
+
   const onFinish = async (values) => {
-    const {Username, Password} = values;
+    const {Email} = values;
     setIsSubmit(true);
-    const res = await callLogin(Username, Password);
+    const res = await callforgotPassword(Email);
     setIsSubmit(false);
     if(res) {
       console.log("res", res);
-      localStorage.setItem('access_token', res.data.access_token);
-      localStorage.setItem('refresh_token', res.data.refreshtoken);
-      console.log("refresh_token", res.data.access_token);
-      console.log("refresh_token", res.data.refreshtoken);
-
-      dispatch(doLoginAction(res.data));
-      message.success('Đăng nhập tài khoản thành công!');
-      navigate('/');
+      message.success('Lấy password thành công, kiểm tra mail!');
+      navigate('/login');
     }else{
       notification.error({
         message:'Có lỗi xáy ra',
@@ -40,21 +31,6 @@ const Login = () => {
       })
     }
 
-    // setIsSubmit(false);
-    // console.log("res",res)
-    // if(res?.data) {
-    //   localStorage.setItem('access_token',res.data.access_token)
-    //   dispatch(doLoginAction(res.data.user))
-    //   message.success('Đăng nhập tài khoản thành công!');
-    //   navigate('/')
-    // }else{
-    //   notification.error({
-    //     message:'Có lỗi xáy ra',
-    //     description:
-    //       res.message && Array.isArray(res.message) ? res.message[0] :res.message[1],
-    //     duration: 5
-    //   })
-    // }
   }
   return (
    <>
@@ -79,20 +55,18 @@ const Login = () => {
               onFinish={onFinish}
               autoComplete="off"
             >
-              
-              <h2 style={{marginBottom:'10px'}}>Đăng nhập</h2>
-  
+              <h2 style={{marginBottom:'10px'}}>Quên mật khẩu</h2>
               <Form.Item
                 labelCol={{
                   span: 24,
                 }}
    
-                label="Username"
-                name="Username"
+                label="Email"
+                name="Email"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your Username!',
+                    message: 'Please input your Email!',
                   },
                 ]}
               >
@@ -103,28 +77,6 @@ const Login = () => {
                 }} />
               </Form.Item>
   
-              <Form.Item
-                labelCol={{
-                  span: 24,
-                }}            
-                label="Password"
-                name="Password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                ]}
-              >
-                <Input.Password style={{
-                  height:'40px',
-                  marginTop:'-10px',
-                }}/>
-              </Form.Item>
-  
-              
-  
-              
   
               <Form.Item
                 wrapperCol={{
@@ -136,21 +88,12 @@ const Login = () => {
               >
                 <Button style={{
                   height:'40px',
-                  width:'120px',
+                  width:'100%',
                   
                 }}  type="primary" htmlType="Đăng nhập" loading={isSubmit}>
-                  Đăng nhập
+                  Lấy mật mật khẩu
                 </Button >
 
-                <Button style={{
-                  height:'40px',
-                  width:'120px',
-                  marginLeft:'40px'
-                }} htmlType="Đăng nhập" onClick={() => {
-                  navigate("/forgotPassword")
-                }}>
-                  Quên mật khẩu
-                </Button >
               </Form.Item>
               
             <p style={{textAlign: 'center'}}>Bạn chưa có tài khoản <a style={{marginLeft:'3px', textDecoration:'underline'}} onClick={()=>{navigate('/register')}}>Đăng ký</a></p>
@@ -237,4 +180,4 @@ const Login = () => {
 
     
 };
-export default Login;
+export default ForgotPassword;

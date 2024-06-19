@@ -17,6 +17,7 @@ import Register from './components/Auth/Register/Register';
 import { Provider } from 'react-redux';
 import {store, persistor} from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react';
+import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -29,6 +30,7 @@ root.render(
               <Route path="users" element={<User />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
+              <Route path="forgotPassword" element={<ForgotPassword/>} />
               <Route index element={<Home />} />
             </Route>
           </Routes>

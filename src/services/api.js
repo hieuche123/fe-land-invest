@@ -52,24 +52,24 @@ export const callLogout = () => {
     return instance.post('/api/logout')
 }
 
-export const logoutUser = async () => {
-    try {
-        await instance.post('/api/logout');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        console.log('Logout successful');
-    } catch (error) {
-        console.error('Logout error:', error);
-        if (error.response) {
-            console.error('Response error:', error.response.data);
-        } else if (error.request) {
-            console.error('Request error:', error.request);
-        } else {
-            console.error('Error:', error.message);
-        }
-        throw error;
-    }
-};
+// export const logoutUser = async () => {
+//     try {
+//         await instance.post('/api/logout');
+//         localStorage.removeItem('access_token');
+//         localStorage.removeItem('refresh_token');
+//         console.log('Logout successful');
+//     } catch (error) {
+//         console.error('Logout error:', error);
+//         if (error.response) {
+//             console.error('Response error:', error.response.data);
+//         } else if (error.request) {
+//             console.error('Request error:', error.request);
+//         } else {
+//             console.error('Error:', error.message);
+//         }
+//         throw error;
+//     }
+// };
 
 export const callRefeshToken = () => {
     return instance.post('/refresh_token')
