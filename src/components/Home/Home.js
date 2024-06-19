@@ -1,8 +1,3 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { GoogleMap, useLoadScript, OverlayView } from '@react-google-maps/api';
-import { useDropzone } from 'react-dropzone';
-import Slider from 'rc-slider';
-import 'rc-slider/assets/index.css';
 import './Home.scss'
 import { CiCirclePlus } from "react-icons/ci";
 import { GrSubtractCircle } from "react-icons/gr";
@@ -16,41 +11,45 @@ import { LuShare2 } from "react-icons/lu";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { RiSubtractLine } from "react-icons/ri";
+import { IoLocationSharp } from "react-icons/io5";
 import { BsBookmarkFill } from "react-icons/bs";
 import { CiDollar } from "react-icons/ci";
 import { GrLocation } from "react-icons/gr";
-const libraries = ['places'];
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { useDropzone } from 'react-dropzone';
+import 'rc-slider/assets/index.css';
+import 'leaflet/dist/leaflet.css';
+import { calc } from 'antd/es/theme/internal';
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
+  width: '100%',
+  height: 'calc(100vh - 56px)',
 };
-const center = {
-  lat: 21.136663,
-  lng: 105.7473446,
-};
-const options = {
-  disableDefaultUI: true,
-  zoomControl: true,
-};
+const center = [21.136663, 105.7473446];
 
 function Home() {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyA3bsDl1xddiU_w38hA-fsGea8kWsp5uJM', 
-    libraries,
-  });
-
   const [image, setImage] = useState(null);
   const [opacity, setOpacity] = useState(1);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState(center);
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [currentSize, setCurrentSize] = useState({ width: 0, height: 0 });
-  const [corners, setCorners] = useState({});
   const [mapZoom, setMapZoom] = useState(14);
   const [value, setValue] = useState(50);
+  const [selectedPosition, setSelectedPosition] = useState(null); // State để lưu trữ vị trí được chọn trên bản đồ
 
   const handleSliderChange = (event) => {
     setValue(event.target.value);
+  };
+
+  const handleLocationArrowClick = () => {
+    if (selectedPosition) {
+      const [lat, lng] = selectedPosition;
+      window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
+    }
   };
 
   const increaseValue = () => {
@@ -61,19 +60,7 @@ function Home() {
     setValue((prevValue) => Math.max(prevValue - 1, 0));
   };
 
-
-  const mapRef = useRef();
-  const imgRef = useRef();
-
-  const onMapLoad = map => {
-    mapRef.current = map;
-    // Lắng nghe sự kiện thay đổi tỷ lệ zoom của bản đồ
-    map.addListener('zoom_changed', () => {
-      setMapZoom(map.getZoom());
-    });
-  };
-
-  const onDrop = acceptedFiles => {
+  const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -86,210 +73,156 @@ function Home() {
       };
     };
     reader.readAsDataURL(file);
-  };
+  }, []);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: 'image/*' });
 
-  const handleImageMove = (latLng) => {
-    setPosition(latLng);
-  };
-
   useEffect(() => {
     if (imageSize.width && imageSize.height) {
-      const map = mapRef.current;
-      const mapWidth = map.getDiv().offsetWidth;
-      const mapHeight = map.getDiv().offsetHeight;
-      const mapAspectRatio = mapWidth / mapHeight;
-      const imageAspectRatio = imageSize.width / imageSize.height;
-
-      let newWidth, newHeight;
-      if (mapAspectRatio > imageAspectRatio) {
-        newWidth = mapWidth;
-        newHeight = mapWidth / imageAspectRatio;
-      } else {
-        newWidth = mapHeight * imageAspectRatio;
-        newHeight = mapHeight;
-      }
-
-      setCurrentSize({
-        width: newWidth * scale,
-        height: newHeight * scale,
-      });
+      const newWidth = imageSize.width * scale;
+      const newHeight = imageSize.height * scale;
+      setCurrentSize({ width: newWidth, height: newHeight });
     }
-  }, [scale, imageSize, mapRef]);
+  }, [scale, imageSize]);
 
   useEffect(() => {
-    if (mapRef.current && imageSize.width && imageSize.height) {
-      const bounds = calculateImageBounds(position, currentSize);
-      setCorners(bounds);
-    }
-  }, [position, currentSize]);
+    const handleZoomEnd = () => {
+      const zoom = mapRef.current.getZoom();
+      setMapZoom(zoom);
+    };
 
-  useEffect(() => {
     if (mapRef.current) {
-      const map = mapRef.current;
-      const zoomScale = Math.pow(2, mapZoom - 14); // Điều chỉnh hệ số phóng to/thu nhỏ dựa trên mức zoom hiện tại
-      setCurrentSize({
-        width: imageSize.width * scale * zoomScale,
-        height: imageSize.height * scale * zoomScale,
-      });
+      mapRef.current.on('zoomend', handleZoomEnd);
     }
-  }, [mapZoom, scale, imageSize]);
 
-  const calculateImageBounds = (center, size) => {
-    const map = mapRef.current;
-    const overlayProjection = map.getProjection();
-    
-    const centerPoint = overlayProjection.fromLatLngToPoint(new window.google.maps.LatLng(center));
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.off('zoomend', handleZoomEnd);
+      }
+    };
+  }, []);
+
+  const calculateImageBounds = useCallback((center, size) => {
     const halfWidth = size.width / 2;
     const halfHeight = size.height / 2;
+    return [
+      [center[0] - halfHeight / 111320, center[1] - halfWidth / 111320],
+      [center[0] + halfHeight / 111320, center[1] + halfWidth / 111320]
+    ];
+  }, []);
 
-    const ne = overlayProjection.fromPointToLatLng(new window.google.maps.Point(centerPoint.x + halfWidth, centerPoint.y - halfHeight));
-    const nw = overlayProjection.fromPointToLatLng(new window.google.maps.Point(centerPoint.x - halfWidth, centerPoint.y - halfHeight));
-    const se = overlayProjection.fromPointToLatLng(new window.google.maps.Point(centerPoint.x + halfWidth, centerPoint.y + halfHeight));
-    const sw = overlayProjection.fromPointToLatLng(new window.google.maps.Point(centerPoint.x - halfWidth, centerPoint.y + halfHeight));
+  const mapRef = useRef();
 
-    return { ne, nw, se, sw };
+  const MapEvents = () => {
+    useMapEvents({
+      click(e) {
+        const { lat, lng } = e.latlng;
+        setSelectedPosition([lat, lng]);
+      }
+    });
+    return null;
   };
-
-  if (loadError) return 'Error loading maps';
-  if (!isLoaded) return 'Loading Maps';
 
   return (
     <div className='home-container'>
-      {/* <div {...getRootProps()} style={{ position: 'absolute', top: 10, left: 10, zIndex: 1, padding: 10, background: 'white', borderRadius: 4 }}>
-        <input {...getInputProps()} />
-        <p>Kéo & thả ảnh hoặc click để chọn ảnh</p>
-      </div>
-      <div style={{ position: 'absolute', top: 80, left: 10, zIndex: 1,background: 'white', padding: 10, borderRadius: 4 }}>
-        <div>
-          <label>Độ trong suốt:</label>
-          <Slider min={0} max={1} step={0.01} value={opacity} onChange={setOpacity} />
-        </div>
-        <div>
-          <label>Phóng to/Thu nhỏ:</label>
-          <Slider min={0} max={2} step={0.001} value={scale} onChange={setScale} />
-        </div>
-      </div> */}
-
-        <div className="slider-container" style={{ position: 'absolute', top: 10, right: 10, zIndex: 1, padding: 10, borderRadius: 4 }}>
-            <div className='slider-container-range'>
-                <div className='nav-icon-arrow'>
-                  <FiPlus size={22}/>
-                </div>
-                <input
-                  type="range"
-                  className="slider"
-                  orientation="vertical"
-                  value={value}
-                  onChange={handleSliderChange}
-                  min="0"
-                  max="100"
-                  style={{ writingMode: 'bt-lr', WebkitAppearance: 'slider-vertical' }}
-                />
-                <div className='nav-icon-arrow'>
-                  <RiSubtractLine size={22}/>
-                </div>
-                <div className='nav-icon'>
-                  <div className='nav-icon-arrow'>
-                    <FaArrowRotateLeft size={20}/>
-                  </div>
-                  <div className='nav-icon-arrow'>
-                    <FaLocationArrow size={18} />
-                  </div>
-                  <div className='nav-icon-flag-delete'>
-                    <GiGolfFlag size={24}/>
-                    <MdDeleteForever size={22}/>
-                  </div>
-                  <div className='nav-icon-arrow'>
-                    <FaPaintBrush size={18}/>
-                  </div>
-                  <div className='nav-icon-arrow'>
-                    <LuShare2 size={20}/>
-                  </div>
-                </div>
-
-            </div>
-        </div>
-
-
-        <div className="container-header" style={{ position: 'absolute', top: 10,  zIndex: 1, padding: 10, borderRadius: 4 }}>
-           <div className='container-header-select'>
-              <div className='slider-container-range'>
-                <BsBookmarkFill/>
-                <select id="mySelect">
-                  <option value="option1" selected>Thửa đã lưu</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-                </select>
-              </div>
-              <div className='slider-container-location'>
-                <GrLocation/>
-                <span>Phường 26, Quận Bình Thạnh, TP. Hồ Chí Minh</span>
-              </div>
-  
-              <div className='slider-container-range'>
-                <CiDollar size={24}/>
-                <select id="mySelect">
-                  <option value="option1" selected>Hiển thị giá</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-                </select>
-              </div>
-           </div>
-           <div className='container-header-option'>
-              <div className='container-header-option-item'>Quy hoạch 2030</div>
-              <div className='container-header-option-item'>Quy hoạch 2024</div>
-              <div className='container-header-option-item'>QH Xây dựng</div>
-              <div className='container-header-option-item'>Quy hoạch khác</div>
-
-           </div>
-        </div>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={mapZoom}
-        center={center}
-        options={options}
-        onLoad={onMapLoad}
-        onClick={(e) => handleImageMove({ lat: e.latLng.lat(), lng: e.latLng.lng() })}
-      >
-        {image && (
-          <OverlayView
-            position={position}
-            mapPaneName={OverlayView.OVERLAY_LAYER}
-          >
-            <div
-              ref={imgRef}
-              style={{ position: 'absolute', transform: `translate(-50%, -50%)`, cursor: 'move' }}
-            >
-              <img
-                src={image}
-                alt="Overlay"
-                style={{
-                  width: currentSize.width,
-                  height: currentSize.height,
-                  opacity,
-                }}
-                draggable={false}
-              />
-            </div>
-          </OverlayView>
-        )}
-      </GoogleMap>
-      {/* <div style={{ position: 'absolute', bottom: 10, left: 10, zIndex: 1, background: 'white', padding: 10, borderRadius: 4 }}>
-        <p>Khi click vào đâu trên bản đồ thì tâm ảnh nằm ở đó</p>
-        <p>Kích thước ban đầu: {imageSize.width} x {imageSize.height}</p>
-        <p>Kích thước hiện tại: {currentSize.width} x {currentSize.height}</p>
-        <p>Vị trí trung tâm: {position.lat}, {position.lng}</p>
-        {corners.ne && (
-          <div>
-            <p>Góc đông bắc: {corners.ne.lat()}, {corners.ne.lng()}</p>
-            <p>Góc tây bắc: {corners.nw.lat()}, {corners.nw.lng()}</p>
-            <p>Góc đông nam: {corners.se.lat()}, {corners.se.lng()}</p>
-            <p>Góc tây nam: {corners.sw.lat()}, {corners.sw.lng()}</p>
+      {/* Slider Container */}
+      <div className="slider-container" style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000, padding: 10, borderRadius: 4 }}>
+        <div className='slider-container-range'>
+          <div className='nav-icon-arrow'>
+            <FiPlus size={22} onClick={increaseValue} />
           </div>
+          <input
+            type="range"
+            className="slider"
+            orientation="vertical"
+            value={value}
+            onChange={handleSliderChange}
+            min="0"
+            max="100"
+            style={{ writingMode: 'bt-lr', WebkitAppearance: 'slider-vertical' }}
+          />
+          <div className='nav-icon-arrow'>
+            <RiSubtractLine size={22} onClick={decreaseValue} />
+          </div>
+          <div className='nav-icon'>
+            <div className='nav-icon-arrow'>
+              <FaArrowRotateLeft size={20} />
+            </div>
+            <div className='nav-icon-arrow' onClick={handleLocationArrowClick}>
+              <FaLocationArrow size={18} />
+            </div>
+            <div className='nav-icon-flag-delete'>
+              <GiGolfFlag size={24} />
+              <MdDeleteForever size={22} />
+            </div>
+            <div className='nav-icon-arrow'>
+              <FaPaintBrush size={18} />
+            </div>
+            <div className='nav-icon-arrow'>
+              <LuShare2 size={20} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Header Container */}
+      <div className="container-header" style={{ position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 1000, padding: 10, borderRadius: 4 }}>
+        <div className='container-header-select'>
+          <div className='slider-container-range'>
+            <BsBookmarkFill />
+            <select id="mySelect">
+              <option value="option1" selected>Thửa đã lưu</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </select>
+          </div>
+          <div className='slider-container-location'>
+            <GrLocation />
+            <span>Phường 26, Quận Bình Thạnh, TP. Hồ Chí Minh</span>
+          </div>
+
+          <div className='slider-container-range'>
+            <CiDollar size={24} />
+            <select id="mySelect">
+              <option value="option1" selected>Hiển thị giá</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+            </select>
+          </div>
+        </div>
+        <div className='container-header-option'>
+          <div className='container-header-option-item'>Quy hoạch 2030</div>
+          <div className='container-header-option-item'>Quy hoạch 2024</div>
+          <div className='container-header-option-item'>QH Xây dựng</div>
+          <div className='container-header-option-item'>Quy hoạch khác</div>
+        </div>
+      </div>
+
+      {/* Map Container */}
+      <MapContainer
+        style={mapContainerStyle}
+        center={center}
+        zoom={mapZoom}
+        whenCreated={map => { mapRef.current = map; }}
+      >
+        <MapEvents />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {selectedPosition && ( // Hiển thị marker tại vị trí đã chọn trên bản đồ
+          <Marker position={selectedPosition} icon={L.icon({
+            iconUrl: icon,
+            shadowUrl: iconShadow,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            tooltipAnchor: [16, -28],
+            shadowSize: [41, 41]
+          })}>
+            <Popup>Vị trí đã chọn</Popup>
+          </Marker>
         )}
-      </div> */}
+      </MapContainer>
     </div>
   );
 }

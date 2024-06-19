@@ -5,7 +5,7 @@ import { message } from "antd";
 import { useDispatch } from "react-redux";
 
 const instance = axios.create({
-    baseURL: `http://14.248.100.78:2345`,
+    baseURL: `https://apilandinvest.gachmen.org`,
 });
 
 const handleLogOut = () => {
