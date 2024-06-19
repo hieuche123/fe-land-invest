@@ -2,7 +2,7 @@
 import { HeaderOnly } from '~/components/Layout';
 import App from '../App';
 import User from '../components/User';
-import Admin from '../components/Admin';
+import Admin from '../components/Auth/News/News';
 
 // Pages
 

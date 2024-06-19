@@ -9,7 +9,6 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Admin from './components/Admin';
 import User from './components/User';
 import Home from './components/Home/Home';
 import Login from './components/Auth/Login/Login';
@@ -18,6 +17,7 @@ import { Provider } from 'react-redux';
 import {store, persistor} from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
+import News from './components/Auth/News/News';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -26,7 +26,7 @@ root.render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<App />} >
-              <Route path="admins" element={<Admin />} />
+              <Route path="news" element={<News />} />
               <Route path="users" element={<User />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
