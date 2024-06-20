@@ -97,3 +97,7 @@ export const refreshAccessToken = async () => {
         throw error;
     }
 };
+
+export const searchQueryAPI = (query) => {
+    return instance.get(`/api/zonings/view?name=${encodeURIComponent(query)}`);
+}

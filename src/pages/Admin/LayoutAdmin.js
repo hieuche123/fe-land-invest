@@ -26,50 +26,34 @@ const {Content, Footer, Sider} = Layout
 const LayoutAdmin = () => {
     
 const items = [
+   
     {
-        label: <Link to='/admin'>Dashboard</Link>,
-        key: 'dashboard',
-        icon: <AppstoreOutlined/>
-    },
-    {
-        label: <span>Quản lý người dùng</span>,
-        //key: dashboard,
-        icon: <UserOutlined/>,
-        children: [
-            {
-                label: <Link to='/admin/user'>CRUD</Link>,
-                key: 'crud',
-                icon: <TeamOutlined/>
-            },
-        ]
-    },
-    {
-        label: <Link to='/admin/book'>Quản lý sách</Link>,
-        key: 'book',
+        label: <Link to='/admin'>Quản lý dữ liệu tải lên</Link>,
+        key: 'upload',
         icon: <ExceptionOutlined/>
     },
     {
-        label: <Link to='/admin/order'>Quản lý đơn hàng</Link>,
+        label: <Link to='/admin/order'>Quản lý thông tin</Link>,
         key: 'order',
         icon: <DollarCircleOutlined/>
     },
 ]
 
 const [collapsed, setCollapsed] = useState(false);
-const [activeMenu, setActiveMenu] = useState('dashboard');
-const user = useSelector(state => state.account.user);
+const [activeMenu, setActiveMenu] = useState('upload');
+// const user = useSelector(state => state.account.user);
 
-const navigate = useNavigate();
-const dispatch = useDispatch();
+// const navigate = useNavigate();
+// const dispatch = useDispatch();
 
-useEffect(()=> {
-    if(window.location.pathname.includes('/book')){
-        setActiveMenu('book');
-    }
-    if(window.location.pathname.includes('/admin/user')){
-        setActiveMenu('crud');
-    }
-},[])
+// useEffect(()=> {
+//     if(window.location.pathname.includes('/book')){
+//         setActiveMenu('book');
+//     }
+//     if(window.location.pathname.includes('/admin/user')){
+//         setActiveMenu('crud');
+//     }
+// },[])
 // const hanldeLogout = async () => {
 //     const res = await callLogout();
 //     if(res && res.data) {
@@ -143,7 +127,7 @@ const itemsDropdown = [
                     <Dropdown menu={{items: itemsDropdown}} trigger={['click']}>
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
-                                Welcome {user?.fullName}
+                                {/* Welcome {user?.fullName} */}
                                 <DownOutlined />
                             </Space>
                         </a>

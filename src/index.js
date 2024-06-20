@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -9,7 +8,6 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import User from './components/User';
 import Home from './components/Home/Home';
 import Login from './components/Auth/Login/Login';
 import Register from './components/Auth/Register/Register';
@@ -18,23 +16,30 @@ import {store, persistor} from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
 import News from './components/Auth/News/News';
+import Auction from './components/Auction/Auction';
+import Search from './components/Search/Search';
+import LayoutAdmin from './pages/Admin/LayoutAdmin';
+import App from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter>
+        {/* <BrowserRouter> 
           <Routes>
             <Route path="/" element={<App />} >
               <Route path="news" element={<News />} />
-              <Route path="users" element={<User />} />
+              <Route path="auction" element={<Auction />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="forgotPassword" element={<ForgotPassword/>} />
+              <Route path="search" element={<Search/>} />
               <Route index element={<Home />} />
+              <Route path="admin" element={<LayoutAdmin />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </BrowserRouter> */}
+        <App/>
       </PersistGate>
     </Provider>
   </React.StrictMode>

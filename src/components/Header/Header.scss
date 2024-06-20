@@ -36,6 +36,7 @@
         width: 440px;
         border-radius: 8px;
         outline: none;
+        display: flex;
         input {
             background-color: #2C353D;
             padding-top: 5px;
@@ -50,6 +51,17 @@
             outline: none;
             color: #858EAD;
 
+        }
+        button {
+            background-color: #2C353D;
+            border: none;
+            padding-right: 6px;
+            margin: 6px;
+            
+            &:hover {
+                cursor: pointer;
+            }
+            
         }
     }
     .header-right {
@@ -97,10 +109,6 @@
         .header-right {
             justify-content: center;
         }
-
     }
     
 }
-     
-
-     

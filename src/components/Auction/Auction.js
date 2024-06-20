@@ -1,4 +1,4 @@
-const User = (props) => {
+const Auction = (props) => {
     return (
         <div>
             annoncement-megaphone
@@ -6,4 +6,4 @@ const User = (props) => {
     )
 }
 
-export default User;
+export default Auction;
