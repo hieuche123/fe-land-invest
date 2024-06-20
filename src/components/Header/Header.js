@@ -126,6 +126,19 @@ const Header = () => {
                                 </defs>
                                 </svg>
                             </Nav.Link>
+                            <NavLink to = "/auctions" className='nav-link'><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2.04248 24H14.7347" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13.0425 24V19.6283H3.73486V24" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14.3741 2.51218L8.30718 8.78129C7.6463 9.4642 7.6463 10.5714 8.30718 11.2543L10.9877 14.0241C11.6485 14.707 12.72 14.707 13.3809 14.0241L19.4478 7.75498C20.1088 7.07208 20.1088 5.96486 19.4478 5.28196L16.7674 2.51218C16.1065 1.82927 15.035 1.82927 14.3741 2.51218Z" 
+                            stroke="white" 
+                            stroke-width="3" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round"/>
+                            <path d="M16.4272 10.8849L24.0426 18.7539" 
+                            stroke="white" 
+                            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            </NavLink>
                         </Nav>
                         <div className='header-search'>
                                 <input placeholder='Type here to search...'></input>

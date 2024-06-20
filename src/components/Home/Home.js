@@ -1,8 +1,8 @@
 import './Home.scss'
-import { CiCirclePlus } from "react-icons/ci";
-import { GrSubtractCircle } from "react-icons/gr";
-import { BsArrowLeftCircle } from "react-icons/bs";
-import { IoArrowUndoCircleOutline } from "react-icons/io5";
+// import { CiCirclePlus } from "react-icons/ci";
+// import { GrSubtractCircle } from "react-icons/gr";
+// import { BsArrowLeftCircle } from "react-icons/bs";
+// import { IoArrowUndoCircleOutline } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import { GiGolfFlag } from "react-icons/gi";
 import { MdDeleteForever } from "react-icons/md";
@@ -11,7 +11,7 @@ import { LuShare2 } from "react-icons/lu";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { FiPlus } from "react-icons/fi";
 import { RiSubtractLine } from "react-icons/ri";
-import { IoLocationSharp } from "react-icons/io5";
+// import { IoLocationSharp } from "react-icons/io5";
 import { BsBookmarkFill } from "react-icons/bs";
 import { CiDollar } from "react-icons/ci";
 import { GrLocation } from "react-icons/gr";
@@ -20,10 +20,11 @@ import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMapEvents } fr
 import { useDropzone } from 'react-dropzone';
 import 'rc-slider/assets/index.css';
 import 'leaflet/dist/leaflet.css';
-import { calc } from 'antd/es/theme/internal';
+// import { calc } from 'antd/es/theme/internal';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import { message } from 'antd';
 const mapContainerStyle = {
   width: '100%',
   height: 'calc(100vh - 56px)',
@@ -46,7 +47,9 @@ function Home() {
   };
 
   const handleLocationArrowClick = () => {
-    if (selectedPosition) {
+    if (!selectedPosition) {
+     message.success('Vui lòng chọn vị trí bạn muốn tìm')
+    }else{
       const [lat, lng] = selectedPosition;
       window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
     }

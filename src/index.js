@@ -18,6 +18,7 @@ import {store, persistor} from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react';
 import ForgotPassword from './components/Auth/ForgotPassword/ForgotPassword';
 import News from './components/Auth/News/News';
+import AuctionForm from './components/Auth/Auction/AuctionForm';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
@@ -28,6 +29,7 @@ root.render(
             <Route path="/" element={<App />} >
               <Route path="news" element={<News />} />
               <Route path="users" element={<User />} />
+              <Route path="auctions" element={<AuctionForm />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="forgotPassword" element={<ForgotPassword/>} />
