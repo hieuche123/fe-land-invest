@@ -25,7 +25,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {/* <BrowserRouter> 
+        <BrowserRouter> 
           <Routes>
             <Route path="/" element={<App />} >
               <Route path="news" element={<News />} />
@@ -38,8 +38,8 @@ root.render(
               <Route path="admin" element={<LayoutAdmin />} />
             </Route>
           </Routes>
-        </BrowserRouter> */}
-        <App/>
+        </BrowserRouter>
+        {/* <App/> */}
       </PersistGate>
     </Provider>
   </React.StrictMode>
