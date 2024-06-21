@@ -88,7 +88,27 @@ export const callforgotPassword = (email) => {
 export const searchQueryAPI = (query) => {
     return instance.get(`/api/zonings/view?name=${encodeURIComponent(query)}`);
 }
-
+export const fetchProvinces = async () => {
+    try {
+        const response = await instance.get('/api/provinces/view/');
+       return response.data;
+    }
+    catch (error) {
+        console.error('Error fetching provinces: ', error)
+        return [];
+    }
+}
+export const fetchDistrictsByProvinces = async (ProvinceID) => {
+    try {
+        const response = await instance.get(`/api/districts/Byprovince/${ProvinceID}`)
+        console.log("response ProvinceID:", response.data)
+        return response.data
+    }
+    catch (error) {
+        console.error('Error fetching districts', error)
+        return 
+    }
+}
 
 export const ViewlistBox = () => {
     return instance.get(`/api/box/viewlist_box`);

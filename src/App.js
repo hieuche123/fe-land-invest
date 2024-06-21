@@ -13,6 +13,7 @@ import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import ForgotPassword from "./components/Auth/ForgotPassword/ForgotPassword";
 import TableBox from "./pages/Admin/ListBox";
+import AuctionForm from "./components/Auth/Auction/AuctionForm";
 
 
 
@@ -49,6 +50,10 @@ function App() {
         {
           path: '/auction',
           element: <Auction/>
+        },
+        {
+          path: '/auctions',
+          element: <AuctionForm/>
         },
         {
           path: '/search',
