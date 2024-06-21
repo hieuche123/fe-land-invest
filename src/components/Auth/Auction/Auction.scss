@@ -5,7 +5,7 @@
 }
 
 .auction-form-container h2 {
-  margin-bottom: 20px;
+  margin: 20px 0;
   font-size: 24px;
   font-weight: bold;
 }
@@ -33,5 +33,49 @@
   margin: 10px auto;
 }
 .nav-page label{
-  padding-left: 10px;
+  padding: 10px 0;
+}
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-search {
+  display: flex;
+  margin: 20px 0;
+  gap: 16px;
+  border-bottom: 1px solid #d7d5d5;
+}
+.nav-search span{
+  padding: 0 5px;
+  margin-bottom: 5px;
+}
+
+.nav-breadCrumbs {
+  text-decoration: none;
+  color: inherit;
+  margin-right: 10px;
+  position: relative;
+}
+
+.breadcrumb-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-text {
+  font-size: 16px; 
+  padding: 0 15px; 
+  z-index: 1;
+}
+
+.breadcrumb-icon {
+  position: absolute;
+  top: -6px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
 }
