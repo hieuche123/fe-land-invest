@@ -33,8 +33,8 @@ const items = [
         icon: <ExceptionOutlined/>
     },
     {
-        label: <Link to='/admin/order'>Quản lý thông tin</Link>,
-        key: 'order',
+        label: <Link to='/admin/listbox'>Quản lý thông tin</Link>,
+        key: 'listbox',
         icon: <DollarCircleOutlined/>
     },
 ]

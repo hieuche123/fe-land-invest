@@ -25,21 +25,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter> 
-          <Routes>
-            <Route path="/" element={<App />} >
-              <Route path="news" element={<News />} />
-              <Route path="auction" element={<Auction />} />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              <Route path="forgotPassword" element={<ForgotPassword/>} />
-              <Route path="search" element={<Search/>} />
-              <Route index element={<Home />} />
-              <Route path="admin" element={<LayoutAdmin />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-        {/* <App/> */}
+        <App/>
       </PersistGate>
     </Provider>
   </React.StrictMode>

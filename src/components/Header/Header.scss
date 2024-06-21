@@ -29,6 +29,11 @@
         }
     }
 
+    div#basic-navbar-nav {
+        display: flex;
+        justify-content: end;
+    }
+
     .header-search {
         background-color: #2C353D;
         margin-left: 20px;
@@ -82,7 +87,7 @@
     }
 }
 
-@media (min-width: 640px){
+@media (max-width: 640px){
     .header-container {
         .list-item-icon.navbar-nav {
             margin-left: 0px;
@@ -97,7 +102,7 @@
     }
 }
     
-@media (min-width: 768px){
+@media (max-width: 768px){
     
     .header-container {
         .list-item-icon.navbar-nav {

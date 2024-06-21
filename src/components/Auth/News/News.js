@@ -3,7 +3,33 @@ import Container from "react-bootstrap/esm/Container";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "./News.scss"
+import { useEffect, useState } from "react";
+import { ViewlistBox, ViewlistPost } from "../../../services/api";
 const News = (props) => {
+    const [listViewBox, setListViewBox] = useState([])
+    const [listViewPost, setListViewPost] = useState([])
+    useEffect(()=>{
+        getListViewBox();
+        getListViewPost();
+    },[])
+
+    const getListViewBox = async() => {
+        let res = await ViewlistBox()
+        if(res && res?.data) {
+            setListViewBox(res.data);
+        }
+        console.log("res viewBox",res)
+    }
+
+    const getListViewPost = async() => {
+        let res = await ViewlistPost()
+        if(res && res?.data) {
+            setListViewPost(res.data);
+        }
+        console.log("res viewPost",res)
+    }
+    console.log("listViewPost",listViewPost)
+
     return (
         <Container className="news-container">
           <Row className="news-row">
@@ -136,6 +162,27 @@ const News = (props) => {
                     </div>
                 </div>
 
+
+                <div className="tag-oustanding">
+                    <h2 className="tags-title">List Box</h2>
+
+                    {
+                        listViewBox && listViewBox.length > 0 && listViewBox.map((item, index) => {
+                            return (
+                                <div className="news-hot-item" key={`listbox-${index}`}>
+                                    <div className="news-hot-icon">
+                                        <img className="news-hot-icon-img" src={item.avatarLink}/>
+                                    </div>
+                                    <div className="news-hot-content">
+                                        <h2 className="news-hot-title">{item.BoxName}</h2>
+                                        <p className="news-hot-desc">{item.Description}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                            
+                </div>
                 
             </Col>
             <Col className="content-center" xs={6}>
@@ -151,278 +198,49 @@ const News = (props) => {
                     <button className="post-new-btn">Đăng bài</button>
                 </div>
 
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
+                {listViewPost && listViewPost.length > 0 && 
+                    listViewPost.map((post, index)=>{
+                        return (
+                            <div className="post-item">
+                                <div className="avatar-post">
                                 </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
+                                <div className="content-post">
+                                    <div className="title-post">
+                                        <h2>{`[${post.Title}] ${post.Content}`}</h2>
+                                        <div className="like-post">
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
+                                        </svg>
 
-                        </div>
+                                        </div>
+                                    </div>
+                                    <div className="hagtags-post">
+                                        <div className="hagtags-pos-item">#hieuche</div>
+                                        <div className="hagtags-pos-item">#dinhdung</div>
+                                        <div className="hagtags-pos-item">#chesun</div>
+                                    </div>
+                                    <div className="user-post">
+                                        <div className="info-user-post">
+                                            <div className="avatar-user">
+                                            </div>
+                                            <div className="info-user">
+                                                <h4>Mai Ngo</h4>
+                                                <p>3 days ago</p>
+                                            </div>
+                                        </div>
+                                        <div className="react-post">
+                                            <p>651,324 Views</p>
+                                            <p>51,324 Likes</p>
+                                            <p>65 Comments</p>
+                                        </div>
 
-                    </div>
-                </div>
+                                    </div>
 
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
                                 </div>
                             </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="post-item">
-                    <div className="avatar-post">
-
-                    </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>[Nổi bật] Tư vấn - Trao đổi - Chia  tư vấn thiết kế</h2>
-                            <div className="like-post">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
-                            </svg>
-
-                            </div>
-                        </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
-                        </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                </div>
-                                <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
-                                </div>
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+                        )
+                    })
+                }
             </Col>
             <Col className="content-right">
                 <div className="old-post-right">

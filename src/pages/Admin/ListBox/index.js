@@ -2,9 +2,12 @@ import { CloudDownloadOutlined, DeleteFilled, DeleteTwoTone, EditTwoTone, Export
 import { Button, Input, Pagination, Space, Row, Col, Table, Popconfirm, message, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
+import { ViewlistBox } from '../../../services/api';
+import BoxModalCreate from './BoxModalCreate';
+import BoxModalUpdate from './BoxModalUpdate';
 
-const AdminPage = () => {
-    const [listUser, setListUser] = useState([]);
+const TableBox = () => {
+    const [listBox, setListBox] = useState([]);
     const [filter, setFilter] = useState('');
     const [sortQuery, setSortQuery] = useState('sort=-updateAt');
     const [current, setCurrent] = useState(1);
@@ -20,7 +23,17 @@ const AdminPage = () => {
     const [dataUpdate, setDataUpdate] = useState([]);
     
     
+    useEffect(()=>{
+        getListViewBox();
+    },[])
 
+    const getListViewBox = async() => {
+        let res = await ViewlistBox()
+        if(res && res?.data) {
+            setListBox(res.data);
+        }
+        console.log("res viewBox",res)
+    }
    
   const columns = [
     {
@@ -36,63 +49,24 @@ const AdminPage = () => {
         }
     },
     {
-        title: 'Tên bản đồ',
-        dataIndex: 'mainText',
+        title: 'Tên Box',
+        dataIndex: 'BoxName',
         sorter: true,
 
     },
     {
-        title: 'Tỉnh',
-        dataIndex: 'category',
+        title: 'Mô tả',
+        dataIndex: 'Description',
         sorter: true,
 
     },
     {
-        title: 'Huyện',
-        dataIndex: 'author',
+        title: 'Avtart',
+        dataIndex: 'avatarLink',
         sorter: true,
     },
 
-    {
-        title: 'Giá tiền',
-        dataIndex: 'price',
-        sorter: true,
-    },
-
-    {
-        title: 'Xã',
-        dataIndex: 'price',
-        sorter: true,
-    },
-
-    {
-        title: 'Ghi chú',
-        dataIndex: 'price',
-        sorter: true,
-    },
-    {
-        title: 'Thời gian',
-        dataIndex: 'price',
-        sorter: true,
-    },
-
-    {
-        title: 'Trạng thái',
-        dataIndex: 'updatedAt',
-        sorter: true,
-    },
-
-    {
-        title: 'Kích thước',
-        dataIndex: 'updatedAt',
-        sorter: true,
-    },
-
-    {
-        title: 'Người đăng',
-        dataIndex: 'updatedAt',
-        sorter: true,
-    },
+    
     {
         title: 'Action',
         render: (text, record, index) => {
@@ -170,7 +144,7 @@ const AdminPage = () => {
                         icon={<PlusOutlined/>}
                         type='primary'
                         onClick={()=> {
-                            // setOpenModalCreate(true);
+                            setOpenModalCreate(true);
                         }}
                     >
                         Thêm mới
@@ -196,8 +170,8 @@ const AdminPage = () => {
     }
     
     // const handleExportData = () => {
-    //     if(listUser.length > 0) {
-    //         const worksheet = XLSX.utils.json_to_sheet(listUser);
+    //     if(listBox.length > 0) {
+    //         const worksheet = XLSX.utils.json_to_sheet(listBox);
     //         const workbook = XLSX.utils.book_new();
     //         XLSX.utils.book_append_sheet(workbook, worksheet, 'sheet1');
     //         XLSX.writeFile(workbook,'ExportUser.csv');
@@ -216,7 +190,7 @@ const AdminPage = () => {
                         loading={isLoading}
                         rowKey='_id'
                         columns={columns} 
-                        dataSource={listUser} 
+                        dataSource={listBox} 
                         onChange={onChange}
                         pagination= {
                             {   
@@ -235,9 +209,20 @@ const AdminPage = () => {
                 </Col>
             </Row>
             
-            
+            <BoxModalCreate
+                openModalCreate = {openModalCreate}
+                getListViewBox= {getListViewBox}
+                setOpenModalCreate = {setOpenModalCreate}
+            />
+            <BoxModalUpdate
+                openModalUpdate = {openModalUpdate}
+                dataUpdate = {dataUpdate}
+                setDataUpdate= {setDataUpdate}
+                getListViewBox= {getListViewBox}
+                setOpenModalUpdate = {setOpenModalUpdate}
+            /> 
         </>
 };
 
 
-export default AdminPage;
+export default TableBox;

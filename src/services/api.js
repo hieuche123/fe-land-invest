@@ -83,21 +83,29 @@ export const callforgotPassword = (email) => {
     })
 }
 
-export const refreshAccessToken = async () => {
-    try {
-        const response = await instance.post('/refresh_token');
-        const { access_token } = response.data;
-        
-        // Cập nhật access token mới vào local storage hoặc cookies
-        localStorage.setItem('access_token', access_token);
-        
-        return response.data;
-    } catch (error) {
-        console.error('Refresh token error:', error);
-        throw error;
-    }
-};
+
 
 export const searchQueryAPI = (query) => {
     return instance.get(`/api/zonings/view?name=${encodeURIComponent(query)}`);
 }
+
+
+export const ViewlistBox = () => {
+    return instance.get(`/api/box/viewlist_box`);
+}
+
+export const ViewlistPost = () => {
+    return instance.get(`/api/forum/view_allpost`);
+}
+
+export const UpdateBox = (BoxID, BoxName, Description, avatarLink) => {
+    return instance.patch(`/api/box/change_description${BoxID}`);
+}
+
+export const CreateBox = (BoxName, Description, avatarLink) => {
+    return instance.post('/api/box/add_box',{BoxName, Description, avatarLink});
+}
+
+// export const callCreateUser = (fullName, email, password, phone) => {
+//     return axios.post('/api/v1/user',{fullName, email, password, phone})
+// }
