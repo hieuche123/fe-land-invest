@@ -2,6 +2,7 @@
   background-color: #ffffff;
   width: 100%;
   padding: 15px;
+  min-height: 1200px;
 }
 
 .auction-form-container h2 {
@@ -46,10 +47,12 @@
   margin: 20px 0;
   gap: 16px;
   border-bottom: 1px solid #d7d5d5;
+  cursor: pointer;
+  padding: 10px 0;
 }
-.nav-search span{
-  padding: 0 5px;
-  margin-bottom: 5px;
+
+.search-option.active{
+  font-weight: bold;
 }
 
 .nav-breadCrumbs {
@@ -78,4 +81,59 @@
   width: 100%;
   height: 100%;
   align-items: center;
+}
+.text-Auction > th {
+  padding: 10px;
+}
+
+.auction-results-table {
+  table-layout: auto;
+}
+.auction-results-thead{
+  font-weight: bold;
+  background-color: #cbc4c4;
+  line-height: 20px;
+  font-size: 14px;
+}
+.auction-result-row-thead{
+  border: 1px solid #9c9797;
+}
+.auction-result-row-thead th{
+  border: 1px solid #9c9797;
+  padding: 8px 16px;
+}
+.auction-result-row-body{
+  border: 1px solid #9c9797;
+}
+.auction-result-row-body td{
+  border: 1px solid #9c9797;
+  padding: 8px 0;
+  text-align: center;
+}
+.search-basic {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  gap: 16px;
+}
+
+.search-basic input{
+  width: 600px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 5px;
+}
+.search-basic button{
+  background-color: #ff6f61;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+}
+.react-datepicker-wrapper {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  width: 100%;
 }

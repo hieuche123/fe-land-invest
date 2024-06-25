@@ -1,8 +1,10 @@
+import { Container } from "react-bootstrap";
+
 const Auction = (props) => {
     return (
-        <div>
-            annoncement-megaphone
-        </div>
+        <Container>
+            hello
+        </Container>
     )
 }
 

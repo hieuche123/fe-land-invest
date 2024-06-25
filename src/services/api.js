@@ -101,7 +101,6 @@ export const fetchProvinces = async () => {
 export const fetchDistrictsByProvinces = async (ProvinceID) => {
     try {
         const response = await instance.get(`/api/districts/Byprovince/${ProvinceID}`)
-        console.log("response ProvinceID:", response.data)
         return response.data
     }
     catch (error) {
@@ -129,3 +128,35 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 // export const callCreateUser = (fullName, email, password, phone) => {
 //     return axios.post('/api/v1/user',{fullName, email, password, phone})
 // }
+
+
+//fetch data
+export const fetchFilteredAuctions = async (filters) => {
+    const mockAuctions = [
+      {
+        id: 1,
+        assetName: 'Tài sản 1',
+        organization: '',
+        ownerName: 'Chủ sở hữu 1',
+        province: 'Hà Nội',
+        district: 'Chương mỹ',
+        fromDateAuction: 'Mon Jun 24 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
+        toDateAuction: 'Wed Jun 26 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
+        fromDateAnnouncement: 'Mon Jun 24 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
+        toDateAnnouncement: 'Tue Jun 25 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
+        fromPrice: 1000,
+        toPrice: 2000,
+      },
+    ];
+  
+    return mockAuctions.filter(auction => {
+      return Object.keys(filters).every(key => {
+        if (!filters[key]) return true;
+        if (key === 'fromDateAuction' || key === 'toDateAuction' ||
+            key === 'fromDateAnnouncement' || key === 'toDateAnnouncement') {
+          return new Date(auction[key]) >= new Date(filters[key]);
+        }
+        return auction[key] === filters[key];
+      });
+    });
+  };
