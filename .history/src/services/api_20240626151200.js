@@ -98,8 +98,8 @@ export const ViewlistPost = () => {
     return instance.get(`/api/forum/view_allpost`);
 }
 
-export const UpdateBox = (BoxID, BoxName, Description, avatarLink) => {
-    return instance.patch(`/api/box/update_box/${BoxID}`,{BoxName, Description, avatarLink});
+export const UpdateBox = (_id, BoxName, Description, avatarLink) => {
+    return instance.patch(`/api/box/update_box/${_id}`,{BoxName, Description, avatarLink});
 }
 
 export const CreateBox = (BoxName, Description, avatarLink) => {

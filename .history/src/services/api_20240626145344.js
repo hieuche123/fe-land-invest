@@ -99,7 +99,7 @@ export const ViewlistPost = () => {
 }
 
 export const UpdateBox = (BoxID, BoxName, Description, avatarLink) => {
-    return instance.patch(`/api/box/update_box/${BoxID}`,{BoxName, Description, avatarLink});
+    return instance.patch(`/api/box/update_box${BoxID}`,{BoxName, Description, avatarLink});
 }
 
 export const CreateBox = (BoxName, Description, avatarLink) => {

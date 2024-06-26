@@ -46,8 +46,8 @@ const Header = () => {
             // localStorage.removeItem('refresh_token');
             console.log("refresh_token logout",localStorage.getItem('refresh_token'))
             console.log("access_token logout",localStorage.getItem('access_token'))
-            res.headers= {
-                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            response.headers= {
+                'Authorization': `Bearer ${getCookie('access_token')}`
             }
             console.log("res.headers",res.headers)
 

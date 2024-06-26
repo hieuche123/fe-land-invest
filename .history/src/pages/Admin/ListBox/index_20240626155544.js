@@ -28,16 +28,16 @@ const TableBox = () => {
     },[])
 
     const getListViewBox = async() => {
-        // setIsLoading(true);
-        // let query = `current=${current}&pageSize=${pageSize}`
-        // if(filter) {
-        //     query +=`&${filter}`
-        // }
-        // if(sortQuery) {
-        //     query +=`&${sortQuery}`
-        // }
+        setIsLoading(true);
+        let query = `current=${current}&pageSize=${pageSize}`
+        if(filter) {
+            query +=`&${filter}`
+        }
+        if(sortQuery) {
+            query +=`&${sortQuery}`
+        }
 
-        let res = await ViewlistBox()
+        let res = await ViewlistBox(query)
         if(res && res?.data) {
             setListBox(res.data);
         }

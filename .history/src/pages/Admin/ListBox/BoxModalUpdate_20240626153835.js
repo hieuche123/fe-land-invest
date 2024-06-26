@@ -65,13 +65,13 @@ const BoxModalUpdate = (props) => {
         //     })
         //     return;
         // }
-        const { BoxID, BoxName, Description, avatarLink } = values;
+        const { BoxName, Description, avatarLink } = values;
         // const thumbnail = dataThumbnail[0].name;
         // const slider = dataSlider.map((item)=> {item.name})
 
         console.log("dataUpdate.BoxID: ",dataUpdate.BoxID)
         setIsSubmit(true)
-        const res = await UpdateBox(BoxID, BoxName, Description, avatarLink);
+        const res = await UpdateBox(initForm.BoxID, BoxName, Description, avatarLink);
         res.headers= {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -202,8 +202,8 @@ const BoxModalUpdate = (props) => {
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 hidden
-                                label="BoxID"
-                                name="BoxID"
+                                label="Id"
+                                name="BoxId"
                                 rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
                             >
                                 <Input />

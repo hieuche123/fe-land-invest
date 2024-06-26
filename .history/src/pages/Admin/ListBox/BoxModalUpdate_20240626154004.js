@@ -202,8 +202,8 @@ const BoxModalUpdate = (props) => {
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 hidden
-                                label="BoxID"
-                                name="BoxID"
+                                label="Id"
+                                name="BoxId"
                                 rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
                             >
                                 <Input />

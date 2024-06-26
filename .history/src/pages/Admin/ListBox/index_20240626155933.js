@@ -25,7 +25,7 @@ const TableBox = () => {
     
     useEffect(()=>{
         getListViewBox();
-    },[])
+    },[current, pageSize, filter, sortQuery])
 
     const getListViewBox = async() => {
         // setIsLoading(true);

@@ -37,6 +37,21 @@ const items = [
         key: 'listbox',
         icon: <DollarCircleOutlined/>
     },
+    {
+        label: <Link to='/admin/listbox'>Quản lý người dùng</Link>,
+        key: 'user',
+        icon: <DollarCircleOutlined/>
+    },
+    {
+        label: <Link to='/admin/listbox'>Quản lý bài đăng</Link>,
+        key: 'posts',
+        icon: <DollarCircleOutlined/>
+    },
+    {
+        label: <Link to='/admin/listbox'>Quản lý group</Link>,
+        key: 'group',
+        icon: <DollarCircleOutlined/>
+    },
 ]
 
 const [collapsed, setCollapsed] = useState(false);

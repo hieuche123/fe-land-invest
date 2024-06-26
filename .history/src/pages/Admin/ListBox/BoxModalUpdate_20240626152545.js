@@ -65,11 +65,11 @@ const BoxModalUpdate = (props) => {
         //     })
         //     return;
         // }
-        const { BoxID, BoxName, Description, avatarLink } = values;
+        const {BoxID, BoxName, Description, avatarLink } = values;
         // const thumbnail = dataThumbnail[0].name;
         // const slider = dataSlider.map((item)=> {item.name})
 
-        console.log("dataUpdate.BoxID: ",dataUpdate.BoxID)
+        console.log("res box header: ",dataUpdate.BoxID,)
         setIsSubmit(true)
         const res = await UpdateBox(BoxID, BoxName, Description, avatarLink);
         res.headers= {
@@ -198,17 +198,6 @@ const BoxModalUpdate = (props) => {
                     
                 >
                     <Row gutter={15}>
-                        <Col hidden>
-                            <Form.Item
-                                labelCol={{ span: 24 }}
-                                hidden
-                                label="BoxID"
-                                name="BoxID"
-                                rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{ span: 24 }}

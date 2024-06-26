@@ -22,11 +22,14 @@ const Login = () => {
     const res = await callLogin(Username, Password);
     setIsSubmit(false);
     if(res) {
+
       console.log("res", res);
       localStorage.setItem('access_token', res.data.access_token);
       localStorage.setItem('refresh_token', res.data.refreshtoken);
       console.log("refresh_token", res.data.access_token);
       console.log("refresh_token", res.data.refreshtoken);
+      document.cookie = `access_token_cookie=${res.data.access_token}; path=/`;
+      console.log('document.cookie', document.cookie);
 
       dispatch(doLoginAction(res.data));
       message.success('Đăng nhập tài khoản thành công!');

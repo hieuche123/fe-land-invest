@@ -46,10 +46,10 @@ const Header = () => {
             // localStorage.removeItem('refresh_token');
             console.log("refresh_token logout",localStorage.getItem('refresh_token'))
             console.log("access_token logout",localStorage.getItem('access_token'))
-            res.headers= {
-                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            response.headers= {
+                'Authorization': `Bearer ${getCookie('refresh_token')}`
             }
-            console.log("res.headers",res.headers)
+            console.log("response.headers",response.headers)
 
             message.success('Đăng xuất thành công!');
             navigate('/login');

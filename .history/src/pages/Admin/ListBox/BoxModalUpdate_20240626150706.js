@@ -3,7 +3,6 @@ import { Col, Divider, Form, Input, InputNumber, message, Modal, notification, R
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { UpdateBox } from '../../../services/api';
 const BoxModalUpdate = (props) => {
-    const { openModalCreate, setOpenModalCreate , getListViewBox } = props;
     const { openModalUpdate, setOpenModalUpdate, dataUpdate, setDataUpdate } = props;
     const [isSubmit, setIsSubmit] = useState(false);
 
@@ -65,17 +64,17 @@ const BoxModalUpdate = (props) => {
         //     })
         //     return;
         // }
-        const { BoxID, BoxName, Description, avatarLink } = values;
+        const {_id, BoxName, Description, avatarLink } = values;
         // const thumbnail = dataThumbnail[0].name;
         // const slider = dataSlider.map((item)=> {item.name})
 
-        console.log("dataUpdate.BoxID: ",dataUpdate.BoxID)
         setIsSubmit(true)
-        const res = await UpdateBox(BoxID, BoxName, Description, avatarLink);
+        const res = await UpdateBox(_id, BoxName, Description, avatarLink);
         res.headers= {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
         console.log("them box header: ",res.headers)
+        console.log("res box header: ",res)
         if (res) {
             message.success('Update box thành công');
             form.resetFields();
@@ -198,17 +197,6 @@ const BoxModalUpdate = (props) => {
                     
                 >
                     <Row gutter={15}>
-                        <Col hidden>
-                            <Form.Item
-                                labelCol={{ span: 24 }}
-                                hidden
-                                label="BoxID"
-                                name="BoxID"
-                                rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </Col>
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
