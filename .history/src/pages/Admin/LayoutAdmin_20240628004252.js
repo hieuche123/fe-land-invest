@@ -37,7 +37,7 @@ const LayoutAdmin = () => {
   console.log("res redux idBoxAdmin", idBoxAdmin);
   console.log("res redux adGroupAdmin", adGroupAdmin);
 
-  const navigate = useNavigate();
+
   const handleClick = (boxID) => {
     setListGroupId(boxID);
     dispatch(doGetBoxID(boxID));
@@ -174,7 +174,7 @@ const LayoutAdmin = () => {
         <div
           style={{ height: 32, margin: 16, textAlign: "center" }}
         >
-          <div className='header-logo' onClick={()=>{navigate('/')}}>
+          <div className='header-logo' onAuxClick={navigator('/')}>
               <img
                   src={logo}
                   width="30"

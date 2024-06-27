@@ -31,7 +31,7 @@ const Login = () => {
       document.cookie = `access_token_cookie=${res.data.access_token}; path=/`;
       console.log('document.cookie', document.cookie);
 
-      dispatch(doLoginAction(JSON.parse(res.config.data)));
+      dispatch(doLoginAction(res));
       message.success('Đăng nhập tài khoản thành công!');
       navigate('/');
     }else{

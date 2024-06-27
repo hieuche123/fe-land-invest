@@ -31,7 +31,7 @@ const TablePost = () => {
     const dispatch = useDispatch();
     useEffect(()=>{
         getListViewPost();
-    },[dataUpdate])
+    },[dataUpdate.PostID])
 
     
     const listPosts = listPost.filter((post) => post.GroupID === adGroupAdmin);

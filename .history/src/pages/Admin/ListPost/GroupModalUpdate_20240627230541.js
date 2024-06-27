@@ -25,14 +25,14 @@ const GroupModalUpdate = (props) => {
 
     
     const [initForm, setInitForm] = useState(null);
-    console.log(">>> check dataUpdate create group: ", dataUpdate);
-
+    console.log(">>> check dataUpdate create post: ", dataUpdate);
     useEffect(() => {
         
-        if (dataUpdate?.GroupID) {
+        if (dataUpdate?.PostID) {
             const init = {
-                GroupID: dataUpdate.GroupID,
-                GroupName: dataUpdate.GroupName,
+                PostID: dataUpdate.PostID,
+                Title: dataUpdate.Title,
+                Content: dataUpdate.Content,
             }
             setInitForm(init);
             form.setFieldsValue(init);
@@ -63,13 +63,13 @@ const GroupModalUpdate = (props) => {
         //     })
         //     return;
         // }
-        const { GroupID,  GroupName } = values;
+        const { PostID,  Title , Content} = values;
         // const thumbnail = dataThumbnail[0].name;
         // const slider = dataSlider.map((item)=> {item.name})
 
         console.log("dataUpdate GroupID: ",dataUpdate.GroupID)
         setIsSubmit(true)
-        const res = await UpdateGroup(GroupID, GroupName);
+        const res = await UpdateGroup(PostID,  Title , Content);
         res.headers= {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
@@ -201,8 +201,8 @@ const GroupModalUpdate = (props) => {
                             <Form.Item
                                 labelCol={{ span: 24 }}
                                 hidden
-                                label="GroupID"
-                                name="GroupID"
+                                label="PostID"
+                                name="PostID"
                                 rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
                             >
                                 <Input />
@@ -211,9 +211,20 @@ const GroupModalUpdate = (props) => {
                         <Col span={24}>
                             <Form.Item
                                 labelCol={{ span: 24 }}
-                                label="Tên Group"
-                                name="GroupName"
+                                label="Title"
+                                name="Title"
                                 rules={[{ required: true, message: 'Vui lòng nhập tên hiển thị!' }]}
+                            >
+                                <Input  />
+                            </Form.Item>
+                        </Col>
+
+                        <Col span={24}>
+                            <Form.Item
+                                labelCol={{ span: 24 }}
+                                label="Content"
+                                name="Content"
+                                rules={[{ required: true, message: 'Vui lòng nhập nội dung!' }]}
                             >
                                 <Input  />
                             </Form.Item>

@@ -10,7 +10,6 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaSearchLocation } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import './Header.scss'
-import {Dropdown, Space, Avatar} from "antd";
 import { useEffect, useState } from 'react';
 import ModalNotification from '../Auth/ModalNotification';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,7 +43,7 @@ const Header = () => {
         },
 
         {
-            label: <Link to='/history'>Thông tin tài khoản</Link>,
+            label: <Link to='/history'>Lịch sử đơn hàng</Link>,
             key: 'history',
         },
         {
@@ -240,20 +239,10 @@ const Header = () => {
                             !isAuthenticated ?
                             <button className='btn' onClick={()=>setIsShowModalLogin(true)}>Đăng nhập</button>
                             :
-
-                            <Dropdown menu={{items}} trigger={['click']} >
-                                <a style={{color:'#fff',cursor:'pointer'}} onClick={(e)=> {e.preventDefault()}}>
-                                    <Space>
-                                        <Avatar src={logo}/>
-                                        {user?.Username}
-                                    </Space>
-                                </a>
-
-                            </Dropdown>
-                            // <>
-                            // <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
-                            // <button className='btn' onClick={()=>handleLogOut()}>Đăng xuất</button>
-                            // </>
+                            <>
+                            <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
+                            <button className='btn' onClick={()=>handleLogOut()}>Đăng xuất</button>
+                            </>
                         }
                         
                     </div>

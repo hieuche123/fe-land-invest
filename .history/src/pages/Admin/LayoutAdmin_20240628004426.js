@@ -174,7 +174,7 @@ const LayoutAdmin = () => {
         <div
           style={{ height: 32, margin: 16, textAlign: "center" }}
         >
-          <div className='header-logo' onClick={()=>{navigate('/')}}>
+          <div className='header-logo' onClick={navigate('/')}>
               <img
                   src={logo}
                   width="30"

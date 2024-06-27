@@ -27,11 +27,12 @@ const TablePost = () => {
     const [dataUpdate, setDataUpdate] = useState([]);
     const adGroupAdmin = useSelector((state) => state.getid.idPost);
     const idBox = useSelector((state) => state.getid.idGroup);
-    console.log("res redux post adGroupAdmin",dataUpdate)
+    console.log("res redux idBox",idBox)
     const dispatch = useDispatch();
     useEffect(()=>{
+
         getListViewPost();
-    },[dataUpdate])
+    },[adGroupAdmin])
 
     
     const listPosts = listPost.filter((post) => post.GroupID === adGroupAdmin);
@@ -39,7 +40,7 @@ const TablePost = () => {
         let res = await ViewlistPost()
         if(res ) {
             setListPost(res.data);
-            // dispatch(doListGroup(res.data));
+            //dispatch(doListGroup(res.data));
             console.log("res ViewlistGroup",res)
         }
     }

@@ -244,7 +244,7 @@ const Header = () => {
                             <Dropdown menu={{items}} trigger={['click']} >
                                 <a style={{color:'#fff',cursor:'pointer'}} onClick={(e)=> {e.preventDefault()}}>
                                     <Space>
-                                        <Avatar src={logo}/>
+                                        <Avatar src={urlAvatar}/>
                                         {user?.Username}
                                     </Space>
                                 </a>

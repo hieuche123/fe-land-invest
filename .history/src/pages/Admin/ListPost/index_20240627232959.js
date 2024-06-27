@@ -27,11 +27,11 @@ const TablePost = () => {
     const [dataUpdate, setDataUpdate] = useState([]);
     const adGroupAdmin = useSelector((state) => state.getid.idPost);
     const idBox = useSelector((state) => state.getid.idGroup);
-    console.log("res redux post adGroupAdmin",dataUpdate)
+    console.log("res redux post adGroupAdmin",adGroupAdmin)
     const dispatch = useDispatch();
     useEffect(()=>{
         getListViewPost();
-    },[dataUpdate])
+    },[adGroupAdmin])
 
     
     const listPosts = listPost.filter((post) => post.GroupID === adGroupAdmin);

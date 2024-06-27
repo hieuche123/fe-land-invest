@@ -122,8 +122,8 @@ export const UpdateGroup = (GroupID, GroupName) => {
 }
 
 
-export const CreatePost = ( GroupID, Title, Content, PostLatitude , PostLongitude) => {
-    return instance.post('/api/forum/add_post',{GroupID, Title, Content, PostLatitude , PostLongitude});
+export const CreatePost = ( BoxID, GroupName, avatarLink) => {
+    return instance.post('/api/forum/add_post',{BoxID, GroupName, avatarLink});
 }
 export const UpdatePost = (PostID, Title, Content) => {
     return instance.patch(`/api/forum/update_post/${PostID}`,{Title, Content});

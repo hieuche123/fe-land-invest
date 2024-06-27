@@ -10,7 +10,6 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaSearchLocation } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import './Header.scss'
-import {Dropdown, Space, Avatar} from "antd";
 import { useEffect, useState } from 'react';
 import ModalNotification from '../Auth/ModalNotification';
 import { useDispatch, useSelector } from 'react-redux';
@@ -241,11 +240,11 @@ const Header = () => {
                             <button className='btn' onClick={()=>setIsShowModalLogin(true)}>Đăng nhập</button>
                             :
 
-                            <Dropdown menu={{items}} trigger={['click']} >
-                                <a style={{color:'#fff',cursor:'pointer'}} onClick={(e)=> {e.preventDefault()}}>
+                            <Dropdown menu={{items}} trigger={['click']}>
+                                <a onClick={(e)=> {e.preventDefault()}}>
                                     <Space>
-                                        <Avatar src={logo}/>
-                                        {user?.Username}
+                                        {/* <Avatar src={urlAvatar}/> */}
+                                        {user?.fullName}
                                     </Space>
                                 </a>
 

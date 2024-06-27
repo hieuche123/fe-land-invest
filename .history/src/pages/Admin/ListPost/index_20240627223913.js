@@ -3,12 +3,10 @@ import { Button, Input, Pagination, Space, Row, Col, Table, Popconfirm, message,
 import { useEffect, useRef, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
 import { ViewlistPost } from '../../../services/api';
-import GroupModalCreate from './PostModalCreate';
-import GroupModalUpdate from './PostModalUpdate';
+import GroupModalCreate from './GroupModalCreate';
+import GroupModalUpdate from './GroupModalUpdate';
 import { useDispatch, useSelector } from 'react-redux';
 import { doListBox, doListGroup } from '../../../redux/listForum/lisForumSlice';
-import PostModalCreate from './PostModalCreate';
-import PostModalUpdate from './PostModalUpdate';
 
 const TablePost = () => {
     const [listPost, setListPost] = useState([]);
@@ -25,21 +23,19 @@ const TablePost = () => {
     const [openViewDetail, setOpenViewDetail] = useState(false);
     const [dataViewDetail, setDataViewDetail] = useState('');
     const [dataUpdate, setDataUpdate] = useState([]);
-    const adGroupAdmin = useSelector((state) => state.getid.idPost);
+   
     const idBox = useSelector((state) => state.getid.idGroup);
-    console.log("res redux post adGroupAdmin",dataUpdate)
+    console.log("res redux idBox",idBox)
     const dispatch = useDispatch();
     useEffect(()=>{
         getListViewPost();
-    },[dataUpdate])
+    },[])
 
-    
-    const listPosts = listPost.filter((post) => post.GroupID === adGroupAdmin);
     const getListViewPost = async() => {
         let res = await ViewlistPost()
         if(res ) {
             setListPost(res.data);
-            // dispatch(doListGroup(res.data));
+            //dispatch(doListGroup(res.data));
             console.log("res ViewlistGroup",res)
         }
     }
@@ -207,7 +203,7 @@ const TablePost = () => {
                         loading={isLoading}
                         rowKey='_id'
                         columns={columns} 
-                        dataSource={listPosts} 
+                        dataSource={listPost} 
                         onChange={onChange}
                         pagination= {
                             {   
@@ -226,12 +222,12 @@ const TablePost = () => {
                 </Col>
             </Row>
             
-            <PostModalCreate
+            <GroupModalCreate
                 openModalCreate = {openModalCreate}
                 getListViewPost= {getListViewPost}
                 setOpenModalCreate = {setOpenModalCreate}
             />
-            <PostModalUpdate
+            <GroupModalUpdate
                 openModalUpdate = {openModalUpdate}
                 dataUpdate = {dataUpdate}
                 setDataUpdate= {setDataUpdate}

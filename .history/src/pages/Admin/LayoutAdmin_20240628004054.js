@@ -11,7 +11,6 @@ import {
   DownOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import logo from '../../assets/channels4_profile.jpg'
 import { Layout, Menu, Dropdown, Space, message } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -37,7 +36,7 @@ const LayoutAdmin = () => {
   console.log("res redux idBoxAdmin", idBoxAdmin);
   console.log("res redux adGroupAdmin", adGroupAdmin);
 
-  const navigate = useNavigate();
+
   const handleClick = (boxID) => {
     setListGroupId(boxID);
     dispatch(doGetBoxID(boxID));
@@ -174,7 +173,7 @@ const LayoutAdmin = () => {
         <div
           style={{ height: 32, margin: 16, textAlign: "center" }}
         >
-          <div className='header-logo' onClick={()=>{navigate('/')}}>
+          <div className='header-logo'>
               <img
                   src={logo}
                   width="30"

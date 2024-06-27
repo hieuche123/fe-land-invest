@@ -11,7 +11,6 @@ import {
   DownOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import logo from '../../assets/channels4_profile.jpg'
 import { Layout, Menu, Dropdown, Space, message } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -31,13 +30,12 @@ const LayoutAdmin = () => {
   const adGroupAdmin = useSelector((state) => state.getid.idPost);
 
   const user = useSelector(state => state.account.Users);
-  console.log("res redux user", user);
   console.log("res listGroupId", listGroupId);
   console.log("res redux listGroups", listGroups);
   console.log("res redux idBoxAdmin", idBoxAdmin);
   console.log("res redux adGroupAdmin", adGroupAdmin);
 
-  const navigate = useNavigate();
+
   const handleClick = (boxID) => {
     setListGroupId(boxID);
     dispatch(doGetBoxID(boxID));
@@ -174,16 +172,7 @@ const LayoutAdmin = () => {
         <div
           style={{ height: 32, margin: 16, textAlign: "center" }}
         >
-          <div className='header-logo' onClick={()=>{navigate('/')}}>
-              <img
-                  src={logo}
-                  width="30"
-                  height="30"
-                  className="d-inline-block align-top header-logo-img"
-                  alt="React Bootstrap logo"
-              />
-              <span className='header-logo-content ml-2'>LAND INVEST</span>
-          </div>
+          Admin
         </div>
         <Menu
           selectedKeys={[activeMenu]}
