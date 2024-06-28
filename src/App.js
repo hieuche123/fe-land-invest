@@ -13,7 +13,6 @@ import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import ForgotPassword from "./components/Auth/ForgotPassword/ForgotPassword";
 import TableBox from "./pages/Admin/ListBox";
-import AuctionForm from "./components/Auth/Auction/AuctionForm";
 
 
 
@@ -32,7 +31,6 @@ const Layout = () => {
 }
 
 function App() {
- 
   const router = createBrowserRouter([
     {
       path: "/",
@@ -77,14 +75,14 @@ function App() {
           path: '/admin/listbox',
           element: <TableBox/>
         },
-        // {
-        //   path: 'listbox',
-        //   element: <ContactPage/>
-        // },
-        // {
-        //   path: 'book',
-        //   element: <BookTable/>
-        // },
+        {
+          path: '/admin/listgroup',
+          element: <TableGroup/>
+        },
+        {
+          path: '/admin/listpost',
+          element: <TablePost/>
+        },
         
       ]
     },

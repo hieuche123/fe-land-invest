@@ -118,7 +118,7 @@ export const ViewlistPost = () => {
 }
 
 export const UpdateBox = (BoxID, BoxName, Description, avatarLink) => {
-    return instance.patch(`/api/box/change_description${BoxID}`);
+    return instance.patch(`/api/box/update_box/${BoxID}`,{BoxName, Description, avatarLink});
 }
 
 export const CreateBox = (BoxName, Description, avatarLink) => {
@@ -128,17 +128,3 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 // export const callCreateUser = (fullName, email, password, phone) => {
 //     return axios.post('/api/v1/user',{fullName, email, password, phone})
 // }
-
-
-//fetch data
-
-export const fetchFilteredAuctions = async (startTime, endTime,page, limit) => {
-    const params = {
-        StartTime: startTime,
-        EndTime: endTime,
-        page,
-        limit
-    };
-    const response = await instance.post('/api/landauctions/filter_auction/time',params)
-    return response.data;
-};

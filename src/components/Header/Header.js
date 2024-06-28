@@ -10,6 +10,7 @@ import { HiMiniUserGroup } from "react-icons/hi2";
 import { FaSearchLocation } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 import './Header.scss'
+import {Dropdown, Space, Avatar} from "antd";
 import { useEffect, useState } from 'react';
 import ModalNotification from '../Auth/ModalNotification';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,16 +25,93 @@ const Header = () => {
     // console.log("user type: ", typeof users);
     const [isShowModalLogin, setIsShowModalLogin] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+
+
+
+    let items = [
+        {
+            
+            label: <label 
+                style={{cursor: 'pointer'}}
+                // onClick={()=> {
+                //     setIsModalOpen(true);
+                //     console.log('heloo')
+                // }}
+            >
+                Quản lý tài khoản
+            </label>,
+            key: 'account',
+        },
+
+        {
+            label: <Link to='/history'>Thông tin tài khoản</Link>,
+            key: 'history',
+        },
+        {
+            
+            label: <label 
+                style={{cursor: 'pointer'}}
+                onClick={()=>handleLogOut()}
+            >
+                Đăng xuất
+            </label>,
+            key: 'logout',
+        },
+    ];
+    if(user?.role === 'ADMIN') {
+        items.unshift({
+            label: <Link to='/admin'>Trang quản trị</Link>,
+            key: 'admin',
+
+        })
+    }
+
+
+
+
+
+
+
     const handleClose = () => {
         setIsShowModalLogin(false);
     }
 
-    const handleLogOut = () => {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-        dispatch(doLogoutAction());
-        message.success('Đăng xuất thành công!');
-        navigate('/login');
+    function getCookie(cookieName) {
+        const cookies = document.cookie.split('; ');
+        for (const cookie of cookies) {
+            const [name, value] = cookie.split('=');
+            if (name === cookieName) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    const handleLogOut =  async() => {
+        const res = await callLogout()
+        if(res) {
+            // localStorage.removeItem('access_token');
+            // localStorage.removeItem('refresh_token');
+            console.log("refresh_token logout",localStorage.getItem('refresh_token'))
+            console.log("access_token logout",localStorage.getItem('access_token'))
+            res.headers= {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            }
+            console.log("res.headers",res.headers)
+
+            message.success('Đăng xuất thành công!');
+            navigate('/login');
+            // console.log('response logout results:', response);
+            //dispatch(doLogoutAction(response.data));
+        }else{
+            notification.error({
+              message:'Có lỗi xáy ra',
+              description:
+                res.message && Array.isArray(res.message) ? res.message[0] :res.message[1],
+              duration: 5
+            })
+          }
+        
       };
 
     const handleSearchChange = (event) => {
@@ -175,10 +253,20 @@ const Header = () => {
                             !isAuthenticated ?
                             <button className='btn' onClick={()=>setIsShowModalLogin(true)}>Đăng nhập</button>
                             :
-                            <>
-                            <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
-                            <button className='btn' onClick={()=>handleLogOut()}>Đăng xuất</button>
-                            </>
+
+                            <Dropdown menu={{items}} trigger={['click']} >
+                                <a style={{color:'#fff',cursor:'pointer'}} onClick={(e)=> {e.preventDefault()}}>
+                                    <Space>
+                                        <Avatar src={logo}/>
+                                        {user?.Username}
+                                    </Space>
+                                </a>
+
+                            </Dropdown>
+                            // <>
+                            // <span style={{color:"#fff"}}><span style={{marginLeft:"2px"}}>{user.Username}</span></span>
+                            // <button className='btn' onClick={()=>handleLogOut()}>Đăng xuất</button>
+                            // </>
                         }
                         
                     </div>

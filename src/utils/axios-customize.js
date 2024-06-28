@@ -25,7 +25,7 @@ const instance = axios.create({
 //       throw error;
 //   }
 // };
-instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+// instance.defaults.headers.common = {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
 
 const handleRefreshToken = async () => {
   try {
@@ -63,10 +63,9 @@ instance.interceptors.response.use(
         const access_token = await handleRefreshToken();
         error.config.headers[NO_RETRY_HEADER] = 'true';
         if(access_token) {
-          error.config.headers['Authorization'] = `Bearer ${access_token}`
-          localStorage.setItem('access_token', access_token)
+          // error.config.headers['Authorization'] = `Bearer ${access_token}`
+          // localStorage.setItem('access_token', access_token)
           return instance .request(error.config);
-  
         }
       }
   
