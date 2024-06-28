@@ -108,7 +108,7 @@ const TableBox = () => {
             // fetchBook()
         }
         if (pagination && pagination.pageSize !== pageSize) {
-            setPageSize (pagination. pageSize)
+            setPageSize (pagination.pageSize)
             setCurrent(1);
         }
         

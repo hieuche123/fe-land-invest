@@ -12,7 +12,8 @@ import LayoutAdmin from "./pages/Admin/LayoutAdmin";
 import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 import ForgotPassword from "./components/Auth/ForgotPassword/ForgotPassword";
-import TableBox from "./pages/Admin/ListBox";
+// import TableBox from "./pages/Admin/ListBox";
+import AuctionInfor from "./components/Auction/AuctionInfor";
 
 
 
@@ -67,10 +68,18 @@ function App() {
           index: true,
           element: <AdminPage/>
         },
-        {
-          path: '/admin/listbox',
-          element: <TableBox/>
-        },
+        // {
+        //   path: '/admin/listbox',
+        //   element: <TableBox/>
+        // },
+        // {
+        //   path: '/admin/listgroup',
+        //   element: <TableGroup/>
+        // },
+        // {
+        //   path: '/admin/listpost',
+        //   element: <TablePost/>
+        // },
         
       ]
     },

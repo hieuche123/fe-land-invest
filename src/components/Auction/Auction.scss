@@ -122,8 +122,25 @@
                                 justify-content: center;
                         }
                         
+                     
+                }
+                .pagination-container{
+                        margin: 5px;
+
+                        span, a{
+                                color: #fff;
+                        }
+                        .ant-pagination-item-active, .ant-pagination-item{
+                                background-color: #63c098;
+                        }
+                        .ant-pagination-item-active{
+                                background-color: #777373;
+                        }
                         
                 }
+        }
+        .infor-container{
+                color: #fff;
         }
 }
 

@@ -1,11 +1,135 @@
-import { Container } from "react-bootstrap";
 import './Auction.scss'
 import AuctionSearch from "./AuctionSearch";
+import React from 'react'
+import {Container} from "react-bootstrap";
+import './Auction.scss'
+import "react-datepicker/dist/react-datepicker.css";
+import { useEffect, useState } from "react";
+import { useDebounce } from "../Hooks/useDebounce";
+import { fetchDistrictsByProvinces, fetchFilteredAuctions, fetchProvinces } from "../../services/api";
+import { message } from "antd";
 
 
 
+const Auction = () => {  
+    const [formData, setFormData] = useState({
+        assetName: '',
+        organization: '',
+        ownerName: '',
+        province: '',
+        district: '',
+        fromDateAuction: '',
+        toDateAuction: '',
+        fromDateAnnouncement: '',
+        toDateAnnouncement: '',
+        fromPrice: '',
+        toPrice: '',
+        sortOption: ''
+      });
 
-const Auction = () => {    
+      
+    //State
+      const [province, setProvince] = useState([])
+      const [district, setDistrict] = useState([])
+      const [selectedProvinceId, setSelectedProvinceId] = useState('')
+      const [auctionResults, setAuctionResults] = useState([])
+      console.log('data', auctionResults);
+      const [selectedAuction, setSelectedAuction] = useState(null)
+      const debouncedData = useDebounce(formData, 1000)
+      const [hanoiCoordinates, setHanoiCoordinates] = useState([21.0285, 105.8542]);
+
+      useEffect(() => {
+        // api provinces
+        const fetchProvincesData = async () => {
+          const data = await fetchProvinces()
+          setProvince(data)
+        }
+        fetchProvincesData()
+        // api district
+        const fetchDistrictsData = async () => {
+          if (selectedProvinceId) {
+            const districtsData = await fetchDistrictsByProvinces(selectedProvinceId);
+            setDistrict(districtsData);
+          }
+        };
+    
+        fetchDistrictsData();
+      },[selectedProvinceId])
+    
+      const handleChange = async (e) => {
+        const {name, value} = e.target
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+        if(name === 'province'){
+            const selectedProvince = province.find(p => p.TenTinhThanhPho === value);
+            if (selectedProvince) {
+                setSelectedProvinceId(selectedProvince.TinhThanhPhoID);
+            } else {
+                setSelectedProvinceId('');
+            }
+            setDistrict([]);
+        }
+    
+      };
+
+      const validateForm = () =>{
+        for(let key in formData){
+            if(formData[key] === ''){
+                return false
+            }
+        }
+        return true 
+      }
+
+      //Đổi định dạng ngày tháng năm theo ISO
+
+      const formatDateToISO = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Thêm '0' vào trước nếu tháng chỉ có 1 chữ số
+        const day = ('0' + date.getDate()).slice(-2); // Thêm '0' vào trước nếu ngày chỉ có 1 chữ số
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        const seconds = ('0' + date.getSeconds()).slice(-2);
+      
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+      }
+    // Đổi định dạng theo DD/MM/YYYY
+      const formDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2,'0');
+        const month = String(date.getMonth() + 1).padStart(2,"0");
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}  ${day}/${month}/${year}`
+      }
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        if(validateForm()){
+            try{
+                        const startTime = debouncedData.fromDateAuction ? formatDateToISO(debouncedData.fromDateAuction) : null;
+        const endTime = debouncedData.toDateAuction ? formatDateToISO(debouncedData.toDateAuction) : null;
+        const startPrice = debouncedData.fromPrice ? Number(debouncedData.fromPrice) : null;
+        const endPrice = debouncedData.toPrice ? Number(debouncedData.toPrice) : null;
+        const province = debouncedData.province
+        const district = debouncedData.district
+        const results = await fetchFilteredAuctions(startTime, endTime, startPrice,endPrice,province,district);
+        console.log('test', province);
+        setAuctionResults(results);
+        
+            }catch(error){
+                console.error('Error fetching filtered auctions', error);
+                message.error('Đã xảy ra lỗi khi tìm kiếm đấu giá')
+            }
+        }else{
+            message.error('Vui lòng điền đủ các trường')
+        }
+      }
+
     return (
         <Container>
             <div className="auction-container-form">
@@ -21,7 +145,18 @@ const Auction = () => {
                     <h2>Thông báo đấu giá</h2>
                 </div>
             </div>
-            <AuctionSearch />
+            <AuctionSearch
+                formData={formData}
+                setFormData={setFormData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                province={province}
+                district={district}
+                hanoiCoordinates={hanoiCoordinates}
+                auctionResults={auctionResults}
+                setSelectedProvinceId={setSelectedProvinceId}
+                formDate={formDate}
+            />
         </Container>
 
     )

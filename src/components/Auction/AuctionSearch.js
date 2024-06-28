@@ -3,118 +3,24 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import './Auction.scss'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useEffect, useState } from "react";
-import { useDebounce } from "../Hooks/useDebounce";
-import { fetchDistrictsByProvinces, fetchFilteredAuctions, fetchProvinces } from "../../services/api";
+import {useState } from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
-import { message } from "antd";
+import { Pagination } from "antd";
 
-const AuctionSearch = () => {
-    const [formData, setFormData] = useState({
-        assetName: '',
-        organization: '',
-        ownerName: '',
-        province: '',
-        district: '',
-        fromDateAuction: '',
-        toDateAuction: '',
-        fromDateAnnouncement: '',
-        toDateAnnouncement: '',
-        fromPrice: '',
-        toPrice: '',
-        sortOption: ''
-      });
+const AuctionSearch = ({formData, handleChange, handleSubmit, province, district,hanoiCoordinates,auctionResults,setSelectedProvinceId,formDate}) => {
+    // UseState
+      const [currentPage, setCurrentPage] = useState(1);
+      const [pageSize, setPageSize] = useState(2);
+      const handlePageChange = (page, pageSize) => {
+        setCurrentPage(page);
+        setPageSize(pageSize);
+    };
 
-      
-    //State
-      const [province, setProvince] = useState([])
-      const [district, setDistrict] = useState([])
-      const [selectedProvinceId, setSelectedProvinceId] = useState('')
-      const [auctionResults, setAuctionResults] = useState([])
-      const debouncedData = useDebounce(formData, 1000)
-      const [hanoiCoordinates, setHanoiCoordinates] = useState([21.0285, 105.8542]);
+    const indexOfLastItem = currentPage * pageSize;
+    const indexOfFirstItem = indexOfLastItem - pageSize;
+    const currentItems = auctionResults.slice(indexOfFirstItem, indexOfLastItem);
 
-      useEffect(() => {
-        // api provinces
-        const fetchProvincesData = async () => {
-          const data = await fetchProvinces()
-          setProvince(data)
-        }
-        fetchProvincesData()
-        // api district
-        const fetchDistrictsData = async () => {
-          if (selectedProvinceId) {
-            const districtsData = await fetchDistrictsByProvinces(selectedProvinceId);
-            setDistrict(districtsData);
-            console.log(districtsData);
-          }
-        };
-    
-        fetchDistrictsData();
-      },[selectedProvinceId])
-    
-      const handleChange = async (e) => {
-        const {name, value} = e.target
-        setFormData({
-          ...formData,
-          [name]: value
-        });
-        if(name === 'province'){
-          setSelectedProvinceId(value)
-          setDistrict([])
-        }
-    
-      };
 
-      const validateForm = () =>{
-        for(let key in formData){
-            if(formData[key] === ''){
-                return false
-            }
-        }
-        return true 
-      }
-
-      //Đổi định dạng ngày tháng năm theo ISO
-
-      const formatDateToISO = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = ('0' + (date.getMonth() + 1)).slice(-2); // Thêm '0' vào trước nếu tháng chỉ có 1 chữ số
-        const day = ('0' + date.getDate()).slice(-2); // Thêm '0' vào trước nếu ngày chỉ có 1 chữ số
-        const hours = ('0' + date.getHours()).slice(-2);
-        const minutes = ('0' + date.getMinutes()).slice(-2);
-        const seconds = ('0' + date.getSeconds()).slice(-2);
-      
-        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
-      }
-    // Đổi định dạng theo DD/MM/YYYY
-      const formDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2,'0');
-        const month = String(date.getMonth() + 1).padStart(2,"0");
-        const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${hours}:${minutes}  ${day}/${month}/${year}`
-      }
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        const startTime = debouncedData.fromDateAuction ? formatDateToISO(debouncedData.fromDateAuction) : null;
-        const endTime = debouncedData.toDateAuction ? formatDateToISO(debouncedData.toDateAuction) : null;
-        const results = await fetchFilteredAuctions(startTime, endTime);
-        setAuctionResults(results);
-        // if(validateForm()){
-        //     try{
-        //     }catch(error){
-        //         console.error('Error fetching filtered auctions', error);
-        //         message.error('Đã xảy ra lỗi khi tìm kiếm đấu giá')
-        //     }
-        // }else{
-        //     message.error('Vui lòng điền đủ các trường')
-        // }
-      };
   return (
     <Container className=' m-0 p-0'>
             <div className=" auction-content">
@@ -156,7 +62,7 @@ const AuctionSearch = () => {
                                 value={formData.organization} 
                                 onChange={handleChange}
                                 >
-                                <option value={'tất cả'}>Tất cả</option>
+                                <option value='tất cả'>Tất cả</option>
                                 <option>tổ chức 1</option>
 
                                 </Form.Control>
@@ -224,8 +130,8 @@ const AuctionSearch = () => {
                                 value={formData.sortOption} 
                                 onChange={handleChange}
                                 >
-                                <option value={'Ngày công khai việc đấu giá'}>Ngày công khai việc đấu giá</option>
-                                <option>Ngày tổ chức đấu giá</option>
+                                <option value='Ngày công khai việc đấu giá'>Ngày công khai việc đấu giá</option>
+                                <option value='Ngày công khai việc đấu giá'>Ngày tổ chức đấu giá</option>
                                 </Form.Control>
                             </Col>
                             </Form.Group>
@@ -253,14 +159,14 @@ const AuctionSearch = () => {
                                 name="province" 
                                 value={formData.province} 
                                 onChange={(e) => {
-                                    const selectedProvinceId = e.target.value;
-                                    setSelectedProvinceId(selectedProvinceId);
+                                    const selectedProvinceName = e.target.value;
+                                    setSelectedProvinceId(province.find(p => p.TenTinhThanhPho === selectedProvinceName)?.TinhThanhPhoID || '');
                                     handleChange(e)
                                 }}
                                 >
-                                <option>Tất cả</option>
+                                <option value='Tất cả'>Tất cả</option>
                                 {province.map((province, index)=>(
-                                    <option key={index} value={province.TinhThanhPhoID}>{province.TenTinhThanhPho}</option>
+                                    <option key={index} value={province.TenTinhThanhPho}>{province.TenTinhThanhPho}</option>
                                 ))}
                                 </Form.Control>
                             </Col>
@@ -276,9 +182,9 @@ const AuctionSearch = () => {
                                 onChange={handleChange}
                                 disabled={!formData.province}
                                 >
-                                <option>Tất cả</option>
+                                <option value='Tất cả'>Tất cả</option>
                                 {district.map((district, index)=>(
-                                    <option key={index} value={district.DistrictID}>{district.DistrictName}</option>
+                                    <option key={index} value={district.DistrictName}>{district.DistrictName}</option>
                                 ))}
                                 </Form.Control>
                             </Col>
@@ -322,10 +228,18 @@ const AuctionSearch = () => {
             <div className="text-search">
                 <h2>Danh sách tìm kiếm</h2>
             </div>
+            <div className='pagination-container'>
+                <Pagination
+                        current={currentPage}
+                        pageSize={pageSize}
+                        total={auctionResults.length}
+                        onChange={handlePageChange}
+                    />
+            </div>
             <div className="list-search-result">
                {
-                auctionResults.length > 0 ? (
-                    auctionResults.map((e, index)=>(
+                currentItems.length > 0 ? (
+                    currentItems.map((e, index)=>(
                         <div className="search-container">
                             <div className="description-search">
                                 <p>{e.Title}</p>
@@ -334,9 +248,11 @@ const AuctionSearch = () => {
                                 </span>
                             </div>
                             <div className="img-search">
-                                <img src={e.img1} alt=""/>
-                                <img src={e.img2} alt=""/>
-                                <img src={e.img2} alt=""/>
+                                {
+                                    e.Images.map((item,index) => (
+                                        <img key={index} src={item.Image} alt={`auction ${index}`}/>
+                                    ))
+                                }
                             </div>
                         </div>
                         
@@ -347,7 +263,6 @@ const AuctionSearch = () => {
                }
             </div>
         </div>
-                        
         </Container>
   )
 }

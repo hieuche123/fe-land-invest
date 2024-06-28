@@ -1,3 +1,4 @@
+import { Start } from "@mui/icons-material";
 import instance from "../utils/axios-customize";
 
 export const callLogin = (userName, password) => {
@@ -131,16 +132,18 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 
 //fetch data
 
-export const fetchFilteredAuctions = async (startTime, endTime,page, limit) => {
+export const fetchFilteredAuctions = async (startTime, endTime,startPrice,endPrice,province,district) => {
     const params = {
         StartTime: startTime,
         EndTime: endTime,
-        page,
-        limit
+        Province: province,
+        District: district,
+        StartPrice: startPrice,
+        EndPrice: endPrice,
     };
-    const response = await instance.post('/api/landauctions/filter_auction/time',params)
+    const response = await instance.post('/api/landauctions/filter_auction',params)
     return response.data;
-};
+}
 export const ViewlistGroup = (BoxID) => {
     return instance.get(`/api/group/all_group/${BoxID}`);
 }
