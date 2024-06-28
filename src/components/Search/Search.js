@@ -140,7 +140,7 @@ const Search = (props) => {
             <div className="Planning">
                 <div className="Planning-analysis">
                     <div className="Planning-analysis-icon">
-                        <svg width="35" height="35" viewBox="0 0 58 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg width="35" height="35"  viewBox="0 0 58 47" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0_3920_3694)">
                                 <path d="M24.7857 38.1429C37.3699 38.1429 47.5714 30.052 47.5714 20.0714C47.5714 10.0908 37.3699 2 24.7857 2C12.2015 2 2 10.0908 2 20.0714C2 30.052 12.2015 38.1429 24.7857 38.1429Z" stroke="#B7A800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
                                 <path d="M55.8569 44.7143L41.3569 33.2143" stroke="#B7A800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />

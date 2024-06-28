@@ -42,6 +42,7 @@ function Home() {
   const [value, setValue] = useState(50);
   const [selectedPosition, setSelectedPosition] = useState(null); // State để lưu trữ vị trí được chọn trên bản đồ
 
+
   const handleSliderChange = (event) => {
     setValue(event.target.value);
   };
@@ -49,7 +50,7 @@ function Home() {
   const handleLocationArrowClick = () => {
     if (!selectedPosition) {
      message.success('Vui lòng chọn vị trí bạn muốn tìm')
-    }else{
+    }else {
       const [lat, lng] = selectedPosition;
       window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
     }
@@ -222,7 +223,7 @@ function Home() {
             tooltipAnchor: [16, -28],
             shadowSize: [41, 41]
           })}>
-            <Popup>Vị trí đã chọn</Popup>
+            <Popup>Vị trí đã chọn </Popup>
           </Marker>
         )}
       </MapContainer>

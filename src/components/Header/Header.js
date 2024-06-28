@@ -77,7 +77,7 @@ const Header = () => {
                                 <path d="M19.3441 7.5198L10.8801 0.339514C10.639 0.121018 10.3253 0 9.99995 0C9.6746 0 9.36087 0.121018 9.1198 0.339514L0.656711 7.5199C0.450055 7.70713 0.284894 7.93555 0.17186 8.19047C0.0588252 8.44538 0.000422848 8.72115 0.000411987 9L0.000411987 19.3357C0.000411985 19.5119 0.0703844 19.6808 0.194943 19.8054C0.319502 19.93 0.488449 20 0.664615 20L6.00041 20C6.5527 20 7.00041 19.5523 7.00041 19V15C7.00041 14.436 7.5525 13.9788 8.1167 13.9788H11.8832C12.4475 13.9788 13.0004 14.436 13.0004 15V19C13.0004 19.5523 13.4481 20 14.0004 20H19.3362C19.5124 20 19.6813 19.93 19.8059 19.8054C19.9304 19.6808 20.0004 19.5119 20.0004 19.3357V9C20.0004 8.72114 19.9419 8.44537 19.8289 8.19044C19.7159 7.93551 19.5507 7.70707 19.3441 7.5198Z" fill="white"/>
                                 </svg>
                             </NavLink>
-                            <NavLink to="/auction" className='nav-link'>
+                            <NavLink to="/information" className='nav-link'>
                             <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_4194_13561)">
                                 <path d="M11.2854 5.88788L17.3475 16.3875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -128,7 +128,7 @@ const Header = () => {
                                 </defs>
                                 </svg>
                             </NavLink>
-                            <NavLink to = "/auctions" className='nav-link'><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <NavLink to = "/auction" className='nav-link'><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.04248 24H14.7347" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M13.0425 24V19.6283H3.73486V24" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                                 <path d="M14.3741 2.51218L8.30718 8.78129C7.6463 9.4642 7.6463 10.5714 8.30718 11.2543L10.9877 14.0241C11.6485 14.707 12.72 14.707 13.3809 14.0241L19.4478 7.75498C20.1088 7.07208 20.1088 5.96486 19.4478 5.28196L16.7674 2.51218C16.1065 1.82927 15.035 1.82927 14.3741 2.51218Z" 

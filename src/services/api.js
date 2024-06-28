@@ -131,32 +131,14 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 
 
 //fetch data
-export const fetchFilteredAuctions = async (filters) => {
-    const mockAuctions = [
-      {
-        id: 1,
-        assetName: 'Tài sản 1',
-        organization: '',
-        ownerName: 'Chủ sở hữu 1',
-        province: 'Hà Nội',
-        district: 'Chương mỹ',
-        fromDateAuction: 'Mon Jun 24 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
-        toDateAuction: 'Wed Jun 26 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
-        fromDateAnnouncement: 'Mon Jun 24 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
-        toDateAnnouncement: 'Tue Jun 25 2024 00:00:00 GMT+0700 (Giờ Đông Dương)',
-        fromPrice: 1000,
-        toPrice: 2000,
-      },
-    ];
-  
-    return mockAuctions.filter(auction => {
-      return Object.keys(filters).every(key => {
-        if (!filters[key]) return true;
-        if (key === 'fromDateAuction' || key === 'toDateAuction' ||
-            key === 'fromDateAnnouncement' || key === 'toDateAnnouncement') {
-          return new Date(auction[key]) >= new Date(filters[key]);
-        }
-        return auction[key] === filters[key];
-      });
-    });
-  };
+
+export const fetchFilteredAuctions = async (startTime, endTime,page, limit) => {
+    const params = {
+        StartTime: startTime,
+        EndTime: endTime,
+        page,
+        limit
+    };
+    const response = await instance.post('/api/landauctions/filter_auction/time',params)
+    return response.data;
+};
