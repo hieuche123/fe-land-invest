@@ -128,3 +128,35 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 // export const callCreateUser = (fullName, email, password, phone) => {
 //     return axios.post('/api/v1/user',{fullName, email, password, phone})
 // }
+
+//fetch data
+
+export const fetchFilteredAuctions = async (startTime, endTime,page, limit) => {
+    const params = {
+        StartTime: startTime,
+        EndTime: endTime,
+        page,
+        limit
+    };
+    const response = await instance.post('/api/landauctions/filter_auction/time',params)
+    return response.data;
+};
+export const ViewlistGroup = (BoxID) => {
+    return instance.get(`/api/group/all_group/${BoxID}`);
+}
+
+export const CreateGroup = ( BoxID, GroupName, avatarLink) => {
+    return instance.post('/api/group/add_group',{BoxID, GroupName, avatarLink});
+}
+
+export const UpdateGroup = (GroupID, GroupName) => {
+    return instance.patch(`/api/group/update_group/${GroupID}`,{GroupName});
+}
+
+
+export const CreatePost = ( GroupID, Title, Content, PostLatitude , PostLongitude) => {
+    return instance.post('/api/forum/add_post',{GroupID, Title, Content, PostLatitude , PostLongitude});
+}
+export const UpdatePost = (PostID, Title, Content) => {
+    return instance.patch(`/api/forum/update_post/${PostID}`,{Title, Content});
+}

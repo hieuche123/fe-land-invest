@@ -31,9 +31,6 @@ const AuctionSearch = () => {
       const [district, setDistrict] = useState([])
       const [selectedProvinceId, setSelectedProvinceId] = useState('')
       const [auctionResults, setAuctionResults] = useState([])
-      const [current, setCurrent] = useState(1);
-      const [pageSize, setPageSize] = useState(2);
-      const [total, setTotal] = useState(0);
       const debouncedData = useDebounce(formData, 1000)
       const [hanoiCoordinates, setHanoiCoordinates] = useState([21.0285, 105.8542]);
 

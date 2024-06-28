@@ -50,10 +50,6 @@ function App() {
           element: <Auction/>
         },
         {
-          path: '/auctions',
-          element: <AuctionForm/>
-        },
-        {
           path: '/search',
           element: <Search/>
         },
@@ -74,14 +70,6 @@ function App() {
         {
           path: '/admin/listbox',
           element: <TableBox/>
-        },
-        {
-          path: '/admin/listgroup',
-          element: <TableGroup/>
-        },
-        {
-          path: '/admin/listpost',
-          element: <TablePost/>
         },
         
       ]
