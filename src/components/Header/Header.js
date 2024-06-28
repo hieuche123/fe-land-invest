@@ -44,7 +44,7 @@ const Header = () => {
         },
 
         {
-            label: <Link to='/history'>Thông tin tài khoản</Link>,
+            label: <Link to='/admin'>Trang quản trị</Link>,
             key: 'history',
         },
         {

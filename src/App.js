@@ -3,7 +3,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
 import { useEffect } from "react";
 import Home from "./components/Home/Home";
-import News from "./components/Auth/News/News";
+import News from "./components/News/News";
 import Auction from "./components/Auction/Auction";
 import Search from "./components/Search/Search";
 import AdminPage from "./pages/Admin/Dashboard";
@@ -14,6 +14,10 @@ import Register from "./components/Auth/Register/Register";
 import ForgotPassword from "./components/Auth/ForgotPassword/ForgotPassword";
 // import TableBox from "./pages/Admin/ListBox";
 import AuctionInfor from "./components/Auction/AuctionInfor";
+import TableBox from "./pages/Admin/ListBox";
+import TableGroup from "./pages/Admin/ListGroup";
+import TablePost from "./pages/Admin/ListPost";
+import PostPage from "./components/News/PostPage";
 
 
 
@@ -45,6 +49,10 @@ function App() {
         {
           path: '/news',
           element: <News/>
+        },
+        {
+          path: 'news/:slug',
+          element: <PostPage/>
         },
         {
           path: '/auction',

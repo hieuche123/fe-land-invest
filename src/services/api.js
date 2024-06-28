@@ -163,3 +163,7 @@ export const CreatePost = ( GroupID, Title, Content, PostLatitude , PostLongitud
 export const UpdatePost = (PostID, Title, Content) => {
     return instance.patch(`/api/forum/update_post/${PostID}`,{Title, Content});
 }
+
+export const callFetchPostById = (PostID) => {
+    return instance.get(`/api/forum/view_post/${PostID}`);
+}
