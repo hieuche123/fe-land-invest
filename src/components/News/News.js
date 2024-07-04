@@ -3,17 +3,23 @@ import Container from "react-bootstrap/esm/Container";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "./News.scss"
+import moment from 'moment-timezone';
 import { useEffect,useRef, useState } from "react";
-import { ViewlistBox, ViewlistPost } from "../../services/api";
+import { CheckUserOnline, ViewlistBox, ViewlistPost } from "../../services/api";
 import { useNavigate } from "react-router-dom";
 import ModalCreatePost from "./createPost/ModalCreatePost";
+import { useSelector } from "react-redux";
 const News = (props) => {
     const navigate = useNavigate();
     const [listViewBox, setListViewBox] = useState([])
+    const [listCheckOnline, setListCheckOnline] = useState({})
     const [listViewPost, setListViewPost] = useState([])
     const [inputValue, setInputValue] = useState('');
     const [isShowModalLogin, setIsShowModalLogin] = useState(false);
     const textareaRef = useRef(null);
+    const listUser = useSelector((state) => state.listbox.listuser);
+    console.log("res listUser",listUser)
+
     useEffect(() => {
         adjustTextareaHeight();
     }, [inputValue]);
@@ -54,6 +60,26 @@ const News = (props) => {
         console.log("res viewBox",res)
     }
 
+    useEffect(() => {
+        if (listViewPost.length > 0 && listUser.length > 0) {
+            listViewPost.forEach(post => {
+                const user = listUser.find(user => user.userid === post.UserID);
+                if (user) {
+                    getCheckUserOnline(user.userid);
+                }
+            });
+        }
+    }, [listViewPost, listUser]);
+    const getCheckUserOnline = async (userID) => {
+        let res = await CheckUserOnline(userID);
+        if (res) {
+            setListCheckOnline(prevState => ({
+                ...prevState,
+                [userID]: res.data
+            }));
+        }
+    }
+    console.log("res CheckUserOnline",listCheckOnline)
     const getListViewPost = async() => {
         let res = await ViewlistPost()
         if(res && res?.data) {
@@ -107,6 +133,8 @@ const News = (props) => {
         const slug = convertSlug(post.Title);
         navigate(`/news/${slug}?id=${post.PostID}`)
     }
+
+   
 
     return (
         <>
@@ -286,6 +314,24 @@ const News = (props) => {
     
                     {listViewPost && listViewPost.length > 0 && 
                         listViewPost.map((post, index)=>{
+                            const user = listUser.find(user => user.userid === post.UserID);
+                            //getCheckUserOnline(user.userid);
+                            console.log("test user:", user);
+                            const userOnlineStatus = listCheckOnline[user?.userid];
+                           // Calculate the time difference and adjust to Vietnamese time
+                            const postTime = moment(post.PostTime).tz("Asia/Ho_Chi_Minh");
+                            const currentTime = moment().tz("Asia/Ho_Chi_Minh");
+                            const timeDifference = moment.duration(currentTime.diff(postTime));
+
+                            const formatTimeDifference = (timeDifference) => {
+                                if (timeDifference.years() > 0) return `${timeDifference.years()} years ago`;
+                                if (timeDifference.months() > 0) return `${timeDifference.months()} months ago`;
+                                if (timeDifference.days() > 0) return `${timeDifference.days()} days ago`;
+                                if (timeDifference.hours() > 0) return `${timeDifference.hours()} hours ago`;
+                                if (timeDifference.minutes() > 0) return `${timeDifference.minutes()} minutes ago`;
+                                return `Just now`;
+                            }
+
                             return (
                                 <div className="post-item" style={{cursor:'pointer'}}  onClick={() => handleRedirectPost(post)}>
                                     <div className="avatar-post">
@@ -308,11 +354,13 @@ const News = (props) => {
                                         <div className="user-post">
                                             <div className="info-user-post">
                                                 <div className="avatar-user">
+                                                    {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
                                                 </div>
                                                 <div className="info-user">
-                                                    <h4>Mai Ngo</h4>
-                                                    <p>3 days ago</p>
+                                                    <h4>{user.UserName}</h4>
+                                                    <p>{formatTimeDifference(timeDifference)}</p>
                                                 </div>
+                                                {/* {listCheckOnline.Status} */}
                                             </div>
                                             <div className="react-post">
                                                 <p>651,324 Views</p>

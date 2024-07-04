@@ -31,24 +31,35 @@ const ModalCreatePost = (props) => {
     const handleChangeValueGroup = (event) => {
         setSelectedValueGroup(event.target.value);
       };
-    const handleClickNewPost = async () => {
-        console.log("datapostnew: ",inputValueTitle, inputValueContent, selectedValueGroup)
-        const res = await CreatePost( selectedValueGroup, inputValueTitle, inputValueContent, postLatitude , postLongitude)
-        res.headers= {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      const handleClickNewPost = async () => {
+        console.log("datapostnew: ", inputValueTitle, inputValueContent, selectedValueGroup);
+    
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            notification.error({
+                message: 'Lỗi xác thực',
+                description: 'Vui lòng đăng nhập lại!'
+            });
+            return;
         }
-        if (res) {  
+    
+        const res = await CreatePost(selectedValueGroup, inputValueTitle, inputValueContent, postLatitude, postLongitude, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+    
+        if (res) {
             message.success('Thêm mới Post thành công');
-            props.getListViewPost()
+            props.getListViewPost();
             handleClose();
             setInputValueTitle("");
             setInputValueContent("");
-
         } else {
             notification.error({
                 message: 'Đã có lỗi xảy ra',
                 description: res.message
-            })
+            });
         }
     };
 

@@ -95,11 +95,11 @@ const LayoutAdmin = () => {
       key: "listbox",
       icon: <DollarCircleOutlined />,
     },
-    // {
-    //   label: <Link to="/admin/listbox">Quản lý người dùng</Link>,
-    //   key: "user",
-    //   icon: <DollarCircleOutlined />,
-    // },
+    {
+      label: <Link to="/admin/listuser">Quản lý người dùng</Link>,
+      key: "listuser",
+      icon: <DollarCircleOutlined />,
+    },
     // {
     //   label: <Link to="/admin/listbox">Quản lý bài đăng</Link>,
     //   key: "posts",

@@ -50,11 +50,21 @@ const BoxModalCreate = (props) => {
         // const slider = dataSlider.map((item)=> {item.name})
 
         setIsSubmit(true)
-        const res = await CreateBox( BoxName, Description, avatarLink);
-        res.headers= {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            notification.error({
+                message: 'Lỗi xác thực',
+                description: 'Không tìm thấy token. Vui lòng đăng nhập lại.'
+            });
+            return;
         }
-        if (res && res.data) {  
+
+        const res = await CreateBox( BoxName, Description, avatarLink, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (res) {  
             
             message.success('Thêm mới box thành công');
             form.resetFields();

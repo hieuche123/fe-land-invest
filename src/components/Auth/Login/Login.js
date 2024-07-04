@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import { callLogin } from '../../../services/api';
-import { doLoginAction } from '../../../redux/account/accountSlice';
+import { doLoginAction, doLoginDataUser } from '../../../redux/account/accountSlice';
 import { useDispatch } from 'react-redux';
 const Login = () => {
   const dispatch = useDispatch()
@@ -30,8 +30,9 @@ const Login = () => {
       console.log("refresh_token", res.data.refreshtoken);
       document.cookie = `access_token_cookie=${res.data.access_token}; path=/`;
       console.log('document.cookie', document.cookie);
-
+      
       dispatch(doLoginAction(JSON.parse(res.config.data)));
+      dispatch(doLoginDataUser(res.data));
       message.success('Đăng nhập tài khoản thành công!');
       navigate('/');
     }else{

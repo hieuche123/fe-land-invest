@@ -4,15 +4,29 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "./News.scss"
 import { useEffect, useState } from "react";
-import { ViewlistBox, ViewlistPost } from "../../services/api";
+import { CheckUserOnline, ViewlistBox, ViewlistPost } from "../../services/api";
+import moment from "moment";
+import { useSelector } from "react-redux";
+import Comment from "./comment/Comment";
 const PostDetail = (props) => {
     const {dataPost} = props
     const [listViewBox, setListViewBox] = useState([])
     const [listViewPost, setListViewPost] = useState([])
+    const [listCheckOnline, setListCheckOnline] = useState({})
+    const listUser = useSelector((state) => state.listbox.listuser);
+    const user = listUser.find(user => user.userid === dataPost.UserID);
+console.log('dataPost:' ,dataPost)
+let userIDPost = dataPost.UserID;
+
     useEffect(()=>{
         getListViewBox();
         getListViewPost();
+        getCheckUserOnline(userIDPost)
     },[])
+
+    useEffect(()=>{
+        getCheckUserOnline(userIDPost)
+    },[userIDPost])
 
     const getListViewBox = async() => {
         let res = await ViewlistBox()
@@ -30,7 +44,31 @@ const PostDetail = (props) => {
         console.log("res viewPost",res)
     }
     console.log("listViewPost",listViewPost)
+    const getCheckUserOnline = async () => {
+        let res = await CheckUserOnline(userIDPost);
+        if (res) {
+            setListCheckOnline(prevState => ({
+                ...prevState,
+                [userIDPost]: res.data
+            }));
+        }
+    }
 
+    const userOnlineStatus = listCheckOnline[dataPost?.UserID];
+    console.log("userOnlineStatus:",userOnlineStatus)
+    // Calculate the time difference and adjust to Vietnamese time
+    const postTime = moment(dataPost.PostTime).tz("Asia/Ho_Chi_Minh");
+    const currentTime = moment().tz("Asia/Ho_Chi_Minh");
+    const timeDifference = moment.duration(currentTime.diff(postTime));
+
+    const formatTimeDifference = (timeDifference) => {
+        if (timeDifference.years() > 0) return `${timeDifference.years()} years ago`;
+        if (timeDifference.months() > 0) return `${timeDifference.months()} months ago`;
+        if (timeDifference.days() > 0) return `${timeDifference.days()} days ago`;
+        if (timeDifference.hours() > 0) return `${timeDifference.hours()} hours ago`;
+        if (timeDifference.minutes() > 0) return `${timeDifference.minutes()} minutes ago`;
+        return `Just now`;
+    }
     return (
         <Container className="news-container">
           <Row className="news-row">
@@ -221,11 +259,13 @@ const PostDetail = (props) => {
                         <div className="user-post">
                             <div className="info-user-post">
                                 <div className="avatar-user">
+                                    {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
                                 </div>
                                 <div className="info-user">
-                                    <h4>Mai Ngo</h4>
-                                    <p>3 days ago</p>
+                                    <h4>{user.UserName}</h4>
+                                    <p>{formatTimeDifference(timeDifference)}</p>
                                 </div>
+                                {/* {listCheckOnline.Status} */}
                             </div>
                             <div className="react-post">
                                 <p>651,324 Views</p>
@@ -362,6 +402,7 @@ const PostDetail = (props) => {
                 </div>
             </Col>
           </Row>
+          {/* <Comment/> */}
         </Container>
     );
 }

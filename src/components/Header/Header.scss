@@ -1,9 +1,11 @@
 .header-container {
     background-color: #262D34;
+    div#basic-navbar-nav\ list-item {
+        justify-content: space-between;
+    }
     .header-logo {
-        // .header-logo-img {
-
-        // }    
+        display: flex;
+        align-items: center;
 
         .header-logo-content {
             color: #FF571A;
@@ -11,8 +13,10 @@
             font-weight: 700;
         }
     }
+
     .list-item-icon {
-        margin-left: 120px;
+        display: flex;
+
         a.nav-link.nav-link {
             width: 30px;
             height: 30px;
@@ -23,61 +27,57 @@
             justify-content: center;
             margin-right: 10px;
         }
+
         .active {
             background-color: #10B700;
             border-radius: 4px;
         }
     }
 
-    div#basic-navbar-nav {
-        display: flex;
-        justify-content: end;
-    }
+
 
     .header-search {
         background-color: #2C353D;
-        margin-left: 20px;
+        width: 500px;
         height: 40px;
-        width: 440px;
         border-radius: 8px;
         outline: none;
         display: flex;
+        align-items: center;
+        margin: 0 20px;
+        
         input {
             background-color: #2C353D;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding: 5px 10px;
             width: 100%;
-            height: 100%;
             border-radius: 8px;
             font-size: 14px;
             border: none;
             outline: none;
             color: #858EAD;
-
         }
+
         button {
             background-color: #2C353D;
             border: none;
-            padding-right: 6px;
+            padding: 0 6px;
             margin: 6px;
             
             &:hover {
                 cursor: pointer;
             }
-            
         }
     }
+
     .header-right {
         display: flex;
         align-items: center;
-        .header-notification{
-            margin-left: 50px;
-            margin-right: 50px;
-            color: #fff;
 
+        .header-notification {
+            margin: 0 20px;
+            color: #fff;
         }
+
         button {
             width: 150px;
             border-radius: 10px;
@@ -87,33 +87,87 @@
     }
 }
 
-@media (max-width: 640px){
+@media (max-width: 1024px) {
     .header-container {
-        .list-item-icon.navbar-nav {
-            margin-left: 0px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        .list-item-icon {
+            margin-left: 60px;
         }
+
+        .header-search {
+            width: 300px;
+            margin: 0 10px;
+        }
+
         .header-right {
+            .header-notification {
+                margin: 0 10px;
+            }
+
+            button {
+                width: 120px;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        .list-item-icon {
+            margin-left: 0;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
+        .header-search {
+            width: 200px;
+            margin: 10px 0;
+        }
+
+        .header-right {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 10px;
+
+            .header-notification {
+                margin: 10px 0;
+            }
+
+            button {
+                width: 100px;
+                margin-top: 10px;
+            }
+        }
     }
 }
-    
-@media (max-width: 768px){
-    
+
+@media (max-width: 480px) {
     .header-container {
-        .list-item-icon.navbar-nav {
-            margin-left: 0px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
+        .list-item-icon {
+            a.nav-link.nav-link {
+                width: 25px;
+                height: 25px;
+                margin-right: 5px;
+            }
         }
+
+        .header-search {
+            width: 100%;
+            margin: 10px 0;
+        }
+
         .header-right {
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+
+            .header-notification {
+                margin: 10px 0;
+            }
+
+            button {
+                width: 100%;
+                margin-top: 10px;
+            }
         }
     }
-    
 }

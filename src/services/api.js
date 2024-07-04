@@ -132,3 +132,17 @@ export const UpdatePost = (PostID, Title, Content) => {
 export const callFetchPostById = (PostID) => {
     return instance.get(`/api/forum/view_post/${PostID}`);
 }
+export const callGetAllUsers = () => {
+    return instance.get(`/api/listalluser`);
+}
+export const BlockUserPost = (USERID) => {
+    return instance.patch(`/api/forum/block_user/${USERID}`);
+}
+
+export const CheckUserOnline = (USERID) => {
+    return instance.get(`/api/checkOnline/${USERID}`);
+}
+
+export const ViewProfileUser = (USERID) => {
+    return instance.get(`/api/private/profile/${USERID}`);
+}

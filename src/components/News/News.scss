@@ -244,6 +244,18 @@
                                 height: 40px;
                                 border-radius: 50%;
                                 background-color: #2C353D;
+                                position: relative;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            
+                                .check-online {
+                                    position: absolute;
+                                    font-size: 9px;
+                                    text-align: center;
+                                    width: 100%;
+                                    bottom: -15px;
+                                }
                             }
                             .info-user {
                                 display: flex;

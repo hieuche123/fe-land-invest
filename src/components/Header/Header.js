@@ -22,7 +22,8 @@ const Header = () => {
     const dispatch = useDispatch()
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.Users);
-    // console.log("user type: ", typeof users);
+    const datauser = useSelector(state => state.account.dataUser);
+    console.log("datauser: ",  datauser);
     const [isShowModalLogin, setIsShowModalLogin] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -31,22 +32,10 @@ const Header = () => {
     let items = [
         {
             
-            label: <label 
-                style={{cursor: 'pointer'}}
-                // onClick={()=> {
-                //     setIsModalOpen(true);
-                //     console.log('heloo')
-                // }}
-            >
-                Quản lý tài khoản
-            </label>,
-            key: 'account',
+            label: <Link to='/userprofile'>Trang profile</Link>,
+            key: 'userprofile',
         },
 
-        {
-            label: <Link to='/admin'>Trang quản trị</Link>,
-            key: 'history',
-        },
         {
             
             label: <label 
@@ -58,7 +47,7 @@ const Header = () => {
             key: 'logout',
         },
     ];
-    if(user?.role === 'ADMIN') {
+    if(datauser?.role === true) {
         items.unshift({
             label: <Link to='/admin'>Trang quản trị</Link>,
             key: 'admin',
@@ -88,21 +77,31 @@ const Header = () => {
     }
 
     const handleLogOut =  async() => {
-        const res = await callLogout()
+
+        // const token = localStorage.getItem('access_token');
+        // if (!token) {
+        //     notification.error({
+        //         message: 'Lỗi xác thực',
+        //         description: 'Không tìm thấy token. Vui lòng đăng nhập lại.'
+        //     });
+        //     return;
+        // }
+        const res = await callLogout();
+        res.headers= {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
         if(res) {
+            // res.headers= {
+            //     'Authorization': `Bearer ${token}`
+            // }
+            // console.log("refresh_token logout",localStorage.getItem('refresh_token'))
+            // console.log("access_token logout",localStorage.getItem('access_token'))
+            console.log("res.headers",res.headers)
+            dispatch(doLogoutAction());
+            navigate('/');
+            message.success('Đăng xuất thành công!');
             // localStorage.removeItem('access_token');
             // localStorage.removeItem('refresh_token');
-            console.log("refresh_token logout",localStorage.getItem('refresh_token'))
-            console.log("access_token logout",localStorage.getItem('access_token'))
-            res.headers= {
-                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-            }
-            console.log("res.headers",res.headers)
-
-            message.success('Đăng xuất thành công!');
-            navigate('/login');
-            // console.log('response logout results:', response);
-            //dispatch(doLogoutAction(response.data));
         }else{
             notification.error({
               message:'Có lỗi xáy ra',
@@ -228,10 +227,7 @@ const Header = () => {
                          
                             </button>
                         </form>
-    
-                       
-                    </Navbar.Collapse>
-                    <Navbar.Collapse id="basic-navbar-nav">
+                        <div id="basic-navbar-nav">
                     <div className='header-right'>
                         <div className='header-notification'>
                             <IoIosNotifications size={24}/>
@@ -257,7 +253,10 @@ const Header = () => {
                         }
                         
                     </div>
+                    </div>
+                       
                     </Navbar.Collapse>
+                    
                     
                 </Container>
             </Navbar>

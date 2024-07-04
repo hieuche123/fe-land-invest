@@ -43,13 +43,13 @@ const TableGroup = () => {
   const columns = [
     {
         title: 'Id',
-        dataIndex: '_id',
+        dataIndex: 'GroupID',
         render: (text, record, index) => {
             return (
                 <a href='#' onClick={() => {
                 setDataViewDetail(record);
                 setOpenViewDetail(true);
-                }}>{record._id}</a>
+                }}>{record.GroupID}</a>
             )
         }
     },
@@ -76,7 +76,7 @@ const TableGroup = () => {
                         placement='leftTop'
                         title={'Xác nhận xóa bản đồ'}
                         description={'Bạn có chắc muốn xóa bản đồ này?'}
-                        onConfirm={() => {handleDeleteBook(record._id)}}
+                        onConfirm={() => {handleDeleteBook(record.GroupID)}}
                         okText='Xác nhận'
                         cancelText='Hủy'
                     >
@@ -201,7 +201,7 @@ const TableGroup = () => {
                     <Table 
                         title={renderHeader}
                         loading={isLoading}
-                        rowKey='_id'
+                        rowKey='GroupID'
                         columns={columns} 
                         dataSource={listGroup} 
                         onChange={onChange}

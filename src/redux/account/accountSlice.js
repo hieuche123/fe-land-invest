@@ -14,7 +14,8 @@ const initialState = {
     avatarLink: null,
     Email:"",
     LastLoginIP:"127.0.0.1"
-  }
+  },
+  dataUser: {}
 };
 
 
@@ -42,8 +43,11 @@ export const accountSlice = createSlice({
     },
     doLogoutAction: (state) => {
       state.isAuthenticated = false;
-      state.Users = null;
+      state.Users = null
   },
+  doLoginDataUser: (state,action) => {
+    state.dataUser = action.payload
+  }
 
    
    
@@ -55,7 +59,7 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { doLoginAction,doLGetAccountAction, doLogoutAction } = accountSlice.actions;
+export const { doLoginAction,doLGetAccountAction, doLogoutAction, doLoginDataUser } = accountSlice.actions;
 
 
 

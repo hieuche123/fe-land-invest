@@ -47,13 +47,13 @@ const TablePost = () => {
   const columns = [
     {
         title: 'Id',
-        dataIndex: '_id',
+        dataIndex: 'PostID',
         render: (text, record, index) => {
             return (
                 <a href='#' onClick={() => {
                 setDataViewDetail(record);
                 setOpenViewDetail(true);
-                }}>{record._id}</a>
+                }}>{record.PostID}</a>
             )
         }
     },
@@ -80,7 +80,7 @@ const TablePost = () => {
                         placement='leftTop'
                         title={'Xác nhận xóa bản đồ'}
                         description={'Bạn có chắc muốn xóa bản đồ này?'}
-                        onConfirm={() => {handleDeleteBook(record._id)}}
+                        onConfirm={() => {handleDeleteBook(record.PostID)}}
                         okText='Xác nhận'
                         cancelText='Hủy'
                     >
@@ -205,7 +205,7 @@ const TablePost = () => {
                     <Table 
                         title={renderHeader}
                         loading={isLoading}
-                        rowKey='_id'
+                        rowKey='PostID'
                         columns={columns} 
                         dataSource={listPosts} 
                         onChange={onChange}

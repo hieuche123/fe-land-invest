@@ -2,14 +2,12 @@ import { CloudDownloadOutlined, DeleteFilled, DeleteTwoTone, EditTwoTone, Export
 import { Button, Input, Pagination, Space, Row, Col, Table, Popconfirm, message, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
-import { ViewlistBox } from '../../../services/api';
-import BoxModalCreate from './BoxModalCreate';
-import BoxModalUpdate from './BoxModalUpdate';
+import { BlockUserPost, ViewlistPost, callGetAllUsers } from '../../../services/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { doListBox } from '../../../redux/listForum/lisForumSlice';
+import { doListBox, doListGroup, doListUser } from '../../../redux/listForum/lisForumSlice';
 
-const TableBox = () => {
-    const [listBox, setListBox] = useState([]);
+const TableUser = () => {
+    const [listUser, setListUser] = useState([]);
     const [filter, setFilter] = useState('');
     const [sortQuery, setSortQuery] = useState('sort=-updateAt');
     const [current, setCurrent] = useState(1);
@@ -23,50 +21,47 @@ const TableBox = () => {
     const [openViewDetail, setOpenViewDetail] = useState(false);
     const [dataViewDetail, setDataViewDetail] = useState('');
     const [dataUpdate, setDataUpdate] = useState([]);
-   
-    
+    const adGroupAdmin = useSelector((state) => state.getid.idPost);
+    const idBox = useSelector((state) => state.getid.idGroup);
+    console.log("dataUpdate user: ",dataUpdate)
     const dispatch = useDispatch();
     useEffect(()=>{
-        getListViewBox();
-    },[])
+        getListViewUser();
+    },[dataUpdate])
 
-    const getListViewBox = async() => {
-        let res = await ViewlistBox()
-        if(res && res?.data) {
-            setListBox(res.data);
-            dispatch(doListBox(res.data));
+    
+    const getListViewUser = async() => {
+        let res = await callGetAllUsers()
+        if(res ) {
+            setListUser(res.data);
+            dispatch(doListUser(res.data));
+            console.log("res ViewlistUser",res.data)
         }
-        console.log("res viewBox",res)
     }
    
   const columns = [
     {
         title: 'Id',
-        dataIndex: 'BoxID',
+        dataIndex: '_id',
         render: (text, record, index) => {
             return (
                 <a href='#' onClick={() => {
                 setDataViewDetail(record);
                 setOpenViewDetail(true);
-                }}>{record.BoxID}</a>
+                }}>{record.userid}</a>
             )
         }
     },
     {
-        title: 'Tên Box',
-        dataIndex: 'BoxName',
+        title: 'Email',
+        dataIndex: 'Email',
         sorter: true,
 
     },
-    {
-        title: 'Mô tả',
-        dataIndex: 'Description',
-        sorter: true,
 
-    },
     {
-        title: 'Avtart',
-        dataIndex: 'avatarLink',
+        title: 'UserName',
+        dataIndex: 'UserName',
         sorter: true,
     },
 
@@ -76,27 +71,29 @@ const TableBox = () => {
         render: (text, record, index) => {
             return (
                 <>
+
+                    
                     <Popconfirm
                         placement='leftTop'
-                        title={'Xác nhận xóa bản đồ'}
-                        description={'Bạn có chắc muốn xóa bản đồ này?'}
-                        onConfirm={() => {}}
+                        title={'Xác nhận block user'}
+                        description={'Bạn có chắc muốn block user này?'}
+                        onConfirm={() => {handleBlockUser(record.userid)}}
                         okText='Xác nhận'
                         cancelText='Hủy'
                     >
                         <span style={{cursor:'pointer'}}>
-                            <DeleteTwoTone twoToneColor='#ff4d4f'/>
+                            BLOCK
                         </span>    
 
                     </Popconfirm>
-                    <EditTwoTone
+                    {/* <EditTwoTone
                         twoToneColor='#f57800' style={{cursor: 'pointer'}}
                         onClick={()=>{
                              setOpenModalUpdate(true)
                              setDataUpdate(record)
                         }}
 
-                    />
+                    /> */}
                 </>
             )
         }
@@ -119,10 +116,23 @@ const TableBox = () => {
         }
     }
 
+    const handleBlockUser = async(id) => {
+        const res = await BlockUserPost(id)
+        if(res) {
+            message.success('Block thành công user!')
+            getListViewUser();
+        }else {
+            notification.error({
+                message:'Có lỗi xảy ra',
+                description: res.message
+            })
+        }
+    }
+
     const renderHeader = () => {
         return (
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span>Danh sách bản đồ</span>
+                <span>Danh sách user</span>
                 <span style={{display: 'flex', gap: 15}}>
                     <Button
                         icon={<ExportOutlined/>}
@@ -174,8 +184,8 @@ const TableBox = () => {
     }
     
     // const handleExportData = () => {
-    //     if(listBox.length > 0) {
-    //         const worksheet = XLSX.utils.json_to_sheet(listBox);
+    //     if(listGroup.length > 0) {
+    //         const worksheet = XLSX.utils.json_to_sheet(listGroup);
     //         const workbook = XLSX.utils.book_new();
     //         XLSX.utils.book_append_sheet(workbook, worksheet, 'sheet1');
     //         XLSX.writeFile(workbook,'ExportUser.csv');
@@ -192,9 +202,9 @@ const TableBox = () => {
                     <Table 
                         title={renderHeader}
                         loading={isLoading}
-                        rowKey='BoxID'
+                        rowKey='_id'
                         columns={columns} 
-                        dataSource={listBox} 
+                        dataSource={listUser} 
                         onChange={onChange}
                         pagination= {
                             {   
@@ -213,20 +223,9 @@ const TableBox = () => {
                 </Col>
             </Row>
             
-            <BoxModalCreate
-                openModalCreate = {openModalCreate}
-                getListViewBox= {getListViewBox}
-                setOpenModalCreate = {setOpenModalCreate}
-            />
-            <BoxModalUpdate
-                openModalUpdate = {openModalUpdate}
-                dataUpdate = {dataUpdate}
-                setDataUpdate= {setDataUpdate}
-                getListViewBox= {getListViewBox}
-                setOpenModalUpdate = {setOpenModalUpdate}
-            /> 
+            
         </>
 };
 
 
-export default TableBox;
+export default TableUser;
