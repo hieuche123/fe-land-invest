@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Col, Divider, Form, Input, InputNumber, message, Modal, notification, Row, Select, Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { UpdateBox, UpdateGroup } from '../../../services/api';
+import { useSelector } from 'react-redux';
 const GroupModalUpdate = (props) => {
     const { openModalCreate, setOpenModalCreate , getListViewGroup } = props;
     const { openModalUpdate, setOpenModalUpdate, dataUpdate, setDataUpdate } = props;
@@ -23,16 +24,18 @@ const GroupModalUpdate = (props) => {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
 
-    
+    const idBoxAdmin = useSelector((state) => state.getid.idGroup);
+    const adGroupAdmin = useSelector((state) => state.getid.idPost);
     const [initForm, setInitForm] = useState(null);
     console.log(">>> check dataUpdate create group: ", dataUpdate);
-
     useEffect(() => {
         
         if (dataUpdate?.GroupID) {
             const init = {
                 GroupID: dataUpdate.GroupID,
+                BoxID: idBoxAdmin,
                 GroupName: dataUpdate.GroupName,
+                avatarLink: dataUpdate.avatarLink
             }
             setInitForm(init);
             form.setFieldsValue(init);
@@ -63,16 +66,19 @@ const GroupModalUpdate = (props) => {
         //     })
         //     return;
         // }
-        const { GroupID,  GroupName } = values;
+        const { GroupID, BoxID, avatarLink, GroupName } = values;
         // const thumbnail = dataThumbnail[0].name;
         // const slider = dataSlider.map((item)=> {item.name})
 
         console.log("dataUpdate GroupID: ",dataUpdate.GroupID)
+        console.log("dataUpdate GroupName values: ",GroupName)
         setIsSubmit(true)
-        const res = await UpdateGroup(GroupID, GroupName);
+        const res = await UpdateGroup(GroupID,BoxID, avatarLink, GroupName);
         res.headers= {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
+        console.log("res GroupName values: ",res)
+        
         console.log("them group header: ",res.headers)
         if (res) {
             message.success('Update group thành công');
@@ -206,6 +212,29 @@ const GroupModalUpdate = (props) => {
                                 rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
                             >
                                 <Input />
+                            </Form.Item>
+                        </Col>
+
+                        <Col hidden>
+                            <Form.Item
+                                labelCol={{ span: 24 }}
+                                hidden
+                                label="BoxID"
+                                name="BoxID"
+                                rules={[{ required: true, message: 'Vui lòng nhập id!' }]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </Col>
+
+                        <Col span={24}>
+                            <Form.Item
+                                labelCol={{ span: 24 }}
+                                label="avatarLink"
+                                name="avatarLink"
+                                rules={[{ required: true, message: 'Vui lòng nhập tên hiển thị!' }]}
+                            >
+                                <Input  />
                             </Form.Item>
                         </Col>
                         <Col span={24}>

@@ -1,5 +1,5 @@
 // App.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar.js';
 import UserProfile from './UserProfile';
 import EditProfile from './EditProfile';
@@ -10,8 +10,10 @@ import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const [activeView, setActiveView] = useState('view');
+  const datauser = useSelector(state => state.account.dataUser);
   const userredux = useSelector((state) => state.account.Users);
 console.log("userredux", userredux);
+console.log("data user", datauser);
   const [user, setUser] = useState({
     avatar: 'https://example.com/avatar.jpg',
     fullName: 'John Doe',
@@ -23,13 +25,16 @@ console.log("userredux", userredux);
     phone: '+1 234 567 890'
   });
 
-
-const getViewProfileUser = async (userID) => {
-    let res = await ViewProfileUser(userID);
+useEffect(()=>{
+  getViewProfileUser();
+},[])
+const getViewProfileUser = async () => {
+    let res = await ViewProfileUser(datauser.UserID);
     res.headers= {
         'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
     if (res) {  
+        console.log("data user res", res);
         
         message.success('Thêm mới group thành công');
         setUser();

@@ -11,7 +11,19 @@ import { LuMoreHorizontal } from "react-icons/lu";
 import { Avatar, Space, message, notification } from 'antd';
 import { useSelector } from 'react-redux';
 import { CreatePost } from '../../../services/api';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill's CSS
 
+const modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean']
+  ],
+};
 const ModalCreatePost = (props) => {
     const { handleClose, show } = props;
     const [inputValueTitle, setInputValueTitle] = useState('');
@@ -27,7 +39,14 @@ const ModalCreatePost = (props) => {
     const listGroups = useSelector((state) => state.listbox.listgroup);
     console.log("listGroups post: ", listGroups)
 
-
+    const editorStyle = {
+        height: '200px', // Điều chỉnh chiều cao
+        maxWidth: '100%' // Điều chỉnh chiều rộng
+      };
+      
+      const editorContainerStyle = {
+        height: '100%'
+      };
     const handleChangeValueGroup = (event) => {
         setSelectedValueGroup(event.target.value);
       };
@@ -104,8 +123,8 @@ const ModalCreatePost = (props) => {
     const handleInputTitleChange = (e) => {
         setInputValueTitle(e.target.value);
     };
-    const handleInputContentChange = (e) => {
-        setInputValueContent(e.target.value);
+    const handleInputContentChange = (value) => {
+        setInputValueContent(value);
     };
     const handleTextareaClick = () => {
         setShowSecondTextarea(true);
@@ -142,16 +161,17 @@ const ModalCreatePost = (props) => {
                                 value={inputValueTitle}
                                 onChange={handleInputTitleChange}
                                 ref={textareaTitleRef}
-                                style={{ cursor: 'pointer', padding:'8px 20px', margin:'auto 0' , height:'40px', border:'solid 1px #ccc' }}
+                                style={{ cursor: 'pointer', padding:'8px 20px', margin:'auto 0' , height:'40px', border:'solid 1px #ccc', marginBottom:'10px' }}
                             ></textarea>
-                            <textarea
+                            {/* <textarea
                                 className="post-new-input"
                                 onChange={handleInputContentChange}
                                 ref={textareaContentRef}
                                 value={inputValueContent}
                                 placeholder="Nội dung..."
                                 style={{ cursor: 'pointer',padding:'8px 20px', margin:'auto 0' , height:'40px', border:'solid 1px #ccc',marginTop:'20px' }}
-                            ></textarea>
+                            ></textarea> */}
+                            <div style={editorStyle}><ReactQuill placeholder="Nội dung..." style={editorContainerStyle} className="content-post" value={inputValueContent} onChange={handleInputContentChange} modules={modules} /></div>
                         </div>
                         
                         <div className="post-action">

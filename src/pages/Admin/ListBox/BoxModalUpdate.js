@@ -71,10 +71,25 @@ const BoxModalUpdate = (props) => {
 
         console.log("dataUpdate.BoxID: ",dataUpdate.BoxID)
         setIsSubmit(true)
-        const res = await UpdateBox(BoxID, BoxName, Description, avatarLink);
-        res.headers= {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        // const res = await UpdateBox(BoxID, BoxName, Description, avatarLink);
+        // res.headers= {
+        //     'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        // }
+
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            notification.error({
+                message: 'Lỗi xác thực',
+                description: 'Không tìm thấy token. Vui lòng đăng nhập lại.'
+            });
+            return;
         }
+
+        const res = await UpdateBox(BoxID, BoxName, Description, avatarLink, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
         console.log("them box header: ",res.headers)
         if (res) {
             message.success('Update box thành công');

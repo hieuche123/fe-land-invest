@@ -113,12 +113,20 @@ export const ViewlistGroup = (BoxID) => {
     return instance.get(`/api/group/all_group/${BoxID}`);
 }
 
+export const ViewlistComment = (PostID) => {
+    return instance.get(`/api/post/comments/${PostID}`);
+}
+
 export const CreateGroup = ( BoxID, GroupName, avatarLink) => {
     return instance.post('/api/group/add_group',{BoxID, GroupName, avatarLink});
 }
 
 export const UpdateGroup = (GroupID, GroupName) => {
     return instance.patch(`/api/group/update_group/${GroupID}`,{GroupName});
+}
+
+export const CreateComment = (Content, Images) => {
+    return instance.post(`/api/post/add_comment`,{Content, Images});
 }
 
 
@@ -145,4 +153,12 @@ export const CheckUserOnline = (USERID) => {
 
 export const ViewProfileUser = (USERID) => {
     return instance.get(`/api/private/profile/${USERID}`);
+}
+
+export const DeletePost = (PostID) => {
+    return instance.delete(`/api/forum/delete_post/${PostID}`);
+}
+
+export const DeleteGroup = (GroupID) => {
+    return instance.delete(`/api/group/remove_group/${GroupID}`);
 }

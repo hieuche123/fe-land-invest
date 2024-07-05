@@ -1,22 +1,84 @@
-
+import { SlLike } from "react-icons/sl";
 import Container from "react-bootstrap/esm/Container";
+import { FaRegComment } from "react-icons/fa6";
+import { PiShareFatLight } from "react-icons/pi";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import "./News.scss"
+import "./PostDetail.scss"
 import { useEffect, useState } from "react";
-import { CheckUserOnline, ViewlistBox, ViewlistPost } from "../../services/api";
+import { CheckUserOnline, CreateComment, ViewlistBox, ViewlistComment, ViewlistPost } from "../../services/api";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import Comment from "./comment/Comment";
+import { VscSend } from "react-icons/vsc";
+import { message, notification } from "antd";
+import { useLocation } from 'react-router-dom';
 const PostDetail = (props) => {
-    const {dataPost} = props
-    const [listViewBox, setListViewBox] = useState([])
-    const [listViewPost, setListViewPost] = useState([])
-    const [listCheckOnline, setListCheckOnline] = useState({})
-    const listUser = useSelector((state) => state.listbox.listuser);
-    const user = listUser.find(user => user.userid === dataPost.UserID);
-console.log('dataPost:' ,dataPost)
+const {dataPost} = props
+const [listViewBox, setListViewBox] = useState([])
+const [listViewPost, setListViewPost] = useState([])
+const [listCheckOnline, setListCheckOnline] = useState({})
+const listUser = useSelector((state) => state.listbox.listuser);
+const user = listUser.find(user => user.userid === dataPost.UserID);
+const [inputContent, setInputContent] = useState('')
+const [inputImage, setInputImage] = useState([])
+const [listViewComment, setListViewComment] = useState([])
+
+const location = useLocation();
+const [postId, setPostId] = useState(null);
+
+useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const id = queryParams.get('id');
+    setPostId(id);
+}, [location]);
+
+console.log('postId:' ,postId)
+console.log('listViewComment:' ,listViewComment)
 let userIDPost = dataPost.UserID;
+useEffect(()=>{
+    getListViewComment(postId);
+},[postId])
+
+const getListViewComment = async(postId) => {
+    let res = await ViewlistComment(postId)
+    if(res && res?.data) {
+        setListViewComment(res.data);
+    }
+    console.log("res viewBox",res)
+}
+
+const handleClickNewComment = async () => {
+    console.log("datapostnew: ", inputContent, inputImage);
+
+    // const token = localStorage.getItem('access_token');
+    // if (!token) {
+    //     notification.error({
+    //         message: 'Lỗi xác thực',
+    //         description: 'Vui lòng đăng nhập lại!'
+    //     });
+    //     return;
+    // }
+
+    const res = await CreateComment(inputContent, inputImage);
+
+    if (res) {
+        console.log("content comment: ", res)
+        message.success('Thêm mới Post thành công');
+    } else {
+        notification.error({
+            message: 'Đã có lỗi xảy ra',
+            description: res.message
+        });
+    }
+};
+
+const handleInputContentChange = (e) => {
+    setInputContent(e.target.value);
+};
+const handleInputImageChange = (e) => {
+    setInputImage(e.target.value);
+};
 
     useEffect(()=>{
         getListViewBox();
@@ -70,7 +132,7 @@ let userIDPost = dataPost.UserID;
         return `Just now`;
     }
     return (
-        <Container className="news-container">
+        <Container className="news-detail-container">
           <Row className="news-row">
             <Col className="news-col-left">
                 <div className="news-hot">
@@ -239,43 +301,105 @@ let userIDPost = dataPost.UserID;
                 {dataPost.Title && dataPost.Content &&
                 
                 <div className="post-item">
-                    <div className="avatar-post">
+                    <div className="post-item-content">
+                        <div className="avatar-post">
+                        </div>
+                        <div className="content-post">
+                            <div className="title-post">
+                                <h2>{`[${dataPost.Title}] ${dataPost.Content}`}</h2>
+                                <div className="like-post">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
+                                </svg>
+    
+                                </div>
+                            </div>
+                            <div className="hagtags-post">
+                                <div className="hagtags-pos-item">#hieuche</div>
+                                <div className="hagtags-pos-item">#dinhdung</div>
+                                <div className="hagtags-pos-item">#chesun</div>
+                            </div>
+                            <div className="user-post">
+                                <div className="info-user-post">
+                                    <div className="avatar-user">
+                                        {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
+                                    </div>
+                                    <div className="info-user">
+                                        <h4>{user.UserName}</h4>
+                                        <p>{formatTimeDifference(timeDifference)}</p>
+                                    </div>
+                                    {/* {listCheckOnline.Status} */}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="content-post">
-                        <div className="title-post">
-                            <h2>{`[${dataPost.Title}] ${dataPost.Content}`}</h2>
-                            <div className="like-post">
+                    <div className="react-post">
+                        <p>651,324 Views</p>
+                        <p>51,324 Likes</p>
+                        <p>65 Comments</p>
+                    </div>
+                    <hr style={{width:'100%', background: '#fff',height:'0.2px', border:0, margin:0}}></hr>
+                    
+                    <div className="post-react">
+                        <div className="post-react-icon">
+                            <SlLike />
+                            <span>Like</span>
+                        </div>
+                        <div className="post-react-icon">
+                            <FaRegComment />
+                            <span>Comment</span>
+                        </div>
+                        <div className="post-react-icon">
+                            <PiShareFatLight />
+                            <span>Share</span>
+                        </div>
+
+                    </div>
+
+                    <hr style={{width:'100%', background: '#fff',height:'0.2px', border:0 , margin:0}}></hr>
+                    {listViewComment &&
+                        listViewComment.map((comment, index)=>{
+                            return(
+                                <div className="list-comment" key={`comment-${index}`}>
+                                    <div className="user-post">
+                                        <div className="info-user-post">
+                                            <div className="avatar-user">
+                                                <img src={comment.Avatar} />
+                                                {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
+                                            </div>
+                                            <div className="info-user">
+                                                <h4>{comment.FullName}</h4>
+                                                <p>{formatTimeDifference(timeDifference)}</p>
+                                            </div>
+                                            {/* {listCheckOnline.Status} */}
+                                        </div>
+                                    </div>
+                                    <div className="content-comment">
+                                        <p>{comment.Content}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <div className="comment-new">
+                        <div className="post-new-avatar">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.28472 1.28635C0.582052 2.41945 -0.738149 6.24881 0.391497 9.59912C2.20862 14.9716 10.0014 19 10.0014 19C10.0014 19 17.8521 14.9096 19.6102 9.59912C20.7388 6.24881 19.4102 2.41945 15.7075 1.28635C13.762 0.693293 11.5332 1.07333 10.0014 2.19843C8.38219 1.04133 6.23239 0.689293 4.28472 1.28635ZM13.7574 4.27342C13.3561 4.17072 12.9476 4.41276 12.8448 4.81404C12.7421 5.21532 12.9842 5.62388 13.3855 5.72658C14.768 6.08042 15.5877 7.00903 15.6825 7.93366C15.7247 8.34572 16.093 8.64549 16.5051 8.60323C16.9171 8.56097 17.2169 8.19267 17.1747 7.78062C16.9982 6.06045 15.5644 4.73591 13.7574 4.27342Z" fill="#C5D0E6"/>
+                                <path d="M13 5C13 2.79066 11.2089 1 9 1C6.79109 1 5 2.79066 5 5C5 7.20934 6.79109 9 9 9C11.2089 9 13 7.20934 13 5Z" fill="#FF6934"/>
+                                <path d="M12 9C11.2357 9.5784 10.0266 10 9 10C7.95345 10 6.7718 9.59874 6 9C1.10197 10.179 0.910523 14.2341 1.0085 17.979C1.0247 18.5984 1.3724 19.0001 2 19.0001L11 19V16.0001C11 14.9814 11.307 14.0001 13 14.0001L16.5 14C16.5 11 14.5 9 12 9Z" fill="#FF6934"/>
+                                <path d="M13 17H19M19 17L17.5 15.5M19 17L17.5 18.5" stroke="#FF6934" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-
-                            </div>
                         </div>
-                        <div className="hagtags-post">
-                            <div className="hagtags-pos-item">#hieuche</div>
-                            <div className="hagtags-pos-item">#dinhdung</div>
-                            <div className="hagtags-pos-item">#chesun</div>
+                        <div className="post-comment-input">
+                            <input 
+                                className="post-new-input"
+                                onChange={handleInputContentChange}
+                                value={inputContent} 
+                                placeholder="Viết bình luận"
+                            />
+                            <VscSend size={24} className="comment-icon" onClick={handleClickNewComment}/>
                         </div>
-                        <div className="user-post">
-                            <div className="info-user-post">
-                                <div className="avatar-user">
-                                    {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
-                                </div>
-                                <div className="info-user">
-                                    <h4>{user.UserName}</h4>
-                                    <p>{formatTimeDifference(timeDifference)}</p>
-                                </div>
-                                {/* {listCheckOnline.Status} */}
-                            </div>
-                            <div className="react-post">
-                                <p>651,324 Views</p>
-                                <p>51,324 Likes</p>
-                                <p>65 Comments</p>
-                            </div>
-
-                        </div>
-
                     </div>
+
                 </div>
                 }
                 {/* {listViewPost && listViewPost.length > 0 && 
@@ -321,6 +445,7 @@ let userIDPost = dataPost.UserID;
                         )
                     })
                 } */}
+
             </Col>
             <Col className="content-right">
                 <div className="old-post-right">
@@ -402,7 +527,6 @@ let userIDPost = dataPost.UserID;
                 </div>
             </Col>
           </Row>
-          {/* <Comment/> */}
         </Container>
     );
 }

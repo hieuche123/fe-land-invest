@@ -1,5 +1,6 @@
 .modal-auth {
     .modal-auth-container {
+        padding: 14px;
         .modal-auth-title {
             font-size: 32px;
         }
@@ -7,6 +8,7 @@
             width: 100%;
             display: flex;
             gap: 20px;
+            margin-top: 10px;
             border-radius: 10px;
             flex-direction: column;
             .post-new-avatar {
@@ -43,6 +45,7 @@
                 border-radius: 5px; 
                 justify-content:space-between;
                 padding: 20px;
+                margin-top: 56px;
 
                 span {
                     display: flex;

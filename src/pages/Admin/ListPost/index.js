@@ -2,7 +2,7 @@ import { CloudDownloadOutlined, DeleteFilled, DeleteTwoTone, EditTwoTone, Export
 import { Button, Input, Pagination, Space, Row, Col, Table, Popconfirm, message, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
-import { ViewlistPost } from '../../../services/api';
+import { DeletePost, ViewlistPost } from '../../../services/api';
 import GroupModalCreate from './PostModalCreate';
 import GroupModalUpdate from './PostModalUpdate';
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,7 +79,7 @@ const TablePost = () => {
                     <Popconfirm
                         placement='leftTop'
                         title={'Xác nhận xóa bản đồ'}
-                        description={'Bạn có chắc muốn xóa bản đồ này?'}
+                        description={'Bạn có chắc muốn xóa Post này?'}
                         onConfirm={() => {handleDeleteBook(record.PostID)}}
                         okText='Xác nhận'
                         cancelText='Hủy'
@@ -120,22 +120,22 @@ const TablePost = () => {
     }
 
     const handleDeleteBook = async(id) => {
-        // const res = await callDeleteBook(id)
-        // if(res && res.data) {
-        //     message.success('Xóa thành công book')
-        //     fetchBook();
-        // }else {
-        //     notification.error({
-        //         message:'Có lỗi xảy ra',
-        //         description: res.message
-        //     })
-        // }
+        const res = await DeletePost(id)
+        if(res && res.data) {
+            message.success('Xóa thành công Post')
+            getListViewPost();
+        }else {
+            notification.error({
+                message:'Có lỗi xảy ra',
+                description: res.message
+            })
+        }
     }
 
     const renderHeader = () => {
         return (
             <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <span>Danh sách bản đồ</span>
+                <span>Danh sách Post</span>
                 <span style={{display: 'flex', gap: 15}}>
                     <Button
                         icon={<ExportOutlined/>}

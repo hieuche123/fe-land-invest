@@ -2,7 +2,7 @@ import { CloudDownloadOutlined, DeleteFilled, DeleteTwoTone, EditTwoTone, Export
 import { Button, Input, Pagination, Space, Row, Col, Table, Popconfirm, message, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { current } from '@reduxjs/toolkit';
-import { ViewlistBox, ViewlistGroup } from '../../../services/api';
+import { DeleteGroup, ViewlistBox, ViewlistGroup } from '../../../services/api';
 import GroupModalCreate from './GroupModalCreate';
 import GroupModalUpdate from './GroupModalUpdate';
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,8 +74,8 @@ const TableGroup = () => {
                 <>
                     <Popconfirm
                         placement='leftTop'
-                        title={'Xác nhận xóa bản đồ'}
-                        description={'Bạn có chắc muốn xóa bản đồ này?'}
+                        title={'Xác nhận xóa Group'}
+                        description={'Bạn có chắc muốn xóa Group này?'}
                         onConfirm={() => {handleDeleteBook(record.GroupID)}}
                         okText='Xác nhận'
                         cancelText='Hủy'
@@ -116,16 +116,20 @@ const TableGroup = () => {
     }
 
     const handleDeleteBook = async(id) => {
-        // const res = await callDeleteBook(id)
-        // if(res && res.data) {
-        //     message.success('Xóa thành công book')
-        //     fetchBook();
-        // }else {
-        //     notification.error({
-        //         message:'Có lỗi xảy ra',
-        //         description: res.message
-        //     })
-        // }
+        const res = await DeleteGroup(id)
+       
+        res.headers = {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+        if(res) {
+            message.success('Xóa thành công group')
+            getListViewGroup();
+        }else {
+            notification.error({
+                message:'Có lỗi xảy ra',
+                description: res.message
+            })
+        }
     }
 
     const renderHeader = () => {
