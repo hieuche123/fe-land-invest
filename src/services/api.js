@@ -125,8 +125,16 @@ export const UpdateGroup = (GroupID, GroupName) => {
     return instance.patch(`/api/group/update_group/${GroupID}`,{GroupName});
 }
 
-export const CreateComment = (Content, Images) => {
-    return instance.post(`/api/post/add_comment`,{Content, Images});
+export const CreateComment = (PostID,Content, Images) => {
+    return instance.post(`/api/post/add_comment/${PostID}`,{Content, Images});
+}
+
+export const UpdateComment = (CommentID, Content, PhotoURL) => {
+    return instance.patch(`/api/post/comment/update/${CommentID}`,{Content, PhotoURL});
+}
+
+export const DeleteComment = (CommentID) => {
+    return instance.delete(`/api/post/comment/remove/${CommentID}`);
 }
 
 

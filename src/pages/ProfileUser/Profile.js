@@ -35,9 +35,7 @@ const getViewProfileUser = async () => {
     }
     if (res) {  
         console.log("data user res", res);
-        
-        message.success('Thêm mới group thành công');
-        setUser();
+        //setUser();
     } else {
         notification.error({
             message: 'Đã có lỗi xảy ra',

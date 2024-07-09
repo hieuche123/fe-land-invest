@@ -241,8 +241,8 @@
     
                         .user-post {
                             display: flex;
-                            flex-direction: column;
                             gap: 10px;
+                            justify-content: space-between;
                             .info-user-post {
                                 display: flex;
                                 align-items: center;
@@ -322,7 +322,8 @@
                     .user-post {
                         color: #fff;
                         display: flex;
-                        flex-direction: column;
+                        // flex-direction: column;
+                        justify-content: space-between;
                         gap: 10px;
                         .info-user-post {
                             display: flex;
@@ -471,5 +472,11 @@
             }
         }
     }
-
 }
+// .news-detail-container .news-row .content-center .post-item .list-comment .user-post {
+//     color: #fff;
+//     display: flex;
+//     /* flex-direction: column; */
+//     gap: 10px;
+//     justify-content: space-between;
+// }

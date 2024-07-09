@@ -147,6 +147,7 @@
         .Plot-saved {
             background-color: #B74C00;
             color: white;
+            height: 32px;
 
             .slider-Plot-saved {
                 display: flex;
@@ -201,4 +202,12 @@ body {
 
 .home-container {
     position: relative;
+}
+
+.slider-web {
+    display: none !important;
+}
+
+.web-slider {
+    display: none !important;
 }

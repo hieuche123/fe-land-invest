@@ -1,6 +1,7 @@
 import Header from "./components/Header/Header";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./index.css";
+import "./App.scss";
 import { useEffect } from "react";
 import Home from "./components/Home/Home";
 import News from "./components/News/News";
