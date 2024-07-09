@@ -141,22 +141,22 @@ const Search = (props) => {
                 <div className="Planning-analysis">
                     <div className="Planning-analysis-icon">
                         <svg width="35" height="35" viewBox="0 0 58 47" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_3920_3694)">
-                                <path d="M24.7857 38.1429C37.3699 38.1429 47.5714 30.052 47.5714 20.0714C47.5714 10.0908 37.3699 2 24.7857 2C12.2015 2 2 10.0908 2 20.0714C2 30.052 12.2015 38.1429 24.7857 38.1429Z" stroke="#B7A800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M55.8569 44.7143L41.3569 33.2143" stroke="#B7A800" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
-                                <g clip-path="url(#clip1_3920_3694)">
-                                    <path d="M28.0778 29.9263H14.4644V16.058L21.2711 10.9487L28.0778 16.058V29.9263Z" stroke="#B7A800" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M28.0776 29.9263H36.586V19.7076H28.0776" stroke="#B7A800" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M21.271 29.9264V27.0067" stroke="#B7A800" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M18.7188 22.6273H23.8238" stroke="#B7A800" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M18.7188 18.2478H23.8238" stroke="#B7A800" stroke-linecap="round" stroke-linejoin="round" />
+                            <g clipPath="url(#clip0_3920_3694)">
+                                <path d="M24.7857 38.1429C37.3699 38.1429 47.5714 30.052 47.5714 20.0714C47.5714 10.0908 37.3699 2 24.7857 2C12.2015 2 2 10.0908 2 20.0714C2 30.052 12.2015 38.1429 24.7857 38.1429Z" stroke="#B7A800" strokeWidth="4" strokeLinecap="round" stroke-linejoin="round" />
+                                <path d="M55.8569 44.7143L41.3569 33.2143" stroke="#B7A800" strokeWidth="4" strokeLinecap="round" stroke-linejoin="round" />
+                                <g clipPath="url(#clip1_3920_3694)">
+                                    <path d="M28.0778 29.9263H14.4644V16.058L21.2711 10.9487L28.0778 16.058V29.9263Z" stroke="#B7A800" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M28.0776 29.9263H36.586V19.7076H28.0776" stroke="#B7A800" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M21.271 29.9264V27.0067" stroke="#B7A800" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M18.7188 22.6273H23.8238" stroke="#B7A800" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M18.7188 18.2478H23.8238" stroke="#B7A800" strokeLinecap="round" stroke-linejoin="round" />
                                 </g>
-                                <g clip-path="url(#clip2_3920_3694)">
-                                    <path d="M28.4645 29.7076H14.8511V15.8393L21.6578 10.7299L28.4645 15.8393V29.7076Z" stroke="#B7A800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M28.4644 29.7076H36.9728V19.4888H28.4644" stroke="#B7A800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M21.6577 29.7076V26.788" stroke="#B7A800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M19.1055 22.4085H24.2105" stroke="#B7A800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M19.1055 18.0291H24.2105" stroke="#B7A800" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                                <g clipPath="url(#clip2_3920_3694)">
+                                    <path d="M28.4645 29.7076H14.8511V15.8393L21.6578 10.7299L28.4645 15.8393V29.7076Z" stroke="#B7A800" strokeWidth="3" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M28.4644 29.7076H36.9728V19.4888H28.4644" stroke="#B7A800" strokeWidth="3" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M21.6577 29.7076V26.788" stroke="#B7A800" strokeWidth="3" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M19.1055 22.4085H24.2105" stroke="#B7A800" strokeWidth="3" strokeLinecap="round" stroke-linejoin="round" />
+                                    <path d="M19.1055 18.0291H24.2105" stroke="#B7A800" strokeWidth="3" strokeLinecap="round" stroke-linejoin="round" />
                                 </g>
                             </g>
                             <defs>
@@ -179,10 +179,10 @@ const Search = (props) => {
                         <g filter="url(#filter0_d_4150_7182)">
                             <rect x="4.5" y="0.5" width="39" height="39" rx="14.5" fill="#2C353D" />
                             <rect x="4.5" y="0.5" width="39" height="39" rx="14.5" stroke="black" />
-                            <path d="M28.9229 4L35.0767 10.1538L28.9229 16.3077" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M8 17.5385V12.6155C8 11.9626 8.25934 11.3365 8.72097 10.8749C9.1826 10.4133 9.80869 10.1539 10.4615 10.1539H35.0769" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M19.0767 36L12.9229 29.8462L19.0767 23.6923" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            <path d="M39.9998 22.4616V27.3847C39.9998 28.0375 39.7403 28.6637 39.2788 29.1252C38.8173 29.5868 38.191 29.8462 37.5382 29.8462H12.9229" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M28.9229 4L35.0767 10.1538L28.9229 16.3077" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                            <path d="M8 17.5385V12.6155C8 11.9626 8.25934 11.3365 8.72097 10.8749C9.1826 10.4133 9.80869 10.1539 10.4615 10.1539H35.0769" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                            <path d="M19.0767 36L12.9229 29.8462L19.0767 23.6923" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
+                            <path d="M39.9998 22.4616V27.3847C39.9998 28.0375 39.7403 28.6637 39.2788 29.1252C38.8173 29.5868 38.191 29.8462 37.5382 29.8462H12.9229" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round" />
                         </g>
                         <defs>
                             <filter id="filter0_d_4150_7182" x="0" y="0" width="48" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -238,8 +238,8 @@ const Search = (props) => {
                                                 <g filter="url(#filter0_d_3934_3795)">
                                                     <path d="M21.9998 14.4858L18.222 10.9303L15.5508 13.4444L19.3285 17L15.5508 20.5556L18.222 23.0697L21.9998 19.5142L25.7776 23.0697L28.4489 20.5556L24.6711 17L28.4489 13.4444L25.7776 10.9303L21.9998 14.4858Z" fill="#B74C00" />
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M39 1H5V33H39V1ZM8.77778 29.4444V4.55556H35.2222V29.4444H8.77778Z" fill="#B74C00" />
-                                                    <path d="M21.9998 14.4858L18.222 10.9303L15.5508 13.4444L19.3285 17L15.5508 20.5556L18.222 23.0697L21.9998 19.5142L25.7776 23.0697L28.4489 20.5556L24.6711 17L28.4489 13.4444L25.7776 10.9303L21.9998 14.4858Z" stroke="black" stroke-linecap="square" />
-                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M39 1H5V33H39V1ZM8.77778 29.4444V4.55556H35.2222V29.4444H8.77778Z" stroke="black" stroke-linecap="square" />
+                                                    <path d="M21.9998 14.4858L18.222 10.9303L15.5508 13.4444L19.3285 17L15.5508 20.5556L18.222 23.0697L21.9998 19.5142L25.7776 23.0697L28.4489 20.5556L24.6711 17L28.4489 13.4444L25.7776 10.9303L21.9998 14.4858Z" stroke="black" strokeLinecap="square" />
+                                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M39 1H5V33H39V1ZM8.77778 29.4444V4.55556H35.2222V29.4444H8.77778Z" stroke="black" strokeLinecap="square" />
                                                 </g>
                                                 <defs>
                                                     <filter id="filter0_d_3934_3795" x="0.5" y="0.5" width="43" height="41" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -277,8 +277,8 @@ const Search = (props) => {
                     />
                     <button type="submit" >
                         <svg width="20" height="20" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9" cy="9" r="8" stroke="#858EAD" stroke-width="2" />
-                            <path d="M14.5 15.5L18.5 19.5" stroke="#858EAD" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="9" cy="9" r="8" stroke="#858EAD" strokeWidth="2" />
+                            <path d="M14.5 15.5L18.5 19.5" stroke="#858EAD" strokeWidth="2" strokeLinecap="round" />
                         </svg>
                     </button>
                 </form>
@@ -290,8 +290,8 @@ const Search = (props) => {
                                 <g filter="url(#filter0_d_4148_6307)">
                                     <path d="M19.4 15.3041L14.6 20.4041L12.3372 18L21 8.79579L29.6627 18L27.4 20.4041L22.6 15.3042V26.5H19.4L19.4 15.3041Z" fill="#FCFCFC" />
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35ZM33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18Z" fill="#FCFCFC" />
-                                    <path d="M19.4 15.3041L14.6 20.4041L12.3372 18L21 8.79579L29.6627 18L27.4 20.4041L22.6 15.3042V26.5H19.4L19.4 15.3041Z" stroke="black" stroke-linecap="square" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35ZM33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18Z" stroke="black" stroke-linecap="square" />
+                                    <path d="M19.4 15.3041L14.6 20.4041L12.3372 18L21 8.79579L29.6627 18L27.4 20.4041L22.6 15.3042V26.5H19.4L19.4 15.3041Z" stroke="black" strokeLinecap="square" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35ZM33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18Z" stroke="black" strokeLinecap="square" />
                                 </g>
                                 <defs>
                                     <filter id="filter0_d_4148_6307" x="0.5" y="0.5" width="41" height="43" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -314,8 +314,8 @@ const Search = (props) => {
                                 <g filter="url(#filter0_d_3934_3760)">
                                     <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" fill="#FCFCFC" />
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" fill="#FCFCFC" />
-                                    <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" stroke="black" stroke-linecap="square" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" stroke="black" stroke-linecap="square" />
+                                    <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" stroke="black" strokeLinecap="square" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" stroke="black" strokeLinecap="square" />
                                 </g>
                                 <defs>
                                     <filter id="filter0_d_3934_3760" x="0.5" y="0.5" width="41" height="43" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -339,8 +339,8 @@ const Search = (props) => {
                                 <g filter="url(#filter0_d_3934_3760)">
                                     <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" fill="#FCFCFC" />
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" fill="#FCFCFC" />
-                                    <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" stroke="black" stroke-linecap="square" />
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" stroke="black" stroke-linecap="square" />
+                                    <path d="M22.6 20.6959L27.4 15.5959L29.6628 18L21 27.2042L12.3373 18L14.6 15.5959L19.4 20.6958V9.5H22.6V20.6959Z" stroke="black" strokeLinecap="square" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21 1C12.1634 1 5 8.61116 5 18C5 27.3888 12.1634 35 21 35C29.8366 35 37 27.3888 37 18C37 8.61116 29.8366 1 21 1ZM8.2 18C8.2 10.4889 13.9308 4.4 21 4.4C28.0692 4.4 33.8 10.4889 33.8 18C33.8 25.5111 28.0692 31.6 21 31.6C13.9308 31.6 8.2 25.5111 8.2 18Z" stroke="black" strokeLinecap="square" />
                                 </g>
                                 <defs>
                                     <filter id="filter0_d_3934_3760" x="0.5" y="0.5" width="41" height="43" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

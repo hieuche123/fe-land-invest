@@ -45,6 +45,7 @@
         display: flex;
         align-items: center;
         margin: 0 20px;
+        position: relative;
         
         input {
             background-color: #2C353D;
@@ -67,6 +68,31 @@
                 cursor: pointer;
             }
         }
+        .list--search{
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            z-index: 999999;
+            margin-top: 1rem;
+
+            .list--item{
+                border-radius: 8px;
+                background-color: #2C353D;
+                color: #fff;
+                cursor: pointer;
+                font-size: 14px;
+                margin-bottom: 0.2rem;
+                
+                :last-child {
+                    margin-bottom: 0;
+                }
+                
+            }
+        }
+        
+
+
+        
     }
 
     .header-right {
