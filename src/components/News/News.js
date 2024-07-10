@@ -314,7 +314,7 @@ const News = (props) => {
                         
                     </div>
     
-                    {listViewPost && listViewPost.length > 0 && 
+                    {listViewPost && listUser.length > 0 && listViewPost.length > 0 && 
                         listViewPost.map((post, index)=>{
                             const user = listUser.find(user => user.userid === post.UserID);
                             //getCheckUserOnline(user.userid);
@@ -363,7 +363,7 @@ const News = (props) => {
                                                     {userOnlineStatus && <p className="check-online">{userOnlineStatus.Status}</p>}
                                                 </div>
                                                 <div className="info-user">
-                                                    <h4>{user.UserName}</h4>
+                                                    <h4>{user.userName}</h4>
                                                     <p>{formatTimeDifference(timeDifference)}</p>
                                                 </div>
                                                 {/* {listCheckOnline.Status} */}
