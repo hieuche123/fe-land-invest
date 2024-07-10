@@ -5,12 +5,12 @@ import Header from '../../components/Header/Header';
 const UserProfile = () => {
 
 const user = {
-    avatar: 'https://scontent.fhan5-6.fna.fbcdn.net/v/t39.30808-6/279721342_1291145041644360_2903220512456397091_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=5uf-o8sUvmIQ7kNvgEvR6pd&_nc_ht=scontent.fhan5-6.fna&oh=00_AYA2WLDYPdUr6NVf4xVLK8DiIvho880cwc_eV34vvo_CLA&oe=66867A1B',
+    avatar: 'https://scontent.fhan17-1.fna.fbcdn.net/v/t39.30808-6/279721342_1291145041644360_2903220512456397091_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=_CfZidW9XHgQ7kNvgHvOT7a&_nc_ht=scontent.fhan17-1.fna&oh=00_AYACwRltElqqKl5qnlUdHqE_mkxnr0_1vWU0isfRKoGdFA&oe=6692C81B',
     fullName: 'Hiểu Chể',
     bio: 'Passionate developer and tech enthusiast',
     email: 'john.doe@example.com',
     birthDate: '2002-01-01',
-    birthPlace: 'Hoàng Mai - Hà Nội',
+    birthPlace: 'Hoàng Mai - Hà Nộii',
     gender: 'Male',
     phone: '0383 481 134'
     };
