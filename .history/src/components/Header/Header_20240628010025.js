@@ -157,15 +157,15 @@ const Header = () => {
                             </NavLink>
                             <NavLink to="/auction" className='nav-link'>
                             <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_4194_13561)">
-                                <path d="M11.2854 5.88788L17.3475 16.3875" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M17.03 15.8359L2.08657 19.3058L1.12946 17.6479L11.6062 6.44147" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M5.33733 18.5501L6.16017 19.9752C6.45868 20.4869 6.9482 20.859 7.52105 21.0097C8.09388 21.1602 8.70312 21.0773 9.21473 20.7787C9.72636 20.4803 10.0984 19.9908 10.2491 19.4178C10.3998 18.845 10.3168 18.2358 10.0183 17.7241L9.88649 17.496" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M11.6977 2.88669V0.916931" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M19.2445 10.4337H21.2143" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2.18229 10.4337H4.15204" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M4.96751 3.70435L6.36034 5.09718" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M17.0343 5.097L18.427 3.70416" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <g clipPath="url(#clip0_4194_13561)">
+                                <path d="M11.2854 5.88788L17.3475 16.3875" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M17.03 15.8359L2.08657 19.3058L1.12946 17.6479L11.6062 6.44147" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M5.33733 18.5501L6.16017 19.9752C6.45868 20.4869 6.9482 20.859 7.52105 21.0097C8.09388 21.1602 8.70312 21.0773 9.21473 20.7787C9.72636 20.4803 10.0984 19.9908 10.2491 19.4178C10.3998 18.845 10.3168 18.2358 10.0183 17.7241L9.88649 17.496" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M11.6977 2.88669V0.916931" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M19.2445 10.4337H21.2143" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M2.18229 10.4337H4.15204" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M4.96751 3.70435L6.36034 5.09718" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M17.0343 5.097L18.427 3.70416" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
                                 </g>
                                 <defs>
                                 <clipPath id="clip0_4194_13561">
@@ -185,15 +185,15 @@ const Header = () => {
                                 </svg>
                             </NavLink>
                             <NavLink to="/search" className='nav-link'><svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_4194_13573)">
-                                <path d="M9.42469 17.9633C14.2098 17.9633 18.0889 14.1529 18.0889 9.4526C18.0889 4.75226 14.2098 0.941895 9.42469 0.941895C4.63958 0.941895 0.760494 4.75226 0.760494 9.4526C0.760494 14.1529 4.63958 17.9633 9.42469 17.9633Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M21.2395 21.0581L15.7259 15.6422" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <g clip-path="url(#clip1_4194_13573)">
-                                <path d="M10.6764 14.0938H5.49994V7.5625L8.08817 5.15625L10.6764 7.5625V14.0938Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M10.6764 14.0938H13.9117V9.28125H10.6764" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M8.08817 14.0938V12.7188" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7.11759 10.6562H9.05876" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M7.11759 8.59375H9.05876" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                                <g clipPath="url(#clip0_4194_13573)">
+                                <path d="M9.42469 17.9633C14.2098 17.9633 18.0889 14.1529 18.0889 9.4526C18.0889 4.75226 14.2098 0.941895 9.42469 0.941895C4.63958 0.941895 0.760494 4.75226 0.760494 9.4526C0.760494 14.1529 4.63958 17.9633 9.42469 17.9633Z" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M21.2395 21.0581L15.7259 15.6422" stroke="white" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
+                                <g clipPath="url(#clip1_4194_13573)">
+                                <path d="M10.6764 14.0938H5.49994V7.5625L8.08817 5.15625L10.6764 7.5625V14.0938Z" stroke="white" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M10.6764 14.0938H13.9117V9.28125H10.6764" stroke="white" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M8.08817 14.0938V12.7188" stroke="white" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M7.11759 10.6562H9.05876" stroke="white" strokeLinecap="round" stroke-linejoin="round"/>
+                                <path d="M7.11759 8.59375H9.05876" stroke="white" strokeLinecap="round" stroke-linejoin="round"/>
                                 </g>
                                 </g>
                                 <defs>
@@ -222,8 +222,8 @@ const Header = () => {
                             />
                             <button type="submit" >
                             <svg width="20" height="20" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="10" cy="9" r="8" stroke="#858EAD" stroke-width="2"/>
-                                <path d="M15.5 15.5L19.5 19.5" stroke="#858EAD" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="10" cy="9" r="8" stroke="#858EAD" strokeWidth="2"/>
+                                <path d="M15.5 15.5L19.5 19.5" stroke="#858EAD" strokeWidth="2" strokeLinecap="round"/>
                             </svg>
                          
                             </button>
