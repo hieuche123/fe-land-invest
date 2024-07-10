@@ -21,7 +21,7 @@
             align-items: center;
             border-radius: 100px;
             cursor: pointer;
-
+            z-index: 9999;
         }
 
         .nav-icon {
@@ -84,11 +84,17 @@
 }
 
 .container-header {
-    width: 100%;
+    // width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 10px;
+    z-index: 999;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
 
     .container-header-select {
         display: flex;
@@ -139,9 +145,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 400px;
+            width: fit-content;
             gap: 14px;
             border-radius: 10px;
+            padding: 1rem;
         }
 
         .Plot-saved {
@@ -201,4 +208,18 @@ body {
 
 .home-container {
     position: relative;
+}
+
+.drop--container {
+    position: absolute;
+    cursor: pointer;
+    top: 150px;
+    left: 0;
+    width: fit-content;
+    height: fit-content;
+    text-shadow: center;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #fff;
+    z-index: 9999999;
 }

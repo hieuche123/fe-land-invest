@@ -48,6 +48,10 @@ const item = [
         element: <Home/>
       },
       {
+        path: '/:name',
+        element: <Home/>
+      },
+      {
         path: '/news',
         element: <News/>
       },
