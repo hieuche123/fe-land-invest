@@ -18,7 +18,16 @@ import { BsBookmarkFill } from 'react-icons/bs';
 import { CiDollar } from 'react-icons/ci';
 import { GrLocation } from 'react-icons/gr';
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { MapContainer, TileLayer, ImageOverlay, Marker, Popup, useMapEvents, Polygon } from 'react-leaflet';
+import {
+    MapContainer,
+    TileLayer,
+    ImageOverlay,
+    Marker,
+    Popup,
+    useMapEvents,
+    Polygon,
+    LayersControl,
+} from 'react-leaflet';
 import { useDropzone } from 'react-dropzone';
 import 'rc-slider/assets/index.css';
 import 'leaflet/dist/leaflet.css';
@@ -66,7 +75,7 @@ function Home() {
     const [polygon, setPolygon] = useState(null);
     // const [coordinates, setCoordinates] = useState([])
     const { lat, lon, coordinates, boundingbox, displayName } = useSelector((state) => state.searchQuery.searchResult);
-    
+    const { BaseLayer } = LayersControl;
     const handleSliderChange = (event) => {
         setOpacity(event.target.value);
     };
@@ -241,8 +250,8 @@ function Home() {
                 }}
             >
                 <div className="slider-container-range">
-                    <div className="nav-icon-arrow" onClick={() => setOpacity(prev => prev === 1 ?  1 : (prev + 0.1))}>
-                    <FiPlus size={22}  />
+                    <div className="nav-icon-arrow" onClick={() => setOpacity((prev) => (prev === 1 ? 1 : prev + 0.1))}>
+                        <FiPlus size={22} />
                     </div>
                     <input
                         type="range"
@@ -258,8 +267,8 @@ function Home() {
                             WebkitAppearance: 'slider-vertical',
                         }}
                     />
-                    <div className="nav-icon-arrow" onClick={() => setOpacity(prev => prev === 0 ?  0 : (prev - 0.1))}>
-                        <RiSubtractLine size={22}  />
+                    <div className="nav-icon-arrow" onClick={() => setOpacity((prev) => (prev === 0 ? 0 : prev - 0.1))}>
+                        <RiSubtractLine size={22} />
                     </div>
                     <div className="nav-icon">
                         <div className="nav-icon-arrow">
@@ -283,10 +292,7 @@ function Home() {
             </div>
 
             {/* Header Container */}
-            <div
-                className="container-header"
-                
-            >
+            <div className="container-header">
                 <div className="container-header-select">
                     <div className="slider-container-range Plot-saved">
                         <SaveIcon />
@@ -352,14 +358,34 @@ function Home() {
                 }}
             >
                 <MapEvents />
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                <LayersControl>
+                    <BaseLayer checked name="Map Default">
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                    </BaseLayer>
+                    <BaseLayer name="Ve tinh">
+                        <TileLayer
+                            url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                            attribution='&copy; <a href="https://maps.google.com">Google Maps</a> contributors'
+                            subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+                        />
+                    </BaseLayer>
+                </LayersControl>
                 {imageUrl && location && (
                     <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overFlow: 'hidden' }} />
                 )}
-                {image && boundingbox.length > 0 && <ImageOverlay url={image} bounds={[[boundingbox[0], boundingbox[2]],[boundingbox[1], boundingbox[3]] ]} opacity={opacity}/>}
+                {image && boundingbox.length > 0 && (
+                    <ImageOverlay
+                        url={image}
+                        bounds={[
+                            [boundingbox[0], boundingbox[2]],
+                            [boundingbox[1], boundingbox[3]],
+                        ]}
+                        opacity={opacity}
+                    />
+                )}
                 {selectedPosition && ( // Hiển thị marker tại vị trí đã chọn trên bản đồ
                     <Marker position={selectedPosition}>
                         <Popup>Vị trí đã chọn</Popup>
