@@ -75,6 +75,7 @@ function Home() {
     const [polygon, setPolygon] = useState(null);
     // const [coordinates, setCoordinates] = useState([])
     const { lat, lon, coordinates, boundingbox, displayName } = useSelector((state) => state.searchQuery.searchResult);
+    console.log(lat, lon);
     const { BaseLayer } = LayersControl;
     const handleSliderChange = (event) => {
         setOpacity(event.target.value);
@@ -87,14 +88,6 @@ function Home() {
             const [lat, lng] = selectedPosition;
             window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_blank');
         }
-    };
-
-    const increaseValue = () => {
-        setValue((prevValue) => Math.min(prevValue + 1, 100));
-    };
-
-    const decreaseValue = () => {
-        setValue((prevValue) => Math.max(prevValue - 1, 0));
     };
 
     const onDrop = useCallback((acceptedFiles) => {
@@ -351,7 +344,7 @@ function Home() {
             {/* Map Container */}
             <MapContainer
                 style={mapContainerStyle}
-                center={[lat, lon]}
+                center={center}
                 zoom={13}
                 whenCreated={(map) => {
                     mapRef.current = map;
@@ -359,13 +352,13 @@ function Home() {
             >
                 <MapEvents />
                 <LayersControl>
-                    <BaseLayer checked name="Map Default">
+                    <BaseLayer checked name="Map mặc định">
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                     </BaseLayer>
-                    <BaseLayer name="Ve tinh">
+                    <BaseLayer name="Map vệ tinh">
                         <TileLayer
                             url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
                             attribution='&copy; <a href="https://maps.google.com">Google Maps</a> contributors'
@@ -374,32 +367,32 @@ function Home() {
                     </BaseLayer>
                 </LayersControl>
                 {imageUrl && location && (
-                    <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overFlow: 'hidden' }} />
-                )}
-                {image && boundingbox.length > 0 && (
-                    <ImageOverlay
-                        url={image}
-                        bounds={[
-                            [boundingbox[0], boundingbox[2]],
-                            [boundingbox[1], boundingbox[3]],
-                        ]}
-                        opacity={opacity}
-                    />
-                )}
-                {selectedPosition && ( // Hiển thị marker tại vị trí đã chọn trên bản đồ
-                    <Marker position={selectedPosition}>
-                        <Popup>Vị trí đã chọn</Popup>
+                <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overflow: 'hidden' }} />
+            )}
+            {image && boundingbox?.length > 0 && (
+                <ImageOverlay
+                    url={image}
+                    bounds={[
+                        [boundingbox[0], boundingbox[2]],
+                        [boundingbox[1], boundingbox[3]],
+                    ]}
+                    opacity={opacity}
+                />
+            )}
+            {selectedPosition && (
+                <Marker position={selectedPosition}>
+                    <Popup>Vị trí đã chọn</Popup>
+                </Marker>
+            )}
+            {lat && lon && (
+                <>
+                    <Marker position={[lat, lon]}>
+                        <Popup>Vị trí trung tâm</Popup>
                     </Marker>
-                )}
-                {lat && lon && (
-                    <>
-                        <Marker position={[lat, lon]}>
-                            <Popup>Vị trí trung tâm</Popup>
-                        </Marker>
-                        <ResetCenterView lat={lat} lon={lon} />
-                    </>
-                )}
-                {polygon && <Polygon pathOptions={{ fillColor: 'transparent' }} positions={polygon} />}
+                    <ResetCenterView lat={lat} lon={lon} />
+                </>
+            )}
+            {polygon && <Polygon pathOptions={{ fillColor: 'transparent' }} positions={polygon} />}
             </MapContainer>
 
             <ModalDownMenu

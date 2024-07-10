@@ -143,7 +143,7 @@ const Header = () => {
     }, [debouncedInputSearch]);
 
     const handleItemClick = (item) => {
-        dispatch(
+        item && dispatch(
             doSearch({
                 displayName: item.display_name,
                 lat: item.lat,

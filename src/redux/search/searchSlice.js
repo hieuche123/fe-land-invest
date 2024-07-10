@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
-    searchResult: {}
+    searchResult: {
+      
+    }
 }
 
 export const searchQuery = createSlice({
