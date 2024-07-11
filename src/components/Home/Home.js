@@ -62,9 +62,10 @@ function Home() {
     const [imageUrl, setImageUrl] = useState('');
     const [location, setLocation] = useState([]);
     const [polygon, setPolygon] = useState(null);
+    
     // const [coordinates, setCoordinates] = useState([])
     const { lat, lon, coordinates, boundingbox, displayName } = useSelector((state) => state.searchQuery.searchResult);
-    console.log(lat, lon);
+  
     const { BaseLayer } = LayersControl;
     const handleSliderChange = (event) => {
         setOpacity(event.target.value);
@@ -205,7 +206,6 @@ function Home() {
         } else {
             setPolygon(null); // Reset polygon if no coordinates
         }
-        console.log('test',coordinates);
     }, [coordinates]);
 
     return (
@@ -343,7 +343,7 @@ function Home() {
                 <LayersControl>
                     <BaseLayer checked name="Map vệ tinh">
                         <TileLayer
-                            url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                            url="http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"
                             subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
                             maxZoom={30}
                             attribution="&copy; <a href='https://www.google.com/maps'>Google Maps</a> contributors"
