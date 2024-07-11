@@ -115,73 +115,67 @@ export const NewsIcon = () => (
     </svg>
 );
 
-export const ActionIcon = () => {
+export const ActionIcon = () => (
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.04248 24H14.7347" 
+            stroke="white" stroke-width="3" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+        <path d="M13.0425 24V19.6283H3.73486V24" 
+            stroke="white" stroke-width="3" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+        <path 
+            d="M14.3741 2.51218L8.30718 8.78129C7.6463 9.4642 7.6463 10.5714 8.30718 11.2543L10.9877 14.0241C11.6485 14.707 12.72 14.707 13.3809 14.0241L19.4478 7.75498C20.1088 7.07208 20.1088 5.96486 19.4478 5.28196L16.7674 2.51218C16.1065 1.82927 15.035 1.82927 14.3741 2.51218Z" 
+            stroke="white" 
+            stroke-width="3" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+        <path d="M16.4272 10.8849L24.0426 18.7539" 
+            stroke="white" 
+            stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+export const NotificationIcon = () => (
     <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g clipPath="url(#clip0_4194_13561)">
-            <path
-                d="M11.2854 5.88788L17.3475 16.3875"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M17.03 15.8359L2.08657 19.3058L1.12946 17.6479L11.6062 6.44147"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M5.33733 18.5501L6.16017 19.9752C6.45868 20.4869 6.9482 20.859 7.52105 21.0097C8.09388 21.1602 8.70312 21.0773 9.21473 20.7787C9.72636 20.4803 10.0984 19.9908 10.2491 19.4178C10.3998 18.845 10.3168 18.2358 10.0183 17.7241L9.88649 17.496"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M11.6977 2.88669V0.916931"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M19.2445 10.4337H21.2143"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M2.18229 10.4337H4.15204"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M4.96751 3.70435L6.36034 5.09718"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M17.0343 5.097L18.427 3.70416"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                stroke-linejoin="round"
-            />
-        </g>
-        <defs>
-            <clipPath id="clip0_4194_13561">
-                <rect width="22" height="22" fill="white" />
-            </clipPath>
-        </defs>
-    </svg>;
-};
+    <g clip-path="url(#clip0_4194_13561)">
+        <path 
+            d="M11.2854 5.88788L17.3475 16.3875" 
+            stroke="white" stroke-width="2" 
+            stroke-linecap="round" 
+            stroke-linejoin="round" />
+        <path 
+            d="M17.03 15.8359L2.08657 19.3058L1.12946 17.6479L11.6062 6.44147" 
+            stroke="white" stroke-width="2" 
+            stroke-linecap="round" stroke-linejoin="round" />
+        <path 
+            d="M5.33733 18.5501L6.16017 19.9752C6.45868 20.4869 6.9482 20.859 7.52105 21.0097C8.09388 21.1602 8.70312 21.0773 9.21473 20.7787C9.72636 20.4803 10.0984 19.9908 10.2491 19.4178C10.3998 18.845 10.3168 18.2358 10.0183 17.7241L9.88649 17.496" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path 
+            d="M11.6977 2.88669V0.916931" 
+            stroke="white" stroke-width="2" stroke-linecap="round" 
+            stroke-linejoin="round" />
+        <path 
+            d="M19.2445 10.4337H21.2143" 
+            stroke="white" stroke-width="2" 
+            stroke-linecap="round" stroke-linejoin="round" />
+        <path 
+            d="M2.18229 10.4337H4.15204" stroke="white" 
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path 
+            d="M4.96751 3.70435L6.36034 5.09718" 
+            stroke="white" stroke-width="2" 
+            stroke-linecap="round" stroke-linejoin="round" />
+        <path 
+            d="M17.0343 5.097L18.427 3.70416" stroke="white" 
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    <defs>
+        <clipPath id="clip0_4194_13561">
+            <rect width="22" height="22" fill="white" />
+        </clipPath>
+    </defs>
+    </svg>
+);
 
 export const HomeIcon = () => (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

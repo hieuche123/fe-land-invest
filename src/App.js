@@ -21,6 +21,7 @@ import TableUser from "./pages/Admin/ListUser";
 import UserProfile from "./pages/ProfileUser/UserProfile";
 import Profile from "./pages/ProfileUser/Profile";
 import { useSelector } from 'react-redux';
+import Notification from "./components/Notification/Notification";
 
 const Layout = () => {
   return (
@@ -53,6 +54,10 @@ const item = [
         element: <Home/>
       },
       {
+        path: '/notifications',
+        element: <Notification/>
+      },
+      {
         path: '/news',
         element: <News/>
       },
@@ -61,7 +66,7 @@ const item = [
         element: <PostPage/>
       },
       {
-        path: '/auction',
+        path: '/auctions',
         element: <Auction/>
       },
       {

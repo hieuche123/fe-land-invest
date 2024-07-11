@@ -1,0 +1,22 @@
+.video-container{
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 tỉ lệ khung */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    .video-player {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+    }
+    .video-player::cue{
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        padding: 0 4px;
+    }
+}

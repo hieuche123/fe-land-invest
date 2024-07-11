@@ -218,6 +218,7 @@ function Home() {
         } else {
             setPolygon(null); // Reset polygon if no coordinates
         }
+        console.log('test',coordinates);
     }, [coordinates]);
 
     return (
