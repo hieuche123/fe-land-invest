@@ -1,0 +1,147 @@
+.appraisal-form {
+            width: 100%;
+            margin: 80px 0;
+            background-color: #262d34;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            position: relative;
+            .appraisal-header {
+                display: flex;
+                align-items: center;
+                position: absolute;
+                top: -30px;
+                .avatar {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                }
+                .appraiser-name {
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            
+            }
+            .appraisal-body {
+                margin-bottom: 20px;
+                .appraisal-textarea {
+                    width: 1100px;
+                    height: 200px;
+                    background-color: #262d34;
+                    border: none;
+                    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+                    border-radius: 10px;
+                    outline: none;
+                    padding: 10px;
+                    color: #fff;
+                    resize: none;
+                    transform: translate(64px, 64px);
+                  }
+                  .attachment-section {
+                    display: flex;
+                    margin-top: 10px;
+                    background-color: #56585A;
+                    border-radius: 10px;
+                    height: 245px;
+                    justify-content: center;
+                    align-items: center;
+                    .attachment-item-left{
+                        width: 50%;
+                        display: flex;
+                        margin-top: 70px;
+                        .attachment-item{
+                            width: 120px;
+                            height: 120px;
+                            background-color: #262D34;
+                            border-radius: 10px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 30px;
+                            margin: 30px;
+                            color: #fff;
+                            cursor: pointer;
+                        }
+                    }
+                    .attachment-item-right{
+                        width: 50%;
+                        margin-top: 70px;
+                        .attachment-item {
+                            width: 300px;
+                            height: 120px;
+                            background-color: #262D34;
+                            border-radius: 10px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 30px;
+                            margin: 30px;
+                            color: #fff;
+                            cursor: pointer;
+                          }
+                    }
+                    
+                  }
+                  
+              }
+            .appraisal-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .media-buttons {
+                    display: flex;
+                    .media-button {
+                      width: 40px;
+                      height: 40px;
+                      background-color: #333;
+                      border: none;
+                      border-radius: 10px;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      font-size: 20px;
+                      color: #fff;
+                      margin-right: 10px;
+                      cursor: pointer;
+                    }
+                  }
+                  .submit-button {
+                    background-color: #28a745;
+                    border: none;
+                    border-radius: 10px;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #fff;
+                    cursor: pointer;
+                }
+                .submit-button:hover {
+                    background-color: #218838;
+                  }
+              }
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  

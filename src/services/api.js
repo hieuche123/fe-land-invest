@@ -109,6 +109,53 @@ export const CreateBox = (BoxName, Description, avatarLink) => {
 // export const callCreateUser = (fullName, email, password, phone) => {
 //     return axios.post('/api/v1/user',{fullName, email, password, phone})
 // }
+
+//Api Auction
+export const fetchProvinces = async () => {
+    try {
+        const response = await instance.get('/api/provinces/view/');
+       return response.data;
+    }
+    catch (error) {
+        console.error('Error fetching provinces: ', error)
+        return [];
+    }
+}
+export const fetchDistrictsByProvinces = async (ProvinceID) => {
+    try {
+        const response = await instance.get(`/api/districts/Byprovince/${ProvinceID}`)
+        return response.data
+    }
+    catch (error) {
+        console.error('Error fetching districts', error)
+        return 
+    }
+}
+
+export const fetchFilteredAuctions = async (startTime, endTime,startPrice,endPrice,province,district) => {
+    const params = {
+        StartTime: startTime,
+        EndTime: endTime,
+        Province: province,
+        District: district,
+        StartPrice: startPrice,
+        EndPrice: endPrice,
+    };
+    const response = await instance.post('/api/landauctions/filter_auction',params)
+    return response.data;
+}
+
+export const fetchAuctionInfor = async (LandAuctionID) => {
+    const response = await instance.get(`/api/landauctions/view/${LandAuctionID}`);
+    return response.data;
+}
+
+export const fetchOrganization = async () => {
+    const response = await instance.get('/api/list_organizers');
+    return response.data;
+}
+
+
 export const ViewlistGroup = (BoxID) => {
     return instance.get(`/api/group/all_group/${BoxID}`);
 }

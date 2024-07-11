@@ -17,7 +17,7 @@ import axios from 'axios';
 import { useDebounce } from 'use-debounce';
 import  { doSearch } from '../../redux/search/searchSlice';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { ActionIcon, HomeIcon, NewsIcon, SearchIcon, SearchNavbarIcon } from '../Icons';
+import { ActionIcon, HomeIcon, NewsIcon, SearchIcon, SearchNavbarIcon,NotificationIcon } from '../Icons';
 
 const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org/search?';
 const params = {
@@ -124,6 +124,7 @@ const Header = () => {
                     );
 
                     const filteredData = data.filter((item) => item.geojson?.type === 'Polygon');
+                    console.log('test',filteredData);
 
                     setSearchResult(filteredData);
 
@@ -179,14 +180,17 @@ const Header = () => {
                             <NavLink to="/" className="nav-link">
                                 <HomeIcon />
                             </NavLink>
-                            <NavLink to="/auction" className="nav-link">
-                                <ActionIcon />
+                            <NavLink to="/notifications" className="nav-link">
+                               <NotificationIcon />
                             </NavLink>
                             <NavLink to="/news" className="nav-link">
                                <NewsIcon />
                             </NavLink>
                             <NavLink to="/search" className="nav-link">
                                <SearchNavbarIcon />
+                            </NavLink>
+                            <NavLink to="/auctions" className="nav-link">
+                                <ActionIcon />
                             </NavLink>
                         </Nav>
                         <form className="header-search">
