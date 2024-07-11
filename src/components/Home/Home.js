@@ -129,31 +129,31 @@ function Home() {
         }
     }, [scale, imageSize]);
 
-    useEffect(() => {
-        const handleZoomEnd = () => {
-            const zoom = mapRef.current.getZoom();
-            setMapZoom(zoom);
-        };
+    // useEffect(() => {
+    //     const handleZoomEnd = () => {
+    //         const zoom = mapRef.current.getZoom();
+    //         setMapZoom(zoom);
+    //     };
 
-        if (mapRef.current) {
-            mapRef.current.on('zoomend', handleZoomEnd);
-        }
+    //     if (mapRef.current) {
+    //         mapRef.current.on('zoomend', handleZoomEnd);
+    //     }
 
-        return () => {
-            if (mapRef.current) {
-                mapRef.current.off('zoomend', handleZoomEnd);
-            }
-        };
-    }, []);
+    //     return () => {
+    //         if (mapRef.current) {
+    //             mapRef.current.off('zoomend', handleZoomEnd);
+    //         }
+    //     };
+    // }, []);
 
-    const calculateImageBounds = useCallback((center, size) => {
-        const halfWidth = size.width / 2;
-        const halfHeight = size.height / 2;
-        return [
-            [center[0] - halfHeight / 111320, center[1] - halfWidth / 111320],
-            [center[0] + halfHeight / 111320, center[1] + halfWidth / 111320],
-        ];
-    }, []);
+    // const calculateImageBounds = useCallback((center, size) => {
+    //     const halfWidth = size.width / 2;
+    //     const halfHeight = size.height / 2;
+    //     return [
+    //         [center[0] - halfHeight / 111320, center[1] - halfWidth / 111320],
+    //         [center[0] + halfHeight / 111320, center[1] + halfWidth / 111320],
+    //     ];
+    // }, []);
 
     const mapRef = useRef();
 
@@ -346,53 +346,56 @@ function Home() {
                 style={mapContainerStyle}
                 center={center}
                 zoom={13}
+                maxZoom={30}
                 whenCreated={(map) => {
                     mapRef.current = map;
                 }}
             >
                 <MapEvents />
                 <LayersControl>
-                    <BaseLayer checked name="Map mặc định">
+                    <BaseLayer checked name="Map vệ tinh">
                         <TileLayer
+                            url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                            subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+                            maxZoom={30}
+                            attribution="&copy; <a href='https://www.google.com/maps'>Google Maps</a> contributors"
+                        />
+                    </BaseLayer>
+                    <BaseLayer name="Map mặc định">
+                        <TileLayer
+                            maxZoom={22}
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
                     </BaseLayer>
-                    <BaseLayer name="Map vệ tinh">
-                        <TileLayer
-                            url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-                            attribution='&copy; <a href="https://maps.google.com">Google Maps</a> contributors'
-                            subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
-                        />
-                    </BaseLayer>
                 </LayersControl>
                 {imageUrl && location && (
-                <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overflow: 'hidden' }} />
-            )}
-            {image && boundingbox?.length > 0 && (
-                <ImageOverlay
-                    url={image}
-                    bounds={[
-                        [boundingbox[0], boundingbox[2]],
-                        [boundingbox[1], boundingbox[3]],
-                    ]}
-                    opacity={opacity}
-                />
-            )}
-            {selectedPosition && (
-                <Marker position={selectedPosition}>
-                    <Popup>Vị trí đã chọn</Popup>
-                </Marker>
-            )}
-            {lat && lon && (
-                <>
-                    <Marker position={[lat, lon]}>
-                        <Popup>Vị trí trung tâm</Popup>
+                    <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overflow: 'hidden' }} />
+                )}
+                {image && boundingbox?.length > 0 && (
+                    <ImageOverlay
+                        url={image}
+                        bounds={[
+                            [boundingbox[0], boundingbox[2]],
+                            [boundingbox[1], boundingbox[3]],
+                        ]}
+                        opacity={opacity}
+                    />
+                )}
+                {selectedPosition && (
+                    <Marker position={selectedPosition}>
+                        <Popup>Vị trí đã chọn</Popup>
                     </Marker>
-                    <ResetCenterView lat={lat} lon={lon} />
-                </>
-            )}
-            {polygon && <Polygon pathOptions={{ fillColor: 'transparent' }} positions={polygon} />}
+                )}
+                {lat && lon && (
+                    <>
+                        <Marker position={[lat, lon]}>
+                            <Popup>Vị trí trung tâm</Popup>
+                        </Marker>
+                        <ResetCenterView lat={lat} lon={lon} />
+                    </>
+                )}
+                {polygon && <Polygon pathOptions={{ fillColor: 'transparent' }} positions={polygon} />}
             </MapContainer>
 
             <ModalDownMenu
