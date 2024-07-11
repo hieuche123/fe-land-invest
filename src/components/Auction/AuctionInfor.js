@@ -9,7 +9,11 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick'
 import ModalComponent from './ModalComponent/ModalComponent'
 import { FaArrowAltCircleLeft } from 'react-icons/fa'
+import VideoPlayer from './VideoPlayer/VideoPlayer'
+import { LayersControl, MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 
+
+const  hanoiCoordinates  = [21.0285, 105.8542]
 
 const AuctionInfor = () => {
 
@@ -19,6 +23,8 @@ const AuctionInfor = () => {
   console.log('data infor', auctionInfor);
   const [isShowModalComment, setIsShowModalComment] = useState(false)
   const [appraisalData, setAppraisalData] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const { BaseLayer } = LayersControl;
   const navigate = useNavigate()
 
 
@@ -88,14 +94,6 @@ const AuctionInfor = () => {
     ],
   };
 
- //array img test 
- const images = [
-    "https://via.placeholder.com/800x400.png?text=Slide+1",
-    "https://via.placeholder.com/800x400.png?text=Slide+2",
-    "https://via.placeholder.com/800x400.png?text=Slide+3",
-    "https://via.placeholder.com/800x400.png?text=Slide+4"
-  ];
-
   //handle exit 
   const handleExit = () => {
     navigate('/auctions')
@@ -117,6 +115,16 @@ const handleAppraisalChange = (event) => {
 const handleSubmit = () => {
   closeModal();
 };
+const MapEvents = () => {
+  useMapEvents({
+      click(e) {
+          const { lat, lng } = e.latlng;
+          setSelectedLocation([lat, lng]);
+      },
+  });
+  return null;
+};
+
 
   return (
     <Container className='infor-container'>
@@ -211,9 +219,9 @@ const handleSubmit = () => {
                             <p>Link Chi Tiết: <Link to={e.AuctionUrl} className='link-auction'>{e.AuctionUrl}</Link></p>
                             <div className='image-slider'>
                             <Slider {...settings}>
-                                    {images.map((image, index) => (
-                                    <div key={index} className='slider-item'>
-                                        <img src={image} alt={`Slide ${index + 1}`} style={{ width: "100%" }} />
+                                    {e.Images.map((image, index) => (
+                                      <div key={index} className='slider-item'>
+                                        <img src={image.Image} alt={`Slide ${index + 1}`} style={{ width: "100%" }} />
                                     </div>
                                     ))}
                             </Slider>
@@ -221,11 +229,32 @@ const handleSubmit = () => {
                             <div className='map-video-infor'>
                                 {/* map */}
                                 <div className='map-container'>
-                                    map
+                                    <MapContainer center={hanoiCoordinates} zoom={13} style={{ height: "100%", width: "100%" }}>
+                                      <MapEvents />
+                                          <LayersControl>
+                                              <BaseLayer checked name="Map mặc định">
+                                                  <TileLayer
+                                                      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                                  />
+                                              </BaseLayer>
+                                              <BaseLayer name="Map vệ tinh">
+                                                  <TileLayer
+                                                      url="http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+                                                      attribution='&copy; <a href="https://maps.google.com">Google Maps</a> contributors'
+                                                      subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+                                                  />
+                                              </BaseLayer>
+                                          </LayersControl>
+                                    </MapContainer>
                                 </div>
                                 {/* video */}
                                 <div className='video-container'>
-                                    video
+                                    {
+                                      e.Videos.map((item, index) => (
+                                        <VideoPlayer videoUrl={item.Video}/>
+                                      ))
+                                    }
                                 </div>
                             </div>
                             <div className='infor-item'>
