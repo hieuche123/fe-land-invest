@@ -1,8 +1,4 @@
 import './Home.scss';
-// import { CiCirclePlus } from "react-icons/ci";
-// import { GrSubtractCircle } from "react-icons/gr";
-// import { BsArrowLeftCircle } from "react-icons/bs";
-// import { IoArrowUndoCircleOutline } from "react-icons/io5";
 import { FaLocationArrow } from 'react-icons/fa';
 import { GiGolfFlag } from 'react-icons/gi';
 import { MdDeleteForever } from 'react-icons/md';
@@ -13,11 +9,8 @@ import { FiPlus } from 'react-icons/fi';
 import { RiSubtractLine } from 'react-icons/ri';
 import { FaAngleDown } from 'react-icons/fa6';
 
-// import { IoLocationSharp } from "react-icons/io5";
-import { BsBookmarkFill } from 'react-icons/bs';
-import { CiDollar } from 'react-icons/ci';
 import { GrLocation } from 'react-icons/gr';
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
 import {
     MapContainer,
     TileLayer,
@@ -38,7 +31,6 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { message } from 'antd';
 import ModalDownMenu from './ModalDown/ModalDownMenu';
 import ModalPriceFilter from './ModalDown/ModalPriceFilter';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import ResetCenterView from '../../function/resetCenterView';
 import { DollarIcon, SaveIcon } from '../Icons';
@@ -57,14 +49,11 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 function Home() {
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState([]);
     const [opacity, setOpacity] = useState(1);
     const [scale, setScale] = useState(1);
-    const [position, setPosition] = useState(center);
     const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
     const [currentSize, setCurrentSize] = useState({ width: 0, height: 0 });
-    const [mapZoom, setMapZoom] = useState(14);
-    const [value, setValue] = useState(50);
     const [selectedPosition, setSelectedPosition] = useState(null); // State để lưu trữ vị trí được chọn trên bản đồ
     const [activeItem, setActiveItem] = useState(0);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -98,8 +87,7 @@ function Home() {
             const img = new Image();
             img.onload = () => {
                 URL.revokeObjectURL(img.src);
-                setImage(img);
-                console.log('Image loaded:', img);
+                setImage(prev => [...prev, img]);
                 setImageSize({
                     width: img.width,
                     height: img.height,
@@ -370,17 +358,21 @@ function Home() {
                     </BaseLayer>
                 </LayersControl>
                 {imageUrl && location && (
-                    <ImageOverlay url={imageUrl} bounds={location} opacity={opacity} style={{ overflow: 'hidden' }} />
+                    <ImageOverlay url={imageUrl} bounds={location} opacity={opacity}/>
                 )}
                 {image && boundingbox?.length > 0 && (
-                    <ImageOverlay
-                        url={image}
-                        bounds={[
-                            [boundingbox[0], boundingbox[2]],
-                            [boundingbox[1], boundingbox[3]],
-                        ]}
-                        opacity={opacity}
-                    />
+                    image.map((item, index) => (
+                        <div key={index}>
+                            <ImageOverlay
+                            url={item}
+                            bounds={[
+                                [boundingbox[0], boundingbox[2]],
+                                [boundingbox[1], boundingbox[3]],
+                            ]}
+                            opacity={opacity}
+                        />
+                        </div>
+                    ))
                 )}
                 {selectedPosition && (
                     <Marker position={selectedPosition}>
@@ -408,4 +400,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default memo(Home);
