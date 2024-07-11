@@ -150,6 +150,11 @@ export const fetchAuctionInfor = async (LandAuctionID) => {
     return response.data;
 }
 
+export const fetchOrganization = async () => {
+    const response = await instance.get('/api/list_organizers');
+    return response.data;
+}
+
 
 export const ViewlistGroup = (BoxID) => {
     return instance.get(`/api/group/all_group/${BoxID}`);

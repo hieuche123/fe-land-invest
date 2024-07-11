@@ -8,7 +8,7 @@ import { LayersControl, MapContainer, TileLayer, useMapEvents } from "react-leaf
 import { Pagination } from "antd";
 import { useNavigate } from 'react-router-dom';
 
-const AuctionSearch = ({formData, handleChange, handleSubmit, province, district,hanoiCoordinates,auctionResults,setSelectedProvinceId,formatDate, loading}) => {
+const AuctionSearch = ({formData, handleChange, handleSubmit, province, district,hanoiCoordinates,auctionResults,setSelectedProvinceId,formatDate, loading, isOrganization}) => {
     // UseState
       const [currentPage, setCurrentPage] = useState(1);
       const [pageSize, setPageSize] = useState(3);
@@ -92,7 +92,9 @@ const AuctionSearch = ({formData, handleChange, handleSubmit, province, district
                                 onChange={handleChange}
                                 >
                                 <option value='Tất cả'>Tất cả</option>
-                                <option value='Tổ chức 1'>tổ chức 1</option>
+                                {isOrganization.map((item, index)=>(
+                                    <option key={index} value={item.id}>{item.name}</option>
+                                ))}
 
                                 </Form.Control>
                             </Col>

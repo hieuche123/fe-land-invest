@@ -6,7 +6,7 @@ import './Auction.scss'
 import "react-datepicker/dist/react-datepicker.css";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../Hooks/useDebounce";
-import { fetchDistrictsByProvinces, fetchFilteredAuctions, fetchProvinces } from "../../services/api";
+import { fetchDistrictsByProvinces, fetchFilteredAuctions, fetchOrganization, fetchProvinces } from "../../services/api";
 import { message } from "antd";
 
 
@@ -36,7 +36,7 @@ const Auction = () => {
       const debouncedData = useDebounce(formData, 1000)
       const [hanoiCoordinates, setHanoiCoordinates] = useState([21.0285, 105.8542]);
       const [loading, setLoading] = useState(false)
-
+      const [isOrganization, setIsOrganization] = useState([])
 
       useEffect(() => {
         // api provinces
@@ -74,6 +74,17 @@ const Auction = () => {
         }
     
       };
+
+
+      // api tổ chức
+      useEffect(() => {
+        const fetchOrganizationData = async () => {
+          const data = await fetchOrganization()
+          setIsOrganization(data.message)
+        }
+        fetchOrganizationData()
+      },[])
+      
 
       const validateForm = () =>{
         for(let key in formData){
@@ -163,6 +174,7 @@ const Auction = () => {
                 setSelectedProvinceId={setSelectedProvinceId}
                 formatDate={formatDate}
                 loading={loading}
+                isOrganization={isOrganization}
             />
         </Container>
 

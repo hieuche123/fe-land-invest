@@ -189,7 +189,6 @@ function Home() {
                     'https://apilandinvest.gachmen.org/api/landauctions/search/1?fbclid=IwZXh0bgNhZW0CMTAAAR1oHBpYlbHJfOuEWlCwGbcdC1csdl9wM2F0ZEWSrIcZK3_QAj3Weewb6pY_aem_sNNcYgwRijyY_JiZ2dUsww',
                 );
                 const data = await response.json();
-
                 if (data.status === 200 && data.message.length > 0) {
                     const imageUrl = data.message[0].imageHttp;
                     const location = JSON.parse(data.message[0].location);

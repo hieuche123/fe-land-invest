@@ -22,6 +22,7 @@ import UserProfile from "./pages/ProfileUser/UserProfile";
 import Profile from "./pages/ProfileUser/Profile";
 import { useSelector } from 'react-redux';
 import Notification from "./components/Notification/Notification";
+import AuctionInfor from "./components/Auction/AuctionInfor";
 
 const Layout = () => {
   return (
@@ -68,6 +69,10 @@ const item = [
       {
         path: '/auctions',
         element: <Auction/>
+      },
+      {
+        path: 'auctions/information/:LandAuctionID',
+        element: <AuctionInfor />
       },
       {
         path: '/search',
