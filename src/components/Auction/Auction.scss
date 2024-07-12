@@ -3,6 +3,7 @@
 }
 
 .container{
+        overflow: hidden;
         .react-datepicker-wrapper{
                 width: 100%;
         }
@@ -262,7 +263,7 @@
                                         opacity: 0.7;
                                         width: 500px;
                                         text-overflow: ellipsis;
-                                        overflow: hidden;
+                                        overflow: scroll;
                                 }
                                 .image-slider{
                                         padding: 20px;
@@ -279,10 +280,10 @@
                                                 }
                                             }               
                                         .slick-prev{
-                                                left: -15px;
+                                                left: -30px;
                                         }
                                         .slick-next{
-                                                right: -15px;
+                                                right: -30px ;
                                         }
                                         .slick-track{
                                                 display: flex;
@@ -303,8 +304,6 @@
                                         }
                                         .video-container{
                                                 width: 50%;
-                                                background-color: #8a897c;
-                                                border: 2px solid #000;
                                         }
                                 }
                         }
