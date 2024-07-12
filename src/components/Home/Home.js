@@ -205,7 +205,7 @@ function Home() {
 
         fetchData();
     }, []);
-
+    
     useEffect(() => {
         if (coordinates && coordinates.length > 0) {
             // Map coordinates to Leaflet format [lat, lng]
