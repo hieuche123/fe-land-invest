@@ -134,8 +134,7 @@ const item = [
                 },
             ],
         });
-    }
-
+      }
     const router = createBrowserRouter(item);
     return <>{<RouterProvider router={router} />}</>;
 }
